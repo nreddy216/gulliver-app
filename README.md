@@ -7,7 +7,7 @@ Travelogue is an interactive storytelling application where users tell stories t
 
 ### Planning / UX
 
-Below are a few wireframes that map out (punintended) the
+Below are a few wireframes that map out (punintended) the overall user interface.
 
 #### Wireframes
 
@@ -38,6 +38,8 @@ Below are a few wireframes that map out (punintended) the
 * Material Design + Bootstrap
 * HTML5 / CSS3
 * SASS
+* Balsamiq (for wireframes)
+* Adobe Illustrator (for visual designs)
 
 ## How to contribute
 
