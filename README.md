@@ -11,20 +11,20 @@ Below are a few wireframes that map out (punintended) the overall user interface
 
 #### Wireframes
 
-##### Home page (not logged in)
-![edit](./wireframes/home.png)
+##### Landing page (not logged in)
+![landing page wireframe](./wireframes/home.png)
 
 ##### Home page (logged in)
-![edit](./wireframes/loggedin_home.png)
+![logged in home wireframe](./wireframes/loggedin_home.png)
 
 ##### Profile page
-![edit](./wireframes/profile.png)
+![profile wireframe](./wireframes/profile.png)
 
 ##### Edit one story
-![edit](./wireframes/edit.png)
+![edit story wireframe](./wireframes/edit.png)
 
 ##### View another's story
-![edit](./wireframes/othersprofile.png)
+![view another's story wireframe](./wireframes/othersprofile.png)
 
 
 ## Technologies
