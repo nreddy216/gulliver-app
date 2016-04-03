@@ -5,7 +5,7 @@ var PinSchema = mongoose.Schema({
   locationName: String, //what the user wants to call the location
   latitude: String, //get both from MapBox
   longitude: String,
-  textContent: String, //actual story
+  textContent: { type: String, default: ''}, //actual story
   photoUrl: [], //array with all the photos for the pin
   videoUrl: [],
   audioUrl: []
