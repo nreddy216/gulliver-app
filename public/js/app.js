@@ -1,36 +1,74 @@
 
 //insert all modules
-var app = angular.module('TravelogueApp', ['ui.router','ngResource']);
+var app = angular.module('TravelogueApp', ['ui.router','ngResource', 'satellizer', 'ngMessages', 'ngRoute']);
 
-app.config(config);
-//
-// config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+app.config(config)
+   .controller('MainCtrl', MainCtrl)
+   .controller('LandingCtrl', LandingCtrl)
+   .controller('ProfileCtrl', ProfileCtrl)
+   .controller('LoginCtrl', LoginCtrl)
+   .controller('SignupCtrl', SignupCtrl)
+   .controller('LogoutCtrl', LogoutCtrl)
+   .service('Account', Account);
 
-  function config ( $locationProvider, $stateProvider, $urlRouterProvider ) {
-    console.log("Config loaded.");
+// UI ROUTES=========================================
 
-    //this allows us to use routes without hash params!
-    $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-    });
+//is this needed?
+config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-      // return to user-index if bad route request
-      $urlRouterProvider.otherwise("/");
-      $stateProvider
+function config ( $locationProvider, $stateProvider, $urlRouterProvider ) {
+  console.log("Config loaded.");
+
+  //this allows us to use routes without hash params!
+  $locationProvider.html5Mode({
+  enabled: true,
+  requireBase: false
+  });
+
+    // return to user-index if bad route request
+    $urlRouterProvider.otherwise("/");
+    $stateProvider
       .state('landing-page', {
           url: '/',
+          controller: 'LandingCtrl',
           templateUrl: "views/landing_page.html"
+      })
+      .state('sign-up', {
+          url: '/sign-up',
+          templateUrl: "views/sign_up.html",
+          controller: 'SignupCtrl',
+          resolve: {
+            skipIfLoggedIn : skipIfLoggedIn
+          }
+      })
+      .state('login', {
+          url: '/login,
+          templateUrl: "templates/login.html",
+          controller: 'LoginCtrl',
+          resolve: {
+            loginRequired : loginRequired
+          }
+      })
+      .state('logout', {
+          url: '/logout',
+          template: null,
+          controller: 'LogoutCtrl',
+          resolve: {
+            skipIfLoggedIn : skipIfLoggedIn
+          }
+      })
+      .state('profile', {
+          url: '/profile',
+          templateUrl: "views/profile.html",
+          controller: 'ProfileCtrl',
+          resolve: {
+            loginRequired : loginRequired
+          }
       });
 
-  };
+};
 
-  app.controller('MainCtrl', MainCtrl);
 
-  function MainCtrl(){
-
-    console.log("Main Controller");
-  }
 
   // story resource
   // app.service('Story', function($resource){
