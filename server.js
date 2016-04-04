@@ -96,15 +96,15 @@ app.get('/api/users', function (req, res) {
 // });
 
 //auth.ensureAuthenticated ? This doesn't work
-app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
-
-  User.find(req.user, function(err, user){
-    if(err){
-      console.log(err);
-    }
-    res.send(user.stories);
-  });
-});
+// app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
+//
+//   User.find(req.user, function(err, user){
+//     if(err){
+//       console.log(err);
+//     }
+//     res.send(user.stories);
+//   });
+// });
 
 //testing stories data
 app.get('/api/stories', function (req, res) {

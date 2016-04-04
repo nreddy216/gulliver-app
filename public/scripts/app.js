@@ -243,11 +243,12 @@ function HomeController ($http) {
 
 ///api/me/stories?
   $http.get('/api/stories')
-    .then(function (response) {
-      // console.log(response.data);
-      vm.stories.push(response.data);
-      console.log(vm.stories);
-    });
+      .then(function (response) {
+        // console.log(response.data);
+        vm.stories.push(response.data);
+        console.log(vm.stories);
+      });
+
 
   vm.createStory = function(){
     console.log("create story: ", vm.new_story);
@@ -256,7 +257,7 @@ function HomeController ($http) {
         // console.log(vm.stories);
         vm.new_story = {};
         vm.stories.push(response.data);
-        console.log(vm.stories);
+        // console.log(vm.stories);
       });
   }
 }
