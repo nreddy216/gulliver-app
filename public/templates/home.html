@@ -1,0 +1,28 @@
+<h2>Your Stories</h2>
+<hr>
+<p ng-if="home.stories.length === 0">No stories yet.</p>
+
+<div ng-if="home.stories.length > 0">
+	<div ng-repeat="story in home.stories">
+		<p><strong>{{story.title}}</strong></p><br>
+	</div>
+</div>
+
+<div ng-show="main.currentUser()">
+	<br>
+	<h4>Add New Story</h4>
+	<hr>
+	<!-- Story Form here -->
+
+	<!-- ADD STORY -->
+	<form ng-submit="home.createStory()">
+		<div class="form-group">
+		  <input type="text" ng-model="home.new_story.title" class="form-control" placeholder="Story Title">
+		</div>
+	  <div class="form-group">
+	    <input type="text" ng-model="home.new_story.content" class="form-control" placeholder="Write your thoughts here...">
+	  </div>
+	  <input type="submit" value="Add Story" class="btn btn-block btn-info">
+	</form>
+
+</div>

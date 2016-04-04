@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/travelogue');
 
-var Story = require('../models/Story')
-var User = require('../models/User');
+var Story = require('../models/story')
+var User = require('../models/user');
 
 User.remove({}, function(err) {
   if (err) {
@@ -19,11 +19,13 @@ Story.remove({}, function(err) {
 var users = [
   {
       email: "user1@gmail.com",
+      firstName: "User One",
       username: "user1",
       password: "user1"
   },
   {
       email: "user2@gmail.com",
+      firstName: "User Two",
       username: "user2",
       password: "user2"
   }

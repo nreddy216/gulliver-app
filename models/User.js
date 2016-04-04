@@ -1,19 +1,20 @@
 // Create Schema==============================================================
 
 var mongoose = require('mongoose');
-var Story = require('./Story');
+var Story = require('./story');
 var bcrypt = require('bcryptjs');
+var Schema = mongoose.Schema;
 
-var UserSchema = mongoose.Schema({
-  dateCreated: { type: Date },
-  dateUpdated: { type: Date },
+var UserSchema = new Schema({
+  created: { type: Date },
+  updated: { type: Date },
   username: String,
   email: { type: String, unique: true, lowercase: true },
   firstName: String,
   lastName: String,
   password: { type: String, select: false}, //select??
   profilePic: String,
-  stories: [Story]
+  stories: [{type: Schema.Types.ObjectId, ref:'Story'}]
   // isPublic: Boolean //users can create private accounts? icebox
   //followers: ref data - icebox
 });
@@ -22,9 +23,9 @@ var UserSchema = mongoose.Schema({
 UserSchema.pre('save', function (next) {
   // set created and updated
   now = new Date();
-  this.dateUpdated = now;
-  if (!this.dateCreated) {
-    this.dateCreated = now;
+  this.updated = now;
+  if (!this.created) {
+    this.created = now;
   }
 
   // encrypt password

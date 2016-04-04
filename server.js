@@ -1,41 +1,184 @@
-//require all dependencies
+// require express and other modules
 var express = require('express'),
-    path = require('path'),
-    cors = require('cors'),
-    logger = require('morgan'),
-    bodyParser = require('body-parser')
-    bcrypt = require('bcryptjs'),
-    app = express();
+    router = express.Router(), //router ~
+    app = express(),
+    bodyParser = require('body-parser'),
+    hbs = require('hbs'),
+    mongoose = require('mongoose'),
+    auth = require('./resources/auth'),
+    // ~ models
+    User = require('./models/user'),
+    Story = require('./models/story')
+    Pin = require('./models/pin');
 
-var mongoose = require('mongoose');
-//connect to DB
-mongoose.connect('mongodb://localhost/travelogue');
-
-//look this up? what does cors do?
-app.use(cors());
-app.use(logger('dev'));
-
-//access body of any input by json object
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-// set the static files location /public/img will be /img for users
-app.use(express.static(__dirname + '/public'));
-
-//require routes file
-var routes = require('./config/routes');
-
-//configute the routes
-app.use('/', routes);
-
-// require and load dotenv ???
+// require and load dotenv
 require('dotenv').load();
 
+// configure bodyParser (for receiving form data)
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-//listen to port & startup the app
-var port = process.env.PORT || 3000;
-app.listen(port, function(){
-  console.log("Listening to port ", port);
+// serve static files from public folder
+app.use(express.static(__dirname + '/public'));
+
+// set view engine to hbs (handlebars)
+app.set('view engine', 'hbs');
+
+// connect to mongodb
+mongoose.connect('mongodb://localhost/travelogue');
+
+// require User and Post models
+var User = require('./models/user');
+
+/*
+ * API Routes
+ */
+
+
+app.get('/api/me', auth.ensureAuthenticated, function (req, res) {
+  User.findById(req.user, function (err, user) {
+    res.send(user.populate('posts'));
+  });
 });
 
-exports = module.exports = app;
+app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
+  User.findById(req.user, function (err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found.' });
+    }
+    user.displayName = req.body.displayName || user.displayName;
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.save(function(err) {
+      res.send(user);
+    });
+  });
+});
+
+
+//testing users data
+app.get('/api/users', function (req, res) {
+
+  User.find({}, function(err, users){
+    if(err){
+      console.log(err);
+    }
+    res.send(users);
+  });
+});
+
+
+
+
+
+
+
+// app.post('/api/users', auth.ensureAuthenticated, function (req, res) {
+//   User.findById(req.user, function (err, user) {
+//     var newStory = new Story(req.body);
+//     newStory.save(function (err, savedStory) {
+//       if (err) {
+//         res.status(500).json({ error: err.message });
+//       } else {
+//         user.stories.push(newStory);
+//         user.save();
+//         res.json(savedStory);
+//       }
+//     });
+//   });
+// });
+
+
+app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
+
+  User.find(req.user, function(err, user){
+    if(err){
+      console.log(err);
+    }
+    res.send(user.stories);
+  });
+});
+
+//testing stories data
+app.get('/api/stories', function (req, res) {
+
+  Story.find({}, function(err, stories){
+    if(err){
+      console.log(err);
+    }
+    res.json(stories);
+  });
+});
+
+
+app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
+  User.findById(req.user, function (err, user) {
+    var newStory = new Story(req.body);
+    newStory.save(function (err, savedStory) {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        user.stories.push(newStory);
+        user.save();
+        res.json(savedStory);
+      }
+    });
+  });
+});
+
+
+/*
+ * Auth Routes
+ */
+
+app.post('/auth/signup', function (req, res) {
+  User.findOne({ email: req.body.email }, function (err, existingUser) {
+    if (existingUser) {
+      return res.status(409).send({ message: 'Email is already taken.' });
+    }
+    var user = new User({
+      firstName: req.body.firstName,
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
+    });
+    user.save(function (err, result) {
+      if (err) {
+        res.status(500).send({ message: err.message });
+      }
+      res.send({ token: auth.createJWT(result) });
+    });
+  });
+});
+
+app.post('/auth/login', function (req, res) {
+  User.findOne({ email: req.body.email }, '+password', function (err, user) {
+    if (!user) {
+      return res.status(401).send({ message: 'Invalid email or password.' });
+    }
+    user.comparePassword(req.body.password, function (err, isMatch) {
+      if (!isMatch) {
+        return res.status(401).send({ message: 'Invalid email or password.' });
+      }
+      res.send({ token: auth.createJWT(user)});
+      console.log(user)
+
+    });
+  });
+});
+
+
+/*
+ * Catch All Route
+ */
+app.get(['/', '/signup', '/login', '/profile'], function (req, res) {
+  res.render('index');
+});
+
+
+/*
+ * Listen on localhost:3000
+ */
+app.listen(3000, function() {
+  console.log('server started');
+});

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-var Pin = require('./Pin');
+var Pin = require('./pin');
 
 var StorySchema = mongoose.Schema({
-  title: String,
-  dateCreated: { type: Date },
-  dateUpdated: { type: Date },
+  title: {type : String},
+  created: { type: Date },
+  updated: { type: Date },
   tags: [], //array that gets diff tags pushed on it
   pins: [Pin]
   // sharedAnonymously: Boolean, //icebox

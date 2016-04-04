@@ -1,5 +1,3 @@
-// Using Satellizer & jwt token
-
 var jwt = require('jwt-simple'),
     moment = require('moment');
 
