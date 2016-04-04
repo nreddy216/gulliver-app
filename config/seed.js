@@ -31,7 +31,7 @@ var users = [
 ];
 
 User.create(users, function(err, doc) {
-    if (err){ console.log("ERROR:", err); }
+    if (err){ console.log("Error : ", err); }
     else {
       console.log("Created: " , doc);
       mongoose.connection.close();

@@ -1,6 +1,6 @@
 <h3 class="text-center">Sign Up</h3>
 <hr>
-<form ng-submit="SignupCtrl.signup">
+<form ng-submit="SignupCtrl.signup()">
 	<div class="form-group">
 	  <input type="text" ng-model="SignupCtrl.new_user.firstName" class="form-control" placeholder="First Name">
 	</div>
@@ -21,8 +21,5 @@
 <br>
 <p class="text-muted">Already have an account? <a ui-sref="login">Log in here.</a></p>
 
-{{SignupCtrl.new_user}}
-
-{{SignupCtrl}}
 <button ui-sref="landing-page">Back to landing page</button>
 <button onclick='SignupCtrl.test()'>test</button>

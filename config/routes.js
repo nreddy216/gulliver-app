@@ -114,8 +114,8 @@ app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
 
 
 // STORY routes ****************************************
-router.route('/api/stories')
-  .get(storiesController.getAll);
+// router.route('/api/stories')
+//   .get(storiesController.getAll);
 
 
 

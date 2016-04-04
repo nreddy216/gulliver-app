@@ -1,30 +1,28 @@
 
 //insert all modules
-var app = angular.module('TravelogueApp', ['ui.router','ngResource', 'satellizer', 'ngMessages']);
+var app = angular.module('TravelogueApp', ['ui.router','satellizer']);
 
-app.config(config)
-   .controller('MainCtrl', MainCtrl)
+app.controller('MainCtrl', MainCtrl)
    .controller('LandingCtrl', LandingCtrl)
    .controller('ProfileCtrl', ProfileCtrl)
    .controller('LoginCtrl', LoginCtrl)
    .controller('SignupCtrl', SignupCtrl)
    .controller('LogoutCtrl', LogoutCtrl)
-   .service('Account', Account);
+   .service('Account', Account)
+   .config(configRoutes);
 
 // UI ROUTES=========================================
 
-config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+configRoutes.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-function config ( $stateProvider,  $urlRouterProvider, $locationProvider ) {
-  console.log("Config loaded.");
+function configRoutes ( $stateProvider,  $urlRouterProvider, $locationProvider ) {
+  console.log("Config Routes loaded.");
 
   //lets us use routes without hash params
   $locationProvider.html5Mode({
       enabled: true,
       requireBase: false
   });
-
-  // $locationProvider.html5Mode(true);
 
   // return to user-index if bad route request
   $urlRouterProvider.otherwise("/");
@@ -67,7 +65,7 @@ function config ( $stateProvider,  $urlRouterProvider, $locationProvider ) {
         resolve: {
           loginRequired : loginRequired
         }
-    });
+    })
 
 
     function skipIfLoggedIn($q, $auth) {
@@ -90,9 +88,8 @@ function config ( $stateProvider,  $urlRouterProvider, $locationProvider ) {
       return deferred.promise;
     }
 
-};
+}
 
-// CONTROLLERS ========================================
 /////////////////
 // CONTROLLERS //
 /////////////////
@@ -101,17 +98,28 @@ MainCtrl.$inject = ["Account"]; // minification protection
 function MainCtrl (Account) {
   var vm = this;
 
+  var test = function(){
+    console.log("OMG IS THIS WORKING");
+  };
+
+  vm.test = test();
+
   vm.currentUser = function() {
    return Account.currentUser();
   }
 
 }
 
-LandingCtrl.$inject = ["Account"];
-function LandingCtrl ($http) {
+LandingCtrl.$inject = ["$http", "Account"];
+function LandingCtrl ($http, Account) {
   var vm = this;
 
-  vm.test = "test landing ctrl is connected";
+  console.log(Account);
+
+  this.test = function(){
+    console.log("test landing ctrl connected");
+  }
+  // vm.test = "test landing ctrl is connected";
   console.log("LANDING CTRL");
 }
 
@@ -161,7 +169,7 @@ function SignupCtrl (Account, $location) {
   vm.new_user = {}; // form data
 
   vm.test = function(){
-    console.log("TEST");
+    return "HELLO";
   }
 
   vm.signup = function() {
