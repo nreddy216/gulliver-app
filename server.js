@@ -3,7 +3,8 @@ var express = require('express'),
     path = require('path'),
     cors = require('cors'),
     logger = require('morgan'),
-    bodyParser = require('body-parser'),
+    bodyParser = require('body-parser')
+    bcrypt = require('bcryptjs'),
     app = express();
 
 var mongoose = require('mongoose');
@@ -25,7 +26,11 @@ app.use(express.static(__dirname + '/public'));
 var routes = require('./config/routes');
 
 //configute the routes
-app.use('/', routes); //throws error?
+app.use('/', routes);
+
+// require and load dotenv ???
+require('dotenv').load();
+
 
 //listen to port & startup the app
 var port = process.env.PORT || 3000;

@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Story = require('./Story');
+var bcrypt = require('bcryptjs');
 
 var UserSchema = mongoose.Schema({
   dateCreated: { type: Date },

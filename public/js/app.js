@@ -1,6 +1,6 @@
 
 //insert all modules
-var app = angular.module('TravelogueApp', ['ui.router','ngResource', 'satellizer', 'ngMessages', 'ngRoute']);
+var app = angular.module('TravelogueApp', ['ui.router','ngResource', 'satellizer', 'ngMessages']);
 
 app.config(config)
    .controller('MainCtrl', MainCtrl)
@@ -13,60 +13,61 @@ app.config(config)
 
 // UI ROUTES=========================================
 
-//is this needed?
 config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-function config ( $locationProvider, $stateProvider, $urlRouterProvider ) {
+function config ( $stateProvider,  $urlRouterProvider, $locationProvider ) {
   console.log("Config loaded.");
 
   //lets us use routes without hash params
   $locationProvider.html5Mode({
-  enabled: true,
-  requireBase: false
+      enabled: true,
+      requireBase: false
   });
 
-    // return to user-index if bad route request
-    $urlRouterProvider.otherwise("/");
+  // $locationProvider.html5Mode(true);
 
-    //template switching happens here
-    $stateProvider
-      .state('landing-page', {
-          url: '/',
-          controller: 'LandingCtrl',
-          templateUrl: "views/landing_page.html"
-      })
-      .state('sign-up', {
-          url: '/sign-up',
-          templateUrl: "views/sign_up.html",
-          controller: 'SignupCtrl',
-          resolve: {
-            skipIfLoggedIn : skipIfLoggedIn
-          }
-      })
-      .state('login', {
-          url: '/login,
-          templateUrl: "templates/login.html",
-          controller: 'LoginCtrl',
-          resolve: {
-            skipIfLoggedIn : skipIfLoggedIn
-          }
-      })
-      .state('logout', {
-          url: '/logout',
-          template: null,
-          controller: 'LogoutCtrl',
-          resolve: {
-            loginRequired : loginRequired
-          }
-      })
-      .state('profile', {
-          url: '/profile',
-          templateUrl: "views/profile.html",
-          controller: 'ProfileCtrl',
-          resolve: {
-            loginRequired : loginRequired
-          }
-      });
+  // return to user-index if bad route request
+  $urlRouterProvider.otherwise("/");
+
+  //template switching happens here
+  $stateProvider
+    .state('landing-page', {
+        url: '/',
+        controller: 'LandingCtrl',
+        templateUrl: "views/landing_page.html"
+    })
+    .state('signup', {
+        url: '/signup',
+        templateUrl: "views/sign_up.html",
+        controller: 'SignupCtrl',
+        resolve: {
+          skipIfLoggedIn : skipIfLoggedIn
+        }
+    })
+    .state('login', {
+        url: '/login',
+        templateUrl: "views/login.html",
+        controller: 'LoginCtrl',
+        resolve: {
+          skipIfLoggedIn : skipIfLoggedIn
+        }
+    })
+    .state('logout', {
+        url: '/logout',
+        template: null,
+        controller: 'LogoutCtrl',
+        resolve: {
+          loginRequired : loginRequired
+        }
+    })
+    .state('profile', {
+        url: '/profile',
+        templateUrl: "views/profile.html",
+        controller: 'ProfileCtrl',
+        resolve: {
+          loginRequired : loginRequired
+        }
+    });
 
 
     function skipIfLoggedIn($q, $auth) {
@@ -106,7 +107,11 @@ function MainCtrl (Account) {
 
 }
 
+LandingCtrl.$inject = ["Account"];
 function LandingCtrl ($http) {
+  var vm = this;
+
+  vm.test = "test landing ctrl is connected";
   console.log("LANDING CTRL");
 }
 
@@ -155,7 +160,12 @@ function SignupCtrl (Account, $location) {
   var vm = this;
   vm.new_user = {}; // form data
 
+  vm.test = function(){
+    console.log("TEST");
+  }
+
   vm.signup = function() {
+    console.log("SIGN UP");
     Account
       .signup(vm.new_user)
       .then(
@@ -218,6 +228,7 @@ function Account($http, $q, $auth) {
 
 
   function signup(userData) {
+    console.log("SIGN UP ", userData);
     // #8: signup (https://github.com/sahat/satellizer#authsignupuser-options)
     return (
       $auth
@@ -299,7 +310,7 @@ function Account($http, $q, $auth) {
 
   function getProfile() {
     //they had api/me
-    return $http.get('/api/users/:id');
+    return $http.get('/api/me');
   }
 
   function updateProfile(profileData) {
@@ -313,72 +324,4 @@ function Account($http, $q, $auth) {
         )
     );
   }
-
-
 }
-
-
-
-
-  // story resource
-  // app.service('Story', function($resource){
-  //   return $resource('http://localhost:3000/api/stories', { id: '@_id' }, {
-  //     update: {
-  //       method: 'PUT' // this method issues a PUT request
-  //     }
-  //   });
-  // });
-  //
-  // app.controller('StoryCtrl', StoryCtrl);
-  //
-  // function StoryCtrl(Story){
-  //
-  //   console.log(Story);
-  //
-  //   console.log("Home Controller Loaded");
-  //   var vm = this;
-  //   vm.homeTest = "Welcome to the homepage!";
-  //
-  //   vm.newStory = {};
-  //   vm.todos = Story.query();
-  //   vm.createStory = createStory;
-  //   vm.updateStory = updateStory;
-  //   vm.deleteStory = deleteStory;
-  //   vm.markCompleted = markCompleted;
-  //
-  //
-  //   function createStory(){
-  //     vm.newStory.completed = false;
-  //     Story.save(vm.newStory);
-  //     vm.todos.unshift(vm.newStory);
-  //     vm.newStory = {};
-  //   }
-  //
-  //   function deleteStory(todo){
-  //     // console.log("delete");
-  //     Story.remove({id: todo._id});
-  //     var index = vm.todos.indexOf(todo);
-  //     vm.todos.splice(index, 1);
-  //   }
-  //
-  //   function markCompleted(todo){
-  //     console.log('mark');
-  //     todo.completed = true;
-  //     Story.update(todo);
-  //   }
-  //
-  //
-  //   function updateStory(todo){
-  //     console.log("update");
-  //     Story.update(todo);
-  //     // Story.save(todo);
-  //     todo.displayEditForm = false;
-  //   }
-  //
-  // };
-
-
-
-
-///FUTURE REFACTOR
-// var app = angular.module('TravelogueApp', ['ui.router','uiRoutes','ngResource', 'MainCtrl', 'PinCtrl', 'StoryCtrl', 'UserCtrl', 'PinService', 'StoryService', 'UserService']);
