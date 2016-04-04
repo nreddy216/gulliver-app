@@ -37,23 +37,30 @@ var User = require('./models/user');
 
 app.get('/api/me', auth.ensureAuthenticated, function (req, res) {
   User.findById(req.user, function (err, user) {
-    res.send(user.populate('posts'));
+    res.send(user.populate('stories'));
   });
 });
 
 app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
+  // console.log(req.session);
   User.findById(req.user, function (err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found.' });
     }
-    user.displayName = req.body.displayName || user.displayName;
+    user.firstName = req.body.firstName || user.firstName;
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.save(function(err) {
-      res.send(user);
+      res.send(user.populate('stories'));
     });
   });
 });
+
+
+
+// app.get('/api/users/:id', function(req, res){
+//   User.findById({_id: req.params.id}, function)
+// })
 
 
 //testing users data
@@ -88,7 +95,7 @@ app.get('/api/users', function (req, res) {
 //   });
 // });
 
-
+//auth.ensureAuthenticated ? This doesn't work
 app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
 
   User.find(req.user, function(err, user){
@@ -102,16 +109,18 @@ app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
 //testing stories data
 app.get('/api/stories', function (req, res) {
 
-  Story.find({}, function(err, stories){
+  Story.find({}, function(err, allStories){
     if(err){
       console.log(err);
     }
-    res.json(stories);
+    res.json(allStories);
   });
 });
 
-
+//post to user stories
+//auth.ensureAuthenticated,
 app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
+  console.log(" USER ", req);
   User.findById(req.user, function (err, user) {
     var newStory = new Story(req.body);
     newStory.save(function (err, savedStory) {
@@ -131,6 +140,7 @@ app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
  * Auth Routes
  */
 
+//sign up and login
 app.post('/auth/signup', function (req, res) {
   User.findOne({ email: req.body.email }, function (err, existingUser) {
     if (existingUser) {
@@ -151,6 +161,7 @@ app.post('/auth/signup', function (req, res) {
   });
 });
 
+//login
 app.post('/auth/login', function (req, res) {
   User.findOne({ email: req.body.email }, '+password', function (err, user) {
     if (!user) {

@@ -1,10 +1,11 @@
 <h2>Your Stories</h2>
 <hr>
-<p ng-if="home.stories.length === 0">No stories yet.</p>
+<p ng-if="home.stories[0].length === 0">No stories yet.</p>
 
-<div ng-if="home.stories.length > 0">
-	<div ng-repeat="story in home.stories">
-		<p><strong>{{story.title}}</strong></p><br>
+<div ng-if="home.stories[0].length > 0">
+	<div ng-repeat="story in home.stories[0]">
+		<p><strong>{{story.title}}</strong></p>
+		<br>
 	</div>
 </div>
 

@@ -1,7 +1,7 @@
 angular
   .module('TravelogueApp', [
     'ui.router', 'satellizer'
-    // TODO #2: Add satellizer module
+    // #2: Add satellizer module
   ])
   .controller('MainController', MainController)
   .controller('HomeController', HomeController)
@@ -16,6 +16,15 @@ angular
   //////////////
   // Services //
   //////////////
+
+  //app.service('Stories', Stories)
+  // Stories.$inject = ["$http", "$q", "$auth"];
+  // function Stories($http, $q, $auth) {
+  //   var self = this;
+  //
+  //
+  // };
+
 
   Account.$inject = ["$http", "$q", "$auth"]; // minification protection
   function Account($http, $q, $auth) {
@@ -232,17 +241,22 @@ function HomeController ($http) {
   vm.stories = [];
   vm.new_story = {}; // form data
 
-  $http.get('/api/me/stories')
+///api/me/stories?
+  $http.get('/api/stories')
     .then(function (response) {
-      vm.stories = response.data;
+      // console.log(response.data);
+      vm.stories.push(response.data);
+      console.log(vm.stories);
     });
 
   vm.createStory = function(){
     console.log("create story: ", vm.new_story);
-    $http.post('/api/me/stories', vm.new_story)
+    $http.post('/api/stories', vm.new_story)
       .then(function (response) {
-        vm.stories.push(response.data);
+        // console.log(vm.stories);
         vm.new_story = {};
+        vm.stories.push(response.data);
+        console.log(vm.stories);
       });
   }
 }
@@ -257,13 +271,11 @@ function LoginController (Account, $location) {
     Account
       .login(vm.new_user)
       .then(function(){
-        console.log("NEW USER ", vm);
-        // TODO #5: redirect to '/profile'
+        // console.log("NEW USER ", vm);
+        //  #5: redirect to '/profile'
          $location.path('/profile');
-         // TODO #4: clear sign up form
+         //  #4: clear sign up form
          vm.new_user = {};
-
-
 
       })
   };
@@ -279,9 +291,9 @@ function SignupController (Account, $location) {
       .signup(vm.new_user)
       .then(
         function (response) {
-          // TODO #9: clear sign up form
+          //  #9: clear sign up form
           vm.new_user = {};
-          // TODO #10: redirect to '/profile'
+          //  #10: redirect to '/profile'
           $location.path('/profile');
         }
       );
@@ -296,7 +308,7 @@ function LogoutController (Account, $location) {
       $location.path('/login');
     })
 
-  // TODO #7: when the logout succeeds, redirect to the login page
+  //  #7: when the logout succeeds, redirect to the login page
 
 }
 
@@ -315,7 +327,7 @@ function ProfileController (Account) {
         vm.new_profile = {};
         vm.showEditForm = false;
       })
-    // TODO #14: Submit the form using the relevant `Account` method
+    //  #14: Submit the form using the relevant `Account` method
     // On success, clear the form
 
   };
