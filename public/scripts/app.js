@@ -1,8 +1,10 @@
-angular
+var app = angular
   .module('TravelogueApp', [
-    'ui.router', 'satellizer'
+    'ui.router', 'satellizer', 'leaflet-directive'
     // #2: Add satellizer module
-  ])
+  ]);
+
+app
   .controller('MainController', MainController)
   .controller('HomeController', HomeController)
   .controller('LoginController', LoginController)
@@ -10,6 +12,7 @@ angular
   .controller('LogoutController', LogoutController)
   .controller('ProfileController', ProfileController)
   .controller('MapController', MapController)
+  .controller('PinController', PinController)
   .service('Account', Account)
   .config(configRoutes)
   ;
@@ -98,6 +101,15 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
 
 }
 
+
+/////////////////
+// MAPBOX STUFF //
+/////////////////
+
+// ????
+
+
+
 /////////////////
 // CONTROLLERS //
 /////////////////
@@ -137,6 +149,7 @@ function HomeController ($http) {
         // console.log(vm.stories);
       });
   }
+
 }
 
 LoginController.$inject = ["Account", "$location"]; // minification protection
@@ -211,9 +224,44 @@ function ProfileController (Account) {
   };
 }
 
-MapController.$inject = ['$http'];
-function MapController ($http){
+MapController.$inject = ['$http', '$scope'];
+function MapController ($http, $scope){
+  // var vm = this;
+  // vm.test = "map control works";
 
+  angular.extend($scope, {
+      //originally in london
+      center: {
+          lat: 51.505,
+          lng: -0.09,
+          zoom: 4
+      }
+  });
+}
+
+PinController.$inject = ['$http'];
+function PinController ($http){
+  var self = this;
+
+  angular.extend(self , {
+    osloCenter: {
+      lat: 59.91,
+      lng: 10.75,
+      zoom: 12
+    },
+    pins: {
+      osloMarker: {
+        lat: 59,
+        lng: 10,
+        message: "HERE IT IS",
+        focus: true,
+        draggable: false
+      }
+    },
+      defaults: {
+        scrollWheelZoom: false
+      }
+  });
 }
 
 

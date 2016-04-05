@@ -1,3 +1,4 @@
 node_modules/
 .env
 thingsIllNeedLater
+public/scripts/mapbox_keys.js
