@@ -235,6 +235,18 @@ function MapController ($http, $scope){
           lat: 51.505,
           lng: -0.09,
           zoom: 4
+      },
+      markers: {
+        testPin: {
+          lat: 51.505,
+          lng: -0.09,
+          message: "Hi is this working?",
+          focus: true,
+          draggable: true
+        }
+      },
+      defaults: {
+        scrollWheelZoom: false
       }
   });
 }

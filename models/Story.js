@@ -6,7 +6,7 @@ var StorySchema = mongoose.Schema({
   created: { type: Date },
   updated: { type: Date },
   tags: [], //array that gets diff tags pushed on it
-  pins: [Pin]
+  pins: [Pin.schema]
   // sharedAnonymously: Boolean, //icebox
   //likes: Number //icebox
   //comments: [CommentSchema] //icebox
