@@ -89,6 +89,22 @@ app.get('/api/users/:id/stories', function(req, res){
   });
 });
 
+//ADD STORIES FROM SPECIFIC USER
+app.post('/api/users/:id/stories', function(req, res){
+  User.findById({_id: req.params.id}, function (err, user) {
+    var newStory = new Story(req.body);
+    newStory.save(function (err, savedStory) {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        user.stories.push(newStory);
+        user.save();
+        res.json(savedStory);
+      }
+    });
+  });
+});
+
 //GET PINS FROM SPECIFIC USER
 app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
   User.findById({_id: req.params.userId}, function (err, user) {
@@ -135,6 +151,27 @@ app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
   });
 });
 
+//get specific story
+app.get('/api/stories/:storyId', function (req, res) {
+    Story.find({_id: req.params.storyId}, function(err, story){
+      if(err){
+        console.log(err);
+      }
+      res.json(story);
+    });
+});
+
+//delete specific story
+app.delete('/api/stories/:storyId', function (req, res) {
+
+
+  Story.remove({_id: req.params.storyId}, function(err, story){
+    if(err){
+      res.status(500).json({error: err.message});
+    }
+    res.json({ deleted: story });
+  });
+});
 
 /*
  * Auth Routes

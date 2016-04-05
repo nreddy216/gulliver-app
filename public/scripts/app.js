@@ -1,6 +1,6 @@
 var app = angular
   .module('TravelogueApp', [
-    'ui.router', 'satellizer', 'leaflet-directive'
+    'ui.router', 'satellizer', 'leaflet-directive', 'ngResource'
     // #2: Add satellizer module
   ]);
 
@@ -14,6 +14,7 @@ app
   .controller('MapController', MapController)
   .controller('PinController', PinController)
   .service('Account', Account)
+  .factory('Story', StoryFactory)
   .config(configRoutes)
   ;
 
@@ -124,15 +125,16 @@ function MainController (Account) {
 
 }
 
-HomeController.$inject = ["$http", "Account"]; // minification protection
-function HomeController ($http, Account) {
+HomeController.$inject = ["$http", "Account", "Story"]; // minification protection
+function HomeController ($http, Account, Story) {
   var vm = this;
   vm.stories = [];
-  vm.new_story = {}; // form data
+  // vm.new_story = {}; // form data
+  vm.new_story = {};
 
   // console.log("ACCOUNT ", Account.currentUser()._id);
 
-///api/me/stories?
+//get specific user's stories
   $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
       .then(function (response) {
         // console.log(response.data);
@@ -143,13 +145,23 @@ function HomeController ($http, Account) {
 
   vm.createStory = function(){
     console.log("create story: ", vm.new_story);
-    $http.post('/api/stories', vm.new_story)
+    $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
       .then(function (response) {
         // console.log(vm.stories);
         vm.new_story = {};
         vm.stories.push(response.data);
         // console.log(vm.stories);
       });
+
+      //use with $resource
+    // var newStory = Story.save(vm.new_story);
+    // vm.new_story = {};
+    // vm.stories.unshift(newStory);
+  }
+
+  vm.deleteStory = function(story){
+    console.log("delete story");
+
   }
 
 }
@@ -292,6 +304,18 @@ function PinController ($http){
 //
 // };
 
+// STORY FACTORY ============================================
+StoryFactory.$inject = ["$resource"]; // minification protection
+function StoryFactory($resource) {
+  return $resource('/api/stories/:storyId', {storyId: '@_id'},
+    {
+      'update': {method: 'PUT'}
+    });
+}
+
+
+
+// ACCOUNT ===================================================
 
 Account.$inject = ["$http", "$q", "$auth"]; // minification protection
 function Account($http, $q, $auth) {
