@@ -106,6 +106,28 @@ app.get('/api/users', function (req, res) {
 //   });
 // });
 
+
+//testing retrieving stories in user
+app.get('/api/users/:id', function(req, res){
+  User.find({_id: req.params.id}, function(err, user){
+    if(err){
+      console.log(err);
+    } else {
+      res.json(user);
+    }
+  })
+});
+
+//GET STORIES FROM SPECIFIC USER
+app.get('/api/users/:id/stories', function(req, res){
+  User.findById({_id: req.params.id}, function (err, user) {
+      Story.find({_id: { $in: user.stories}}, function(err, stories){
+        res.send(stories);
+      })
+  });
+
+});
+
 //testing stories data
 app.get('/api/stories', function (req, res) {
 

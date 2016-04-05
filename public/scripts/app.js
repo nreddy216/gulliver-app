@@ -124,14 +124,16 @@ function MainController (Account) {
 
 }
 
-HomeController.$inject = ["$http"]; // minification protection
-function HomeController ($http) {
+HomeController.$inject = ["$http", "Account"]; // minification protection
+function HomeController ($http, Account) {
   var vm = this;
   vm.stories = [];
   vm.new_story = {}; // form data
 
+  // console.log("ACCOUNT ", Account.currentUser()._id);
+
 ///api/me/stories?
-  $http.get('/api/stories')
+  $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
       .then(function (response) {
         // console.log(response.data);
         vm.stories.push(response.data);
