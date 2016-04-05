@@ -57,12 +57,6 @@ app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
 });
 
 
-
-// app.get('/api/users/:id', function(req, res){
-//   User.findById({_id: req.params.id}, function)
-// })
-
-
 //testing users data
 app.get('/api/users', function (req, res) {
 
@@ -73,38 +67,6 @@ app.get('/api/users', function (req, res) {
     res.send(users);
   });
 });
-
-
-
-
-
-
-
-// app.post('/api/users', auth.ensureAuthenticated, function (req, res) {
-//   User.findById(req.user, function (err, user) {
-//     var newStory = new Story(req.body);
-//     newStory.save(function (err, savedStory) {
-//       if (err) {
-//         res.status(500).json({ error: err.message });
-//       } else {
-//         user.stories.push(newStory);
-//         user.save();
-//         res.json(savedStory);
-//       }
-//     });
-//   });
-// });
-
-//auth.ensureAuthenticated ? This doesn't work
-// app.get('/api/me/stories', auth.ensureAuthenticated, function (req, res) {
-//
-//   User.find(req.user, function(err, user){
-//     if(err){
-//       console.log(err);
-//     }
-//     res.send(user.stories);
-//   });
-// });
 
 
 //testing retrieving stories in user
