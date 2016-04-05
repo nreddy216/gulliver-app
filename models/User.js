@@ -1,7 +1,7 @@
 // Create Schema==============================================================
 
 var mongoose = require('mongoose');
-var Story = require('./story');
+// var Story = require('./story');
 var bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 

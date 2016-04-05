@@ -87,7 +87,23 @@ app.get('/api/users/:id/stories', function(req, res){
         res.send(stories);
       })
   });
+});
 
+//GET PINS FROM SPECIFIC USER
+app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
+  User.findById({_id: req.params.userId}, function (err, user) {
+    Story.find({_id: req.params.storyId}, function(err, story){
+
+      // console.log(story[0].pins);
+      Pin.find({_id: { $in: story.pins}}, function(err, pins){
+        if(err){
+          console.log("Error: ", err);
+        }
+        res.send(pins);
+      })
+    })
+
+  });
 });
 
 //testing stories data
