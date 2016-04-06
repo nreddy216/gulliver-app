@@ -131,6 +131,7 @@ function HomeController ($http, Account, Story, $scope) {
     vm.stories = []; //where all of user's stories will be stored
     vm.new_story = {}; //form data
     vm.storyId = "";
+    vm.pinCounter = 0;
 
     //get specific user's stories
     $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
@@ -144,6 +145,7 @@ function HomeController ($http, Account, Story, $scope) {
       console.log("create story: ", vm.new_story);
       $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
         .then(function (response) {
+          vm.pinCounter = 0; //add counter to pin data
           vm.new_story = {};
           vm.storyId = response.data._id; //get id so that pins can be added to this story
           vm.stories.push(response.data);
@@ -166,24 +168,23 @@ function HomeController ($http, Account, Story, $scope) {
 
     vm.new_location.zipcode = "76021";
 
-    vm.pinCounter = 1; //add counter to pin data
+
+
+
+    // Query.json?  instead of zipcode!!!
 
     //GET LOCATION FROM ZIPCODE
-    vm.geocode = function(cb) {
+    vm.geocode = function(addMapData) {
+      //api from mapbox with access token
       var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.zipcode+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg'
+
+     //ajax call to get location data from the zipcode
      $http.get(apiEndpoint)
        .then(function(mapData) {
          var coordinates = mapData.data.features[0].center; //array [long, lat]
          console.log("vm.location.zipcode", vm.new_location.zipcode)
          console.log("res map", mapData);
-
-        //  vm.pinData = {
-        //    longitude: coordinates[0],
-        //    latitude: coordinates[1],
-        //    pinOrder: vm.pinCounter
-        //  };
-        //
-         cb(vm.pinData);// callback function that is called only after http call is receives data
+         addMapData(coordinates);// callback function that is called only after http call is receives data
        })
     }
 
@@ -192,6 +193,7 @@ function HomeController ($http, Account, Story, $scope) {
      //adding pin
     vm.addPin = function(coordinates){
       vm.pinCounter += 1;
+      vm.new_location.pinOrder = vm.pinCounter;
       vm.new_location.latitude = coordinates[0];
       vm.new_location.longitude = coordinates[1];
        vm.geocode();
