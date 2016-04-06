@@ -42,24 +42,23 @@
 
 
   {{!-- ANGULAR LEAFLET DIRECTIVE MAPBOX --}}
-  {{!-- <script src="../node_modules/leaflet/dist/leaflet-src.js"></script> --}}
-  {{!-- <script src="../node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
-  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css”> --}}
   <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-<script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"  />
+  <script src="http://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"  />
 
-{{!-- more mapbox  --}}
-{{!-- <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+
+
+  {{!-- more mapbox  --}}
+  {{!-- <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> --}}
+  {{!-- <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> --}}
 
 {{!-- GEO CODER --}}
 {{!-- <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.css' type='text/css' /> --}}
 
 <!-- custom script (mapbox keys) -->
-<script type="text/javascript" src="scripts/mapbox_keys.js"></script>
+{{!-- <script type="text/javascript" src="scripts/mapbox_keys.js"></script> --}}
 
   <title>AtLast</title>
 </head>
@@ -90,6 +89,9 @@
   </nav>
   <div class="container">
     <div class="row">
+      <div id="map">
+
+      </div>
       <div class="col-md-6 col-md-offset-3">
         <ui-view>
       </div>

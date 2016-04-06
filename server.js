@@ -105,19 +105,52 @@ app.post('/api/users/:id/stories', function(req, res){
   });
 });
 
-//GET PINS FROM SPECIFIC USER
-app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
-  User.findById({_id: req.params.userId}, function (err, user) {
-    Story.find({_id: req.params.storyId}, function(err, story){
+//GET PINS FROM SPECIFIC USER -- double nested version
+// app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
+//   User.findById({_id: req.params.userId}, function (err, user) {
+//     Story.find({_id: req.params.storyId}, function(err, story){
+//
+//       // console.log(story[0].pins);
+//       Pin.find({_id: { $in: story.pins}}, function(err, pins){
+//         if(err){
+//           console.log("Error: ", err);
+//         }
+//         res.send(pins);
+//       })
+//     })
+//
+//   });
+// });
 
-      // console.log(story[0].pins);
-      Pin.find({_id: { $in: story.pins}}, function(err, pins){
-        if(err){
-          console.log("Error: ", err);
-        }
-        res.send(pins);
+//GET PINS FROM SPECIFIC STORY -- only getting from story id
+app.get('/api/stories/:storyId/pins', function(req, res){
+  Story.findById({_id: req.params.storyId}, function (err, story) {
+    Pin.find({_id: { $in: story.pins}}, function(err, pins){
+      if(err){
+        console.log("Error: ", err);
+      }
+      res.send(pins);
       })
     })
+
+  });
+
+//POST PINS FROM SPECIFIC STORY -- only getting from story id
+app.post('/api/stories/:storyId/pins', function(req, res){
+    Story.findById({_id: req.params.storyId}, function (err, story) {
+      if (err) {
+        return res.status(400).send({ message: 'Story not found.' });
+      }
+      var newPin = new Pin(req.body);
+      newPin.save(function (err, savedPin) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          story.pins.push(newPin);
+          story.save();
+          res.json(savedPin);
+        }
+    });
 
   });
 });

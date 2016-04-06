@@ -8,15 +8,15 @@
 
 
 
-	<div id = "locationSearch" ng-controller="MapController as MapCtrl">
+	<div id = "locationSearch" >
 
 		<h5>center coordinates</h5>
 		<!-- MAP -->
-		<form>
+		<!-- <form>
 			<div class="form-group">
-				<input type="number" step="any" ng-model="center.lat" class="form-control" placeholder="Latitude">
-				<input type="number" step="any" ng-model="center.lng" class="form-control" placeholder="Longitude">
-				<input type="number" step="any" ng-model="center.zoom" class="form-control" placeholder="Zoom">
+				<input type="number" step="any" ng-model="home.new_story.centerLatitude" class="form-control" placeholder="Latitude" ng-value="home.center.lat">
+				<input type="number" step="any" ng-model="home.new_story.centerLongitude" class="form-control" placeholder="Longitude" ng-value="home.center.lng">
+				<input type="number" step="any"  ng-model="home.new_story.centerZoom" class="form-control" placeholder="Zoom" ng-value="home.center.zoom">
 			</div>
 		</form>
 
@@ -27,19 +27,36 @@
 				<input type="number" step="any" ng-model="markers.testPin.lng" class="form-control" placeholder="Longitude">
 				<input type="text" ng-model="markers.testPin.message" class="form-control" placeholder="Message">
 			</div>
-		</form>
+		</form> -->
 		<!-- lf-center="center"   -->
-		<leaflet lf-center="center"  width="100%" height="480px" markers="markers"></leaflet>
+		<!-- <leaflet lf-center="center"  width="100%" height="480px" markers="markers"></leaflet> -->
 	</div>
 
+	<div ng-hide="home.displayPinForm===true">
+		<h2>What's the name of your story?</h2>
+		<!-- ADD STORY -->
+		<form ng-submit="home.createStory()">
+			<div class="form-group">
+			  <input type="text" ng-model="home.new_story.title" class="form-control" placeholder="Story Title">
+			</div>
+		  <input type="submit" value="Publish" class="btn btn-block btn-info">
+		</form>
 
-	<!-- ADD STORY -->
-	<form ng-submit="home.createStory()">
-		<div class="form-group">
-		  <input type="text" ng-model="home.new_story.title" class="form-control" placeholder="Story Title">
-		</div>
-	  <input type="submit" value="Publish" class="btn btn-block btn-info">
-	</form>
+	</div>
+
+	<br />
+
+	<!-- ADD PIN -->
+	<div ng-show="home.displayPinForm === true">
+		<h3>chapter</h3>
+		<form ng-submit="home.addLocation()">
+			<div class="form-group">
+				<input type="text" ng-model="home.new_location.zipcode" class="form-control" placeholder="Zipcode">
+			</div>
+			<input type="submit" value="Publish" class="btn btn-block btn-info">
+		</form>
+	</div>
+
 
 
 	<br>

@@ -4,19 +4,18 @@ var app = angular
     // #2: Add satellizer module
   ]);
 
-app
-  .controller('MainController', MainController)
-  .controller('HomeController', HomeController)
-  .controller('LoginController', LoginController)
-  .controller('SignupController', SignupController)
-  .controller('LogoutController', LogoutController)
-  .controller('ProfileController', ProfileController)
-  .controller('MapController', MapController)
-  .controller('PinController', PinController)
-  .service('Account', Account)
-  .factory('Story', StoryFactory)
-  .config(configRoutes)
-  ;
+app.controller('MainController', MainController)
+    .controller('HomeController', HomeController)
+    .controller('LoginController', LoginController)
+    .controller('SignupController', SignupController)
+    .controller('LogoutController', LogoutController)
+    .controller('ProfileController', ProfileController)
+    .controller('MapController', MapController)
+    .controller('PinController', PinController)
+    .service('Account', Account)
+    .factory('Story', StoryFactory)
+    .config(configRoutes)
+    ;
 
 
 
@@ -125,8 +124,9 @@ function MainController (Account) {
 
 }
 
-HomeController.$inject = ["$http", "Account", "Story"]; // minification protection
-function HomeController ($http, Account, Story) {
+//Story is embedded as factory but not being used right now
+HomeController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
+function HomeController ($http, Account, Story, $scope) {
   var vm = this;
   vm.stories = [];
   // vm.new_story = {}; // form data
@@ -137,32 +137,81 @@ function HomeController ($http, Account, Story) {
 //get specific user's stories
   $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
       .then(function (response) {
-        // console.log(response.data);
         vm.stories.push(response.data);
-        console.log(vm.stories);
       });
 
+
+  vm.new_location = {};
+
+  vm.submitLocationForm = function(){
+    vm.geocode(vm.addLocation);
+  }
+
+  vm.new_location.zipcode = "76021";
+//GET LOCATION FROM ZIPCODE
+  vm.geocode = function(cb) {
+   $http.get('https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.zipcode+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg')
+     .then(function(data) {
+      //  console.log("vm.location.zipcode", vm.new_location.zipcode)
+      //  console.log("res map", data);
+      cb(longLat);
+     })
+  }
+
+ //adding pin
+ vm.addLocation = function(longLat, storyId){
+   vm.geocode();
+   $http.post('/api/stories/' + storyId + '/pins', vm.new_location)
+     .then(function(data) {
+       console.log("location res", data)
+   })
+  }
+
+  // vm.centerLatitude = null;
+  // vm.centerLongitude = null;
+  // vm.centerZoom = null;
+  //
+  //
+  // angular.extend($scope, {
+  //     //originally sets map in london
+  //     center: {
+  //         lat: 51.505,
+  //         lng: -0.09,
+  //         zoom: 4
+  //     },
+  //     markers: {
+  //       testPin: {
+  //         lat: 51.505,
+  //         lng: -0.09,
+  //         message: "Hi is this working?",
+  //         focus: true,
+  //         draggable: false
+  //       }
+  //     },
+  //     defaults: {
+  //       scrollWheelZoom: false
+  //     }
+  // });
+
+  vm.displayPinForm = false;
 
   vm.createStory = function(){
     console.log("create story: ", vm.new_story);
     $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
       .then(function (response) {
-        // console.log(vm.stories);
         vm.new_story = {};
         vm.stories.push(response.data);
-        // console.log(vm.stories);
+        vm.displayPinForm = true;
       });
 
-      //use with $resource
-    // var newStory = Story.save(vm.new_story);
-    // vm.new_story = {};
-    // vm.stories.unshift(newStory);
   }
 
   vm.deleteStory = function(story){
     console.log("delete story");
 
   }
+
+
 
 }
 
@@ -244,7 +293,7 @@ function MapController ($http, $scope){
   // vm.test = "map control works";
 
   angular.extend($scope, {
-      //originally in london
+      //originally sets map in london
       center: {
           lat: 51.505,
           lng: -0.09,
@@ -256,13 +305,14 @@ function MapController ($http, $scope){
           lng: -0.09,
           message: "Hi is this working?",
           focus: true,
-          draggable: true
+          draggable: false
         }
       },
       defaults: {
         scrollWheelZoom: false
       }
   });
+
 }
 
 PinController.$inject = ['$http'];

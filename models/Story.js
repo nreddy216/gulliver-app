@@ -7,6 +7,9 @@ var StorySchema = mongoose.Schema({
   created: { type: Date },
   updated: { type: Date },
   tags: [], //array that gets diff tags pushed on it
+  centerLatitude: { type: Number },
+  centerLongitude: { type: Number },
+  centerZoom: Number,
   pins: [{type: Schema.Types.ObjectId, ref:'Pin'}]
   // sharedAnonymously: Boolean, //icebox
   //likes: Number //icebox
@@ -14,5 +17,16 @@ var StorySchema = mongoose.Schema({
   //is
 
 });
+
+//FIGURE OUT HOW TO SET TIME DATA LATER
+// StorySchema.pre('save', function (next) {
+//   // set created and updated
+//   now = new Date();
+//   this.updated = now;
+//   if (!this.created) {
+//     this.created = now;
+//   }
+// });
+
 
 module.exports = mongoose.model('Story', StorySchema);
