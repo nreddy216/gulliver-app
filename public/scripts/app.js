@@ -20,7 +20,6 @@ app.controller('MainController', MainController)
     .controller('SignupController', SignupController)
     .controller('LogoutController', LogoutController)
     .controller('ProfileController', ProfileController)
-    .controller('MapController', MapController)
     .controller('PinController', PinController)
     .service('Account', Account)
     .factory('Story', StoryFactory)
@@ -210,7 +209,24 @@ function CreateStoryController ($http, Account, Story, $scope) {
       defaults: {
         scrollWheelZoom: false,
         zoomControl: false
-      }
+      },
+      layers: {baselayers: {
+                       mapbox_light: {
+                           name: 'Mapbox Light',
+                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           type: 'xyz',
+                           layerOptions: {
+                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
+                               mapid: 'mapbox.pencil'
+                           }
+                       },
+                       osm: {
+                          name: 'OpenStreetMap',
+                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          type: 'xyz'
+                      }
+                  }
+                }
   });
 
 
@@ -228,7 +244,25 @@ function CreateStoryController ($http, Account, Story, $scope) {
       lng: vm.new_location.longitude,
       message: vm.new_location.textContent,
       draggable: false,
-      focus: true
+      focus: true,
+      layers: {
+            baselayers: {
+                       mapbox_light: {
+                           name: 'Mapbox Light',
+                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           type: 'xyz',
+                           layerOptions: {
+                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
+                               mapid: 'mapbox.pencil'
+                           }
+                       },
+                       osm: {
+                          name: 'OpenStreetMap',
+                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          type: 'xyz'
+                      }
+                  }
+                }
     }
 
      $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
@@ -269,7 +303,24 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
       defaults: {
         scrollWheelZoom: false,
         zoomControl: false
-      }
+      },
+      layers: {baselayers: {
+                       mapbox_light: {
+                           name: 'Mapbox Light',
+                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           type: 'xyz',
+                           layerOptions: {
+                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
+                               mapid: 'mapbox.pencil'
+                           }
+                       },
+                       osm: {
+                          name: 'OpenStreetMap',
+                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          type: 'xyz'
+                      }
+                  }
+                }
   });
 
   //get specific user's story
@@ -394,34 +445,7 @@ function ProfileController (Account) {
 
   };
 }
-//==============================================================================
-MapController.$inject = ['$http', '$scope'];
-function MapController ($http, $scope){
-  // var vm = this;
-  // vm.test = "map control works";
 
-  angular.extend($scope, {
-      //originally sets map in london
-      center: {
-          lat: 51.505,
-          lng: -0.09,
-          zoom: 4
-      },
-      markers: {
-        testPin: {
-          lat: 51.505,
-          lng: -0.09,
-          message: "Hi is this working?",
-          focus: true,
-          draggable: false
-        }
-      },
-      defaults: {
-        scrollWheelZoom: false
-      }
-  });
-
-}
 //==============================================================================
 PinController.$inject = ['$http'];
 function PinController ($http){
