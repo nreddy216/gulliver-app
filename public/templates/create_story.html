@@ -9,13 +9,13 @@
 	<hr>
 
 	<div ng-repeat="pin in cc.locations">
-		<!-- Chapter {{pin.pinOrder}} | {{pin.locationName}} - {{pin.textContent}} -->
-
-		<div>
-			<h6>Chapter {{pin.data.pinOrder}} : </h6>
-			<p>
-				In {{pin.data.locationName}}...{{pin.data.textContent}}
+		<div class="chapterPreview">
+			<p>Chapter {{pin.data.pinOrder}} |
+				{{pin.data.locationName}}. {{pin.data.textContent}}
+				<i class="glyphicon glyphicon-edit" ng-click="book.displayEditForm = true"></i>
+				<i class="glyphicon glyphicon-remove-circle" ></i>
 			</p>
+
 		</div>
 	</div>
 
@@ -49,9 +49,11 @@
 				<input type="submit" value="Next Pin" class="btn btn-block btn-info">
 			</form>
 		</div>
-
+		<br />
 	  <div ng-show="cc.displayStoriesBtn === true">
-	    <input type="button" value="Finish Story" ui-sref="home"/>
+			<!-- <input type="submit" value="Finish Story" ui-sref="home" class="btn btn-block btn-success"> -->
+			<input type="submit" value="Finish Story" ui-sref="home" class="btn-lg.btn-block.btn-raised">
+
 	  </div>
 
 		<br />

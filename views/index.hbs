@@ -5,21 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
 
-
-  <!-- bootstrap css -->
-  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-  <!-- font awesome -->
-  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  {{!--Roboto Font  --}}
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
   <!-- custom styles -->
   <link rel="stylesheet" type="text/css" href="styles/main.css">
 
   <!-- jquery -->
-  {{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> --}}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 
-  <!-- bootstrap js -->
-  {{!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> --}}
+  <!-- material design bootstrap -->
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <!-- MDB core CSS -->
+  {{!-- <link href="../styles/mdb/bootstrap.css" rel="stylesheet"> --}}
+  <link href="../styles/mdb/mdb.css" rel="stylesheet">
+
+  <!-- JQuery -->
+   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   <!-- Bootstrap core JavaScript -->
+   {{!-- <script type="text/javascript" src="../scripts/mdb/bootstrap.min.js"></script> --}}
+   <!-- MDB core JavaScript -->
+   <script type="text/javascript" src="../scripts/mdb/mdb.min.js"></script>
+
 
   <!-- angular -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
@@ -35,7 +45,7 @@
 
   {{!-- MAPBOX CDN AND CSS  --}}
   <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' >
 
   <!-- custom script (angular app) -->
   <script type="text/javascript" src="scripts/app.js"></script>
@@ -64,7 +74,7 @@
   <title>AtLast</title>
 </head>
 <body ng-controller="MainController as main">
-  <nav class="navbar navbar-default">
+  <nav class="navbar default-color">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -73,7 +83,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">atLast</a>
+        <a class="navbar-brand waves-effect waves-light" href="/">atLast</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
