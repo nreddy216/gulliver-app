@@ -158,6 +158,8 @@ function HomeController ($http, Account, Story, $scope) {
      })
   }
 
+  vm.pinCounter = 1;
+
  //adding pin
  vm.addLocation = function(longLat, storyId){
    vm.geocode();
@@ -166,32 +168,6 @@ function HomeController ($http, Account, Story, $scope) {
        console.log("location res", data)
    })
   }
-
-  // vm.centerLatitude = null;
-  // vm.centerLongitude = null;
-  // vm.centerZoom = null;
-  //
-  //
-  // angular.extend($scope, {
-  //     //originally sets map in london
-  //     center: {
-  //         lat: 51.505,
-  //         lng: -0.09,
-  //         zoom: 4
-  //     },
-  //     markers: {
-  //       testPin: {
-  //         lat: 51.505,
-  //         lng: -0.09,
-  //         message: "Hi is this working?",
-  //         focus: true,
-  //         draggable: false
-  //       }
-  //     },
-  //     defaults: {
-  //       scrollWheelZoom: false
-  //     }
-  // });
 
   vm.displayPinForm = false;
 

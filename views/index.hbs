@@ -76,12 +76,13 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="/">Home</a></li>
+          <li ng-show="!main.currentUser()"><a href="/">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          <li ng-show="main.currentUser()"><a ui-sref="home">Stories</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
-          <li ng-show="main.currentUser()"><a ui-sref="profile">\{{main.currentUser().firstName}}</a></li>
+          <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
           <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
         </ul>
       </div>

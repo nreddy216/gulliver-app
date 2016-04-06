@@ -132,7 +132,6 @@ app.get('/api/stories/:storyId/pins', function(req, res){
       res.send(pins);
       })
     })
-
   });
 
 //POST PINS FROM SPECIFIC STORY -- only getting from story id
