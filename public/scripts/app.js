@@ -137,6 +137,7 @@ function CreateStoryController ($http, Account, Story, $scope) {
   vm.stories = []; //where all of user's stories will be stored
   vm.new_story = {}; //form data
   vm.storyId = "";
+  vm.storyTitle = "";
   vm.pinCounter = 0;
 
   vm.new_location = {};
@@ -151,6 +152,7 @@ function CreateStoryController ($http, Account, Story, $scope) {
         vm.pinCounter = 0; //add counter to pin data
         vm.new_story = {};
         vm.storyId = response.data._id; //get id so that pins can be added to this story
+        vm.storyTitle = response.data.title;
         vm.stories.push(response.data);
         vm.displayPinForm = true;
       });
@@ -182,7 +184,7 @@ function CreateStoryController ($http, Account, Story, $scope) {
      })
   }
 
-  angular.extend($scope, {
+  vm.mapAttributes = angular.extend($scope, {
       //originally sets map in london
       center: {
           lat: 51.505,
@@ -196,6 +198,8 @@ function CreateStoryController ($http, Account, Story, $scope) {
         zoomControl: false
       }
   });
+
+
 
    //adding pin
   vm.addPin = function(coordinates){
@@ -221,7 +225,17 @@ function CreateStoryController ($http, Account, Story, $scope) {
          vm.new_location = {};
          console.log("location res", data);
      });
+
+     console.log(vm.mapAttributes);
   }
+
+  vm.pins = []; //where all of user's chapters/pins will be stored
+
+  //get specific user's stories
+  $http.get('/api/stories/' + vm.storyId + '/pins')
+      .then(function (response) {
+        vm.pins.push(response.data);
+      });
 };
 
 //Story is embedded as factory but not being used right now
@@ -242,7 +256,7 @@ function HomeController ($http, Account, Story, $scope) {
           vm.stories.push(response.data);
         });
 
-
+    ///HAVENT DONE THIS YET
     vm.deleteStory = function(story){
       console.log("delete story");
 
