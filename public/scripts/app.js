@@ -133,6 +133,9 @@ function HomeController ($http, Account, Story, $scope) {
     vm.storyId = "";
     vm.pinCounter = 0;
 
+    vm.new_location = {};
+    vm.locations = [];
+
     //get specific user's stories
     $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
         .then(function (response) {
@@ -182,7 +185,8 @@ function HomeController ($http, Account, Story, $scope) {
      $http.get(apiEndpoint)
        .then(function(mapData) {
          var coordinates = mapData.data.features[0].center; //array [long, lat]
-         console.log("vm.location.searchQuery", vm.new_location.locationName)
+         console.log("vm.location.locationName", vm.new_location.locationName);
+         console.log(apiEndpoint);
          console.log("res map", mapData);
          addMapData(coordinates);// callback function that is called only after http call is receives data
        })
@@ -194,12 +198,14 @@ function HomeController ($http, Account, Story, $scope) {
     vm.addPin = function(coordinates){
       vm.pinCounter += 1;
       vm.new_location.pinOrder = vm.pinCounter;
-      vm.new_location.latitude = coordinates[0];
-      vm.new_location.longitude = coordinates[1];
+      vm.new_location.longitude = coordinates[0];
+      vm.new_location.latitude = coordinates[1];
        vm.geocode();
        $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
          .then(function(data) {
-           console.log("location res", data)
+           vm.locations.push(data);
+           vm.new_location = {};
+           console.log("location res", data);
        });
     }
 
