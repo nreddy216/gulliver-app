@@ -256,13 +256,55 @@ function CreateStoryController ($http, Account, Story, $scope) {
 ShowStoryController.$inject = ["$http", "Account", "$scope", "Story", "$stateParams"];
 function ShowStoryController ($http, Account, $scope, Story, $stateParams){
   var vm = this;
-  //get specific story's data
-  // $http.get('/api/stories/' + storyId)
-  //     .then(function (response) {
-  //       vm.stories.push(response.data);
-  //     });
 
-  vm.selectedStory = Story.get({id: $stateParams.id});
+  vm.story = {};
+
+  angular.extend($scope, {
+      //originally sets map in london
+      center: {
+          lat: 0,
+          lng: 0,
+          zoom: 4
+      },
+      markers: {
+      },
+      defaults: {
+        scrollWheelZoom: false,
+        zoomControl: false
+      }
+  });
+
+  //get specific user's story
+  $http.get('/api/stories/' + $stateParams.id)
+      .then(function (response) {
+
+          //each story is the response
+          vm.story = response.data;
+
+          vm.story.pins.forEach(function(pin){
+              console.log(" PIN ", pin);
+               $scope.markers[pin.pinOrder] = {
+                 lat: pin.latitude,
+                 lng: pin.longitude,
+                 message: pin.pinOrder + ": " + pin.textContent,
+                 draggable: false,
+                 focus: true
+              }
+          });
+
+          console.log($scope.markers);
+
+      });
+
+
+
+
+  // console.log(vm.stories);
+
+//display all pins
+
+
+
 
 }
 
