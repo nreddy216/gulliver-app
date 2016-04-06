@@ -192,6 +192,20 @@ function HomeController ($http, Account, Story, $scope) {
        })
     }
 
+    angular.extend($scope, {
+        //originally sets map in london
+        center: {
+            lat: 51.505,
+            lng: -0.09,
+            zoom: 4
+        },
+        markers: {
+        },
+        defaults: {
+          scrollWheelZoom: false
+        }
+    });
+
 
 
      //adding pin
@@ -200,6 +214,17 @@ function HomeController ($http, Account, Story, $scope) {
       vm.new_location.pinOrder = vm.pinCounter;
       vm.new_location.longitude = coordinates[0];
       vm.new_location.latitude = coordinates[1];
+
+
+      $scope.markers[vm.pinCounter] = {
+        lat: vm.new_location.latitude,
+        lng: vm.new_location.longitude,
+        message: vm.new_location.textContent,
+        draggable: false,
+        focus: true
+      }
+
+
        vm.geocode();
        $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
          .then(function(data) {
@@ -208,6 +233,9 @@ function HomeController ($http, Account, Story, $scope) {
            console.log("location res", data);
        });
     }
+
+
+
 
 
 
