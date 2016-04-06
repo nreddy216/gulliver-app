@@ -6,6 +6,7 @@ var app = angular
 
 app.controller('MainController', MainController)
     .controller('HomeController', HomeController)
+    .controller('CreateStoryController', CreateStoryController)
     .controller('LoginController', LoginController)
     .controller('SignupController', SignupController)
     .controller('LogoutController', LogoutController)
@@ -41,6 +42,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: 'templates/home.html',
       controller: 'HomeController',
       controllerAs: 'home'
+    })
+    .state('create-story', {
+      url: '/create-story',
+      templateUrl: 'templates/create_story.html',
+      controller: 'CreateStoryController',
+      controllerAs: 'cc'
     })
     .state('signup', {
       url: '/signup',
@@ -124,6 +131,99 @@ function MainController (Account) {
 
 }
 
+CreateStoryController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
+function CreateStoryController ($http, Account, Story, $scope) {
+  var vm = this;
+  vm.stories = []; //where all of user's stories will be stored
+  vm.new_story = {}; //form data
+  vm.storyId = "";
+  vm.pinCounter = 0;
+
+  vm.new_location = {};
+  vm.locations = [];
+
+  vm.displayPinForm = false;
+
+  vm.createStory = function(){
+    console.log("create story: ", vm.new_story);
+    $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
+      .then(function (response) {
+        vm.pinCounter = 0; //add counter to pin data
+        vm.new_story = {};
+        vm.storyId = response.data._id; //get id so that pins can be added to this story
+        vm.stories.push(response.data);
+        vm.displayPinForm = true;
+      });
+
+  }
+
+
+  vm.new_location = {};
+  vm.displayStoriesBtn = false;
+
+  vm.submitLocationForm = function(){
+    vm.geocode(vm.addPin);
+    vm.displayStoriesBtn = true;
+  }
+
+  //GET LOCATION FROM QUERY
+  vm.geocode = function(addMapData) {
+    //api from mapbox with access token
+    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg&autocomplete=true'
+
+   //ajax call to get location data from the zipcode
+   $http.get(apiEndpoint)
+     .then(function(mapData) {
+       var coordinates = mapData.data.features[0].center; //array [long, lat]
+       console.log("vm.location.locationName", vm.new_location.locationName);
+       console.log(apiEndpoint);
+       console.log("res map", mapData);
+       addMapData(coordinates);// callback function that is called only after http call is receives data
+     })
+  }
+
+  angular.extend($scope, {
+      //originally sets map in london
+      center: {
+          lat: 51.505,
+          lng: -0.09,
+          zoom: 4
+      },
+      markers: {
+      },
+      defaults: {
+        scrollWheelZoom: false,
+        zoomControl: false
+      }
+  });
+
+   //adding pin
+  vm.addPin = function(coordinates){
+    vm.pinCounter += 1;
+    vm.new_location.pinOrder = vm.pinCounter;
+    vm.new_location.longitude = coordinates[0];
+    vm.new_location.latitude = coordinates[1];
+
+
+    $scope.markers[vm.pinCounter] = {
+      lat: vm.new_location.latitude,
+      lng: vm.new_location.longitude,
+      message: vm.new_location.textContent,
+      draggable: false,
+      focus: true
+    }
+
+
+     vm.geocode();
+     $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
+       .then(function(data) {
+         vm.locations.push(data);
+         vm.new_location = {};
+         console.log("location res", data);
+     });
+  }
+};
+
 //Story is embedded as factory but not being used right now
 HomeController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
 function HomeController ($http, Account, Story, $scope) {
@@ -142,103 +242,11 @@ function HomeController ($http, Account, Story, $scope) {
           vm.stories.push(response.data);
         });
 
-    vm.displayPinForm = false;
-
-    vm.createStory = function(){
-      console.log("create story: ", vm.new_story);
-      $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
-        .then(function (response) {
-          vm.pinCounter = 0; //add counter to pin data
-          vm.new_story = {};
-          vm.storyId = response.data._id; //get id so that pins can be added to this story
-          vm.stories.push(response.data);
-          vm.displayPinForm = true;
-        });
-
-    }
 
     vm.deleteStory = function(story){
       console.log("delete story");
 
     }
-
-
-    vm.new_location = {};
-
-    vm.submitLocationForm = function(){
-      vm.geocode(vm.addPin);
-    }
-
-    // vm.new_location.zipcode = "76021";
-
-
-
-
-    // Query.json?  instead of zipcode!!!
-
-    //GET LOCATION FROM ZIPCODE
-    vm.geocode = function(addMapData) {
-      //api from mapbox with access token
-      var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg&autocomplete=true'
-
-     //ajax call to get location data from the zipcode
-     $http.get(apiEndpoint)
-       .then(function(mapData) {
-         var coordinates = mapData.data.features[0].center; //array [long, lat]
-         console.log("vm.location.locationName", vm.new_location.locationName);
-         console.log(apiEndpoint);
-         console.log("res map", mapData);
-         addMapData(coordinates);// callback function that is called only after http call is receives data
-       })
-    }
-
-    angular.extend($scope, {
-        //originally sets map in london
-        center: {
-            lat: 51.505,
-            lng: -0.09,
-            zoom: 4
-        },
-        markers: {
-        },
-        defaults: {
-          scrollWheelZoom: false
-        }
-    });
-
-
-
-     //adding pin
-    vm.addPin = function(coordinates){
-      vm.pinCounter += 1;
-      vm.new_location.pinOrder = vm.pinCounter;
-      vm.new_location.longitude = coordinates[0];
-      vm.new_location.latitude = coordinates[1];
-
-
-      $scope.markers[vm.pinCounter] = {
-        lat: vm.new_location.latitude,
-        lng: vm.new_location.longitude,
-        message: vm.new_location.textContent,
-        draggable: false,
-        focus: true
-      }
-
-
-       vm.geocode();
-       $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
-         .then(function(data) {
-           vm.locations.push(data);
-           vm.new_location = {};
-           console.log("location res", data);
-       });
-    }
-
-
-
-
-
-
 }
 
 LoginController.$inject = ["Account", "$location"]; // minification protection

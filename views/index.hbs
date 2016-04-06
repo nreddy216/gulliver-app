@@ -80,6 +80,7 @@
           <li ng-show="!main.currentUser()"><a href="/">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
           <li ng-show="main.currentUser()"><a ui-sref="home">Stories</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
