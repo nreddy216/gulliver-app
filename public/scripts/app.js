@@ -296,16 +296,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
       });
 
-
-
-
-  // console.log(vm.stories);
-
-//display all pins
-
-
-
-
 }
 
 

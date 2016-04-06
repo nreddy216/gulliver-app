@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var StorySchema = mongoose.Schema({
   title: {type : String},
-  created: { type: Date },
-  updated: { type: Date },
+  // created: { type: Date },
+  // updated: { type: Date },
   tags: [], //array that gets diff tags pushed on it
   centerLatitude: { type: Number },
   centerLongitude: { type: Number },
@@ -16,17 +16,8 @@ var StorySchema = mongoose.Schema({
   //comments: [CommentSchema] //icebox
   //is
 
-});
+}, {timestamps: {createdAt: 'created_at'}});
 
-//FIGURE OUT HOW TO SET TIME DATA LATER
-// StorySchema.pre('save', function (next) {
-//   // set created and updated
-//   now = new Date();
-//   this.updated = now;
-//   if (!this.created) {
-//     this.created = now;
-//   }
-// });
 
 
 module.exports = mongoose.model('Story', StorySchema);
