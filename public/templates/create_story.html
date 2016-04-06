@@ -9,7 +9,7 @@
 	<hr>
 
 	<div ng-repeat="pin in cc.locations">
-		<div class="chapterPreview card-panel teal">
+		<div class="chapterPreview card-panel">
 			<p>Chapter {{pin.data.pinOrder}} |
 				{{pin.data.locationName}}. {{pin.data.textContent}}
 				<i class="glyphicon glyphicon-edit" ng-click="book.displayEditForm = true"></i>
@@ -26,7 +26,6 @@
 
 	<!-- Story Form here -->
 	<div ng-hide="cc.displayPinForm===true">
-		<h3>What's the name of your story?</h3>
 		<!-- ADD STORY -->
 		<form ng-submit="cc.createStory()">
 			<div class="form-group">
@@ -57,11 +56,7 @@
 		<br />
 		<leaflet lf-center="center"  width="100%" height="480px" markers="markers" layers="layers"></leaflet>
 
-
-
 	<br />
-
-
 </div>
 
 <br />
