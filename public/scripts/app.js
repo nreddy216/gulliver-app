@@ -166,7 +166,7 @@ function HomeController ($http, Account, Story, $scope) {
       vm.geocode(vm.addPin);
     }
 
-    vm.new_location.zipcode = "76021";
+    // vm.new_location.zipcode = "76021";
 
 
 
@@ -176,13 +176,13 @@ function HomeController ($http, Account, Story, $scope) {
     //GET LOCATION FROM ZIPCODE
     vm.geocode = function(addMapData) {
       //api from mapbox with access token
-      var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.zipcode+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg'
+      var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg'
 
      //ajax call to get location data from the zipcode
      $http.get(apiEndpoint)
        .then(function(mapData) {
          var coordinates = mapData.data.features[0].center; //array [long, lat]
-         console.log("vm.location.zipcode", vm.new_location.zipcode)
+         console.log("vm.location.searchQuery", vm.new_location.locationName)
          console.log("res map", mapData);
          addMapData(coordinates);// callback function that is called only after http call is receives data
        })
