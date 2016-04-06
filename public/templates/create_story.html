@@ -2,42 +2,65 @@
 
 <div ng-show="main.currentUser()" >
 	<br>
-	<h3>Add Your Story</h3>
+	<h3 ng-if="!cc.storyTitle">Create your story</h3>
+	<div ng-if="cc.storyTitle">
+		<h4>{{cc.storyTitle}}</h4><h6>by {{main.currentUser().firstName}}</h6>
+	</div>
 	<hr>
+
+	<div ng-repeat="pin in cc.locations">
+		<!-- Chapter {{pin.pinOrder}} | {{pin.locationName}} - {{pin.textContent}} -->
+
+		<div>
+			<h6>Chapter {{pin.data.pinOrder}} : </h6>
+			<p>
+				In {{pin.data.locationName}}...{{pin.data.textContent}}
+			</p>
+		</div>
+	</div>
+
+
+	<div ng-if="cc.new_story.title">
+		<h4>{{cc.new_story.title}}</h4><h6>by {{main.currentUser().firstName}}</h6>
+	</div>
+
 	<!-- Story Form here -->
-    <h4>{{cc.storyTitle}}</h4>
-		<leaflet lf-center="center"  width="100%" height="480px" markers="markers"></leaflet>
-
-
 	<div ng-hide="cc.displayPinForm===true">
-		<h2>What's the name of your story?</h2>
+		<h3>What's the name of your story?</h3>
 		<!-- ADD STORY -->
 		<form ng-submit="cc.createStory()">
 			<div class="form-group">
-			  <input type="text" ng-model="cc.new_story.title" class="form-control" placeholder="Story Title">
+				<input type="text" ng-model="cc.new_story.title" class="form-control" placeholder="Story Title">
 			</div>
-		  <input type="submit" value="Publish" class="btn btn-block btn-info">
+			<input type="submit" value="Next" class="btn btn-block btn-info">
 		</form>
 
 	</div>
+
+
+		<!-- ADD PIN -->
+		<div ng-show="cc.displayPinForm === true">
+			<h3>Chapter {{cc.pinCounter + 1}}</h3>
+			<form ng-submit="cc.submitLocationForm()">
+				<div class="form-group">
+					<input type="text" ng-model="cc.new_location.locationName" class="form-control" placeholder="Location name">
+					<input type="text" ng-model="cc.new_location.textContent" class="form-control" placeholder="Your sentence here">
+				</div>
+				<input type="submit" value="Next Pin" class="btn btn-block btn-info">
+			</form>
+		</div>
+
+	  <div ng-show="cc.displayStoriesBtn === true">
+	    <input type="button" value="Finish Story" ui-sref="home"/>
+	  </div>
+
+		<br />
+		<leaflet lf-center="center"  width="100%" height="480px" markers="markers"></leaflet>
+
+
 
 	<br />
 
-	<!-- ADD PIN -->
-	<div ng-show="cc.displayPinForm === true">
-		<h3>Chapter {{cc.pinCounter + 1}}</h3>
-		<form ng-submit="cc.submitLocationForm()">
-			<div class="form-group">
-				<input type="text" ng-model="cc.new_location.locationName" class="form-control" placeholder="Location name">
-				<input type="text" ng-model="cc.new_location.textContent" class="form-control" placeholder="Your sentence here">
-			</div>
-			<input type="submit" value="Next Pin" class="btn btn-block btn-info">
-		</form>
-	</div>
-
-  <div ng-show="cc.displayStoriesBtn === true">
-    <input type="button" value="Finish Story" ui-sref="home"/>
-  </div>
 
 </div>
 

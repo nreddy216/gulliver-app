@@ -1,15 +1,7 @@
 <!-- have to do story bc of the way object is structured  -->
 <h3>{{ss.story.story.title}}</h3>
+<h6>Created on {{ss.story.story.created_at | date: fullDate }}</h6>
 
-
-<!-- <div ng-repeat="pin in ss.selectedStory">
-  {{pin}}
-</div> -->
-
-<!-- <div ng-repeat="pin in ss.selectedStoryPins">
-  {{pin}}
-
-</div> -->
 
 <div ng-repeat='pin in ss.story.pins'>
   {{pin.pinOrder}} - {{pin.textContent}}

@@ -231,13 +231,11 @@ function CreateStoryController ($http, Account, Story, $scope) {
       focus: true
     }
 
-
-     vm.geocode();
      $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
        .then(function(data) {
          vm.locations.push(data);
          vm.new_location = {};
-         console.log("location res", data);
+         console.log("location info vm locations !!!! ", vm.locations);
      });
 
      console.log(vm.mapAttributes);
