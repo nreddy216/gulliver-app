@@ -127,65 +127,79 @@ function MainController (Account) {
 //Story is embedded as factory but not being used right now
 HomeController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
 function HomeController ($http, Account, Story, $scope) {
-  var vm = this;
-  vm.stories = [];
-  // vm.new_story = {}; // form data
-  vm.new_story = {};
+    var vm = this;
+    vm.stories = []; //where all of user's stories will be stored
+    vm.new_story = {}; //form data
+    vm.storyId = "";
 
-  // console.log("ACCOUNT ", Account.currentUser()._id);
+    //get specific user's stories
+    $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
+        .then(function (response) {
+          vm.stories.push(response.data);
+        });
 
-//get specific user's stories
-  $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
-      .then(function (response) {
-        vm.stories.push(response.data);
-      });
+    vm.displayPinForm = false;
+
+    vm.createStory = function(){
+      console.log("create story: ", vm.new_story);
+      $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
+        .then(function (response) {
+          vm.new_story = {};
+          vm.storyId = response.data._id; //get id so that pins can be added to this story
+          vm.stories.push(response.data);
+          vm.displayPinForm = true;
+        });
+
+    }
+
+    vm.deleteStory = function(story){
+      console.log("delete story");
+
+    }
 
 
-  vm.new_location = {};
+    vm.new_location = {};
 
-  vm.submitLocationForm = function(){
-    vm.geocode(vm.addLocation);
-  }
+    vm.submitLocationForm = function(){
+      vm.geocode(vm.addPin);
+    }
 
-  vm.new_location.zipcode = "76021";
-//GET LOCATION FROM ZIPCODE
-  vm.geocode = function(cb) {
-   $http.get('https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.zipcode+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg')
-     .then(function(data) {
-      //  console.log("vm.location.zipcode", vm.new_location.zipcode)
-      //  console.log("res map", data);
-      cb(longLat);
-     })
-  }
+    vm.new_location.zipcode = "76021";
 
-  vm.pinCounter = 1;
+    vm.pinCounter = 1; //add counter to pin data
 
- //adding pin
- vm.addLocation = function(longLat, storyId){
-   vm.geocode();
-   $http.post('/api/stories/' + storyId + '/pins', vm.new_location)
-     .then(function(data) {
-       console.log("location res", data)
-   })
-  }
+    //GET LOCATION FROM ZIPCODE
+    vm.geocode = function(cb) {
+      var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.zipcode+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg'
+     $http.get(apiEndpoint)
+       .then(function(mapData) {
+         var coordinates = mapData.data.features[0].center; //array [long, lat]
+         console.log("vm.location.zipcode", vm.new_location.zipcode)
+         console.log("res map", mapData);
 
-  vm.displayPinForm = false;
+        //  vm.pinData = {
+        //    longitude: coordinates[0],
+        //    latitude: coordinates[1],
+        //    pinOrder: vm.pinCounter
+        //  };
+        //
+         cb(vm.pinData);// callback function that is called only after http call is receives data
+       })
+    }
 
-  vm.createStory = function(){
-    console.log("create story: ", vm.new_story);
-    $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
-      .then(function (response) {
-        vm.new_story = {};
-        vm.stories.push(response.data);
-        vm.displayPinForm = true;
-      });
 
-  }
 
-  vm.deleteStory = function(story){
-    console.log("delete story");
-
-  }
+     //adding pin
+    vm.addPin = function(coordinates){
+      vm.pinCounter += 1;
+      vm.new_location.latitude = coordinates[0];
+      vm.new_location.longitude = coordinates[1];
+       vm.geocode();
+       $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
+         .then(function(data) {
+           console.log("location res", data)
+       });
+    }
 
 
 
