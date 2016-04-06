@@ -251,7 +251,7 @@ app.post('/auth/login', function (req, res) {
 /*
  * Catch All Route
  */
-app.get(['/', '/signup', '/login', '/profile'], function (req, res) {
+app.get('*', function (req, res) {
   res.render('index');
 });
 
