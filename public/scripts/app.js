@@ -1,3 +1,11 @@
+//==============================================================================
+
+////////////
+// SETUP //
+////////////
+
+//==============================================================================
+
 var app = angular
   .module('TravelogueApp', [
     'ui.router', 'satellizer', 'leaflet-directive', 'ngResource'
@@ -7,6 +15,7 @@ var app = angular
 app.controller('MainController', MainController)
     .controller('HomeController', HomeController)
     .controller('CreateStoryController', CreateStoryController)
+    .controller('ShowStoryController', ShowStoryController)
     .controller('LoginController', LoginController)
     .controller('SignupController', SignupController)
     .controller('LogoutController', LogoutController)
@@ -18,11 +27,13 @@ app.controller('MainController', MainController)
     .config(configRoutes)
     ;
 
-
+//==============================================================================
 
 ////////////
 // ROUTES //
 ////////////
+
+//==============================================================================
 
 configRoutes.$inject = ["$stateProvider", "$urlRouterProvider", "$locationProvider"]; // minification protection
 function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -42,6 +53,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: 'templates/home.html',
       controller: 'HomeController',
       controllerAs: 'home'
+    })
+    .state('show-story', {
+      url: '/story/:id',
+      templateUrl: 'templates/show_story.html',
+      controller: 'ShowStoryController',
+      controllerAs: 'ss'
     })
     .state('create-story', {
       url: '/create-story',
@@ -108,18 +125,13 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
 
 }
 
-
-/////////////////
-// MAPBOX STUFF //
-/////////////////
-
-// ????
-
-
+//==============================================================================
 
 /////////////////
 // CONTROLLERS //
 /////////////////
+
+//==============================================================================
 
 MainController.$inject = ["Account"]; // minification protection
 function MainController (Account) {
@@ -130,6 +142,8 @@ function MainController (Account) {
   }
 
 }
+
+//==============================================================================
 
 CreateStoryController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
 function CreateStoryController ($http, Account, Story, $scope) {
@@ -237,23 +251,35 @@ function CreateStoryController ($http, Account, Story, $scope) {
         vm.pins.push(response.data);
       });
 };
+//==============================================================================
 
+ShowStoryController.$inject = ["$http", "Account", "$scope", "Story", "$stateParams"];
+function ShowStoryController ($http, Account, $scope, Story, $stateParams){
+  var vm = this;
+  //get specific story's data
+  // $http.get('/api/stories/' + storyId)
+  //     .then(function (response) {
+  //       vm.stories.push(response.data);
+  //     });
+
+  vm.selectedStory = Story.get({id: $stateParams.id});
+
+}
+
+
+//==============================================================================
 //Story is embedded as factory but not being used right now
 HomeController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
 function HomeController ($http, Account, Story, $scope) {
     var vm = this;
     vm.stories = []; //where all of user's stories will be stored
     vm.new_story = {}; //form data
-    vm.storyId = "";
-    vm.pinCounter = 0;
-
-    vm.new_location = {};
-    vm.locations = [];
 
     //get specific user's stories
     $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
         .then(function (response) {
           vm.stories.push(response.data);
+          console.log(response.data);
         });
 
     ///HAVENT DONE THIS YET
@@ -263,6 +289,7 @@ function HomeController ($http, Account, Story, $scope) {
     }
 }
 
+//==============================================================================
 LoginController.$inject = ["Account", "$location"]; // minification protection
 function LoginController (Account, $location) {
   var vm = this;
@@ -283,6 +310,8 @@ function LoginController (Account, $location) {
   };
 }
 
+//==============================================================================
+
 SignupController.$inject = ['Account', '$location']; // minification protection
 function SignupController (Account, $location) {
   var vm = this;
@@ -302,6 +331,7 @@ function SignupController (Account, $location) {
   };
 }
 
+//==============================================================================
 LogoutController.$inject = ["Account", "$location"]; // minification protection
 function LogoutController (Account, $location) {
   Account
@@ -314,7 +344,7 @@ function LogoutController (Account, $location) {
 
 }
 
-
+//==============================================================================
 ProfileController.$inject = ['Account']; // minification protection
 function ProfileController (Account) {
   var vm = this;
@@ -334,7 +364,7 @@ function ProfileController (Account) {
 
   };
 }
-
+//==============================================================================
 MapController.$inject = ['$http', '$scope'];
 function MapController ($http, $scope){
   // var vm = this;
@@ -362,7 +392,7 @@ function MapController ($http, $scope){
   });
 
 }
-
+//==============================================================================
 PinController.$inject = ['$http'];
 function PinController ($http){
   var self = this;
@@ -394,26 +424,27 @@ function PinController ($http){
 // Services //
 //////////////
 
-//app.service('Stories', Stories)
-// Stories.$inject = ["$http", "$q", "$auth"];
-// function Stories($http, $q, $auth) {
-//   var self = this;
-//
-//
-// };
 
 // STORY FACTORY ============================================
 StoryFactory.$inject = ["$resource"]; // minification protection
 function StoryFactory($resource) {
-  return $resource('/api/stories/:storyId', {storyId: '@_id'},
+  return $resource('/api/stories/:id', {id: '@_id'},
     {
       'update': {method: 'PUT'}
     });
 }
 
+// Pin FACTORY ============================================
+// PinFactory.$inject = ["$resource"]; // minification protection
+// function PinFactory($resource) {
+//   return $resource('/api/stories/:id/pins', {id: '@_id'},
+//     {
+//       'update': {method: 'PUT'}
+//     });
+// }
 
 
-// ACCOUNT ===================================================
+// ACCOUNT SERVICE ===================================================
 
 Account.$inject = ["$http", "$q", "$auth"]; // minification protection
 function Account($http, $q, $auth) {

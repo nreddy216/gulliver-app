@@ -1,0 +1,15 @@
+<h3>{{ss.selectedStory.story.title}}</h3>
+
+
+<!-- <div ng-repeat="pin in ss.selectedStory">
+  {{pin}}
+</div> -->
+
+<!-- <div ng-repeat="pin in ss.selectedStoryPins">
+  {{pin}}
+
+</div> -->
+
+<div ng-repeat='pin in ss.selectedStory.pins'>
+  {{pin.pinOrder}} - {{pin.textContent}}
+</div>
