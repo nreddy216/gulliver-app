@@ -206,6 +206,23 @@ app.delete('/api/stories/:id', function (req, res) {
   });
 });
 
+//edit specific story
+app.put('/api/stories/:id', function (req, res) {
+  // console.log(req.session);
+  Story.findById({_id: req.params.id}, function (err, story) {
+    if (err) {
+      return res.status(400).send({ message: 'Story not found.' });
+    }
+    story.title = req.body.title || story.title;
+    story.save(function(err) {
+      if(err){
+        res.send(err);
+      }
+      res.send(story);
+    });
+  });
+});
+
 
 //edit specific pin
 app.put('/api/pins/:id', function (req, res) {

@@ -285,23 +285,24 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       });
 
   //update chapter / pin
-  vm.displayEditForm = false;
-
-  // vm.pin = {};
-
-  var cb = function(pin){
-    console.log(pin);
+  vm.displayEditPinForm = false; //set displayEditForm to false initially
+  vm.updatePin = function(pin){
+    $http.put('/api/pins/' + pin._id, pin).then(function(response) {
+        vm.displayEditPinForm = false; //set back to false after edit
+      });
   }
 
-  vm.updatePin = function(pin){
-    console.log(" PIN ", pin);
-
-
-  $http.put('/api/pins/' + pin._id, pin).then(function(response) {
-      console.log(response);
-      vm.displayEditForm = false;
-    });
-
+  //update story title
+  vm.displayEditTitleForm = false; //set displayEditForm to false initially
+  vm.updateTitle = function(story){
+    console.log(story);
+    var updated_title = {
+      title: story
+    }
+    $http.put('/api/stories/' + vm.storyId, updated_title).then(function(response) {
+        console.log(response);
+        vm.displayEditTitleForm = false; //set back to false after edit
+      });
   }
 };
 //==============================================================================

@@ -4,7 +4,15 @@
 	<br>
 	<h3 ng-if="!cc.storyTitle">Create your story</h3>
 	<div ng-if="cc.storyTitle">
-		<h4>{{cc.storyTitle}}</h4><h6>by {{main.currentUser().firstName}}</h6>
+		<h4>{{cc.storyTitle}}</h4><h6>by {{main.currentUser().firstName}}</h6><i class="glyphicon glyphicon-edit" ng-click="cc.displayEditTitleForm = true"></i>
+		<!-- EDIT STORY TITLE FORM  -->
+		<form ng-show="cc.displayEditTitleForm" ng-submit="cc.updateTitle(cc.storyTitle)">
+			<div class="form-group" >
+				<input type="text" ng-model="cc.storyTitle" class="form-control"  autofocus>
+			</div>
+			<input type="submit" value="Update Story" class="btn btn-block btn-info">
+		</form>
+	</div>
 	</div>
 	<hr>
 
@@ -17,7 +25,7 @@
 			</p>
 
 			<!-- EDIT LOCATION FORM  -->
-			<form ng-show="cc.displayEditForm" ng-submit="cc.updatePin(pin.data)">
+			<form ng-show="cc.displayEditPinForm" ng-submit="cc.updatePin(pin.data)">
 				<div class="form-group" >
 					<input type="text" ng-model="pin.data.locationName" class="form-control"  autofocus>
 					<input type="textarea" ng-model="pin.data.textContent" class="form-control" >
@@ -29,9 +37,9 @@
 	</div>
 
 
-	<div ng-if="cc.new_story.title" >
+	<!-- <div ng-if="cc.new_story.title" >
 		<h4>{{cc.new_story.title}}</h4><h6>by {{main.currentUser().firstName}}</h6>
-	</div>
+	</div> -->
 
 	<!-- Story Form here -->
 	<div ng-hide="cc.displayPinForm===true">
