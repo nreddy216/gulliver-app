@@ -203,7 +203,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       center: {
           lat: 51.505,
           lng: -0.09,
-          zoom: 4
+          zoom: 0
       },
       markers: {
       },
@@ -264,7 +264,13 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
                           type: 'xyz'
                       }
                   }
-                }
+                },
+        icon: {
+          iconUrl: '../img/black_pin.svg',
+          iconSize: [38, 95],
+          focus: true
+        }
+
     }
 
      $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
@@ -322,6 +328,8 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
   var vm = this;
 
   vm.story = {};
+
+  vm.counter = 1; //display only one chapter at a time
 
   angular.extend($scope, {
       //originally sets map in london

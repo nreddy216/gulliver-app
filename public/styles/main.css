@@ -3,5 +3,24 @@
 /* CREATE STORY */
 
 .chapterPreview{
+  padding: 20px;
+  margin: 20px;
+  /*float: right;*/
+}
 
+.cc-edit-delete-btns{
+  float: right;
+  bottom: 20px;
+}
+
+.delete-btn:hover{
+  color: red;
+}
+
+.edit-btn:hover{
+  color: teal;
+}
+
+.create-map{
+  /*float: left;*/
 }
