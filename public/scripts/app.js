@@ -23,6 +23,7 @@ app.controller('MainController', MainController)
     .controller('PinController', PinController)
     .service('Account', Account)
     .factory('Story', StoryFactory)
+    .factory('Pin', PinFactory)
     .config(configRoutes)
     ;
 
@@ -144,8 +145,8 @@ function MainController (Account) {
 
 //==============================================================================
 
-CreateStoryController.$inject = ["$http", "Account", "Story", "$scope"]; // minification protection
-function CreateStoryController ($http, Account, Story, $scope) {
+CreateStoryController.$inject = ["$http", "Account", "Story", "$scope", "Pin"]; // minification protection
+function CreateStoryController ($http, Account, Story, $scope, Pin) {
   var vm = this;
   vm.stories = []; //where all of user's stories will be stored
   vm.new_story = {}; //form data
@@ -217,7 +218,7 @@ function CreateStoryController ($http, Account, Story, $scope) {
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pencil'
+                               mapid: 'mapbox.pirates'
                            }
                        },
                        osm: {
@@ -282,6 +283,32 @@ function CreateStoryController ($http, Account, Story, $scope) {
       .then(function (response) {
         vm.pins.push(response.data);
       });
+
+  //update chapter / pin
+  vm.displayEditForm = false;
+
+  vm.updated_pin = {};
+
+  var cb = function(pin){
+    console.log(pin);
+  }
+
+  vm.updatePin = function(pin){
+    // console.log(vm.updated_pin);
+    Pin.update({id: pin._id}, vm.updated_pin);
+    // Simple GET request example:
+    // $http.put('/api/pins' + pin._id, vm.updatedPin).then(function successCallback(response) {
+    //     // this callback will be called asynchronously
+    //     // when the response is available
+    //     console.log("SUCCESS UPDATE: ", response);
+    //
+    //   }, function errorCallback(response) {
+    //     // called asynchronously if an error occurs
+    //     // or server returns response with an error status.
+    //     console.log("ERROR UPDATE: ", response);
+    //   });
+    vm.displayEditForm = false;
+  }
 };
 //==============================================================================
 
@@ -489,13 +516,13 @@ function StoryFactory($resource) {
 }
 
 // Pin FACTORY ============================================
-// PinFactory.$inject = ["$resource"]; // minification protection
-// function PinFactory($resource) {
-//   return $resource('/api/stories/:id/pins', {id: '@_id'},
-//     {
-//       'update': {method: 'PUT'}
-//     });
-// }
+PinFactory.$inject = ["$resource"]; // minification protection
+function PinFactory($resource) {
+  return $resource('/api/pins/:id', {id: '@_id'},
+    {
+      'update': {method: 'PUT'}
+    });
+}
 
 
 // ACCOUNT SERVICE ===================================================

@@ -206,6 +206,43 @@ app.delete('/api/stories/:id', function (req, res) {
   });
 });
 
+
+//edit specific pin
+app.patch('/api/pins/:id', function (req, res) {
+  // console.log(req.session);
+  Pin.findById({_id: req.params.id}, function (err, pin) {
+    if (err) {
+      return res.status(400).send({ message: 'Pin not found.' });
+    }
+    pin.locationName = req.body.locationName || pin.locationName;
+    pin.textContent = req.body.textContent || pin.textContent;
+    pin.save(function(err) {
+      if(err){
+        res.send(err);
+      }
+      res.send(pin);
+    });
+  });
+});
+
+//get specific pin
+app.get('/api/pins/:id', function (req, res) {
+  // console.log(req.session);
+  Pin.findById({_id: req.params.id}, function (err, pin) {
+    res.json(pin);
+  });
+});
+
+ //get all  pins
+app.get('/api/pins', function (req, res) {
+  // console.log(req.session);
+  Pin.find({}, function (err, pins) {
+    res.json(pins);
+  });
+});
+
+
+
 /*
  * Auth Routes
  */

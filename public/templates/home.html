@@ -4,13 +4,12 @@
 	<br>
 	<h3>Your stories</h3>
 	<hr>
-	<hr>
 	<p ng-if="home.stories[0].length === 0">No stories yet.</p>
 
 	<div ng-if="home.stories[0].length > 0">
-		<div ng-repeat="story in home.stories[0]">
+		<div ng-repeat="story in home.stories[0] | orderBy: '-created_at'" class="card-panel mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp">
 			<a ui-sref="show-story({id: story._id})"><strong>{{story.title}}</strong></a>
-			
+
 			<br />
 			<br>
 		</div>
