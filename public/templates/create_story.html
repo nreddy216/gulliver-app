@@ -17,10 +17,10 @@
 			</p>
 
 			<!-- EDIT LOCATION FORM  -->
-			<form ng-show="cc.displayEditForm" ng-submit="cc.updatePin(pin)">
+			<form ng-show="cc.displayEditForm" ng-submit="cc.updatePin(pin.data)">
 				<div class="form-group" >
-					<input type="text" ng-model="cc.updated_pin.locationName" class="form-control"  autofocus>
-					<input type="textarea" ng-model="cc.updated_pin.textContent" class="form-control" >
+					<input type="text" ng-model="pin.data.locationName" class="form-control"  autofocus>
+					<input type="textarea" ng-model="pin.data.textContent" class="form-control" >
 				</div>
 				<input type="submit" value="Update Pin" class="btn btn-block btn-info">
 			</form>

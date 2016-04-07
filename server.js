@@ -208,7 +208,7 @@ app.delete('/api/stories/:id', function (req, res) {
 
 
 //edit specific pin
-app.patch('/api/pins/:id', function (req, res) {
+app.put('/api/pins/:id', function (req, res) {
   // console.log(req.session);
   Pin.findById({_id: req.params.id}, function (err, pin) {
     if (err) {

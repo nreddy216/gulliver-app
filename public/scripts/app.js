@@ -287,27 +287,21 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
   //update chapter / pin
   vm.displayEditForm = false;
 
-  vm.updated_pin = {};
+  // vm.pin = {};
 
   var cb = function(pin){
     console.log(pin);
   }
 
   vm.updatePin = function(pin){
-    // console.log(vm.updated_pin);
-    Pin.update({id: pin._id}, vm.updated_pin);
-    // Simple GET request example:
-    // $http.put('/api/pins' + pin._id, vm.updatedPin).then(function successCallback(response) {
-    //     // this callback will be called asynchronously
-    //     // when the response is available
-    //     console.log("SUCCESS UPDATE: ", response);
-    //
-    //   }, function errorCallback(response) {
-    //     // called asynchronously if an error occurs
-    //     // or server returns response with an error status.
-    //     console.log("ERROR UPDATE: ", response);
-    //   });
-    vm.displayEditForm = false;
+    console.log(" PIN ", pin);
+
+
+  $http.put('/api/pins/' + pin._id, pin).then(function(response) {
+      console.log(response);
+      vm.displayEditForm = false;
+    });
+
   }
 };
 //==============================================================================
