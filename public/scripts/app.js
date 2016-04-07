@@ -318,6 +318,8 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
     $http.delete('/api/pins/' + pin._id).then(function(response) {
         var pinIndex = vm.locations.indexOf(pin);
         vm.locations.splice(pinIndex, 1);
+        //delete pin from markers (from map)
+        delete $scope.markers[pin.pinOrder];
       });
   }
 };
