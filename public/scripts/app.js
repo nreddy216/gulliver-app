@@ -21,6 +21,7 @@ app.controller('MainController', MainController)
     .controller('LogoutController', LogoutController)
     .controller('ProfileController', ProfileController)
     .controller('PinController', PinController)
+    .controller('LandingController', LandingController)
     .service('Account', Account)
     .factory('Story', StoryFactory)
     .factory('Pin', PinFactory)
@@ -48,11 +49,20 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/");
 
   $stateProvider
+  .state('landing', {
+    url: '/',
+    templateUrl: 'templates/landing.html',
+    controller: 'LandingController',
+    controllerAs: 'landing'
+    })
     .state('home', {
-      url: '/',
+      url: '/home',
       templateUrl: 'templates/home.html',
       controller: 'HomeController',
-      controllerAs: 'home'
+      controllerAs: 'home',
+      resolve: {
+        loginRequired: loginRequired
+      }
     })
     .state('show-story', {
       url: '/story/:id',
@@ -144,6 +154,26 @@ function MainController (Account) {
 }
 
 //==============================================================================
+//Story is embedded as factory but not being used right now
+LandingController.$inject = ["$http", "Account", "$scope"]; // minification protection
+function LandingController ($http, Account, $scope) {
+    var vm = this;
+    vm.stories = []; //where all of user's stories will be stored
+
+    //get specific user's stories
+    $http.get('/api/stories')
+        .then(function (response) {
+          // vm.stories.push(response.data[0]);
+          // console.log(response.data);
+          vm.stories = response.data;
+        });
+
+
+}
+
+//==============================================================================
+
+//==============================================================================
 
 CreateStoryController.$inject = ["$http", "Account", "Story", "$scope", "Pin"]; // minification protection
 function CreateStoryController ($http, Account, Story, $scope, Pin) {
@@ -152,6 +182,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
   vm.new_story = {}; //form data
   vm.storyId = "";
   vm.storyTitle = "";
+  vm.currentStory = {};
   vm.pinCounter = 0;
 
   vm.new_location = {};
@@ -167,6 +198,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
         vm.new_story = {};
         vm.storyId = response.data._id; //get id so that pins can be added to this story
         vm.storyTitle = response.data.title;
+        vm.currentStory = response.data;
         vm.stories.push(response.data);
         vm.displayPinForm = true;
       });
@@ -398,14 +430,19 @@ function HomeController ($http, Account, Story, $scope) {
     vm.stories = []; //where all of user's stories will be stored
     vm.new_story = {}; //form data
 
+    console.log(Account.currentUser());
+
     //get specific user's stories
     $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
         .then(function (response) {
-          vm.stories.push(response.data[0]);
+          // vm.stories.push(response.data[0]);
+          // console.log(response.data);
+          vm.stories = response.data;
         });
 
     ///delete story from home page
     vm.deleteStory = function(story){
+      console.log(vm.stories);
       $http.delete('/api/stories/' + story._id).then(function(response) {
           //delete story from front view by getting the index in the array and splicing
           var storyIndex = vm.stories.indexOf(story);
@@ -426,8 +463,8 @@ function LoginController (Account, $location) {
       .login(vm.new_user)
       .then(function(){
         // console.log("NEW USER ", vm);
-        //  #5: redirect to '/profile'
-         $location.path('/profile');
+        //  #5: redirect to '/home'
+         $location.path('/');
          //  #4: clear sign up form
          vm.new_user = {};
 
@@ -450,7 +487,7 @@ function SignupController (Account, $location) {
           //  #9: clear sign up form
           vm.new_user = {};
           //  #10: redirect to '/profile'
-          $location.path('/profile');
+          $location.path('/home');
         }
       );
   };
@@ -462,7 +499,7 @@ function LogoutController (Account, $location) {
   Account
     .logout()
     .then(function(){
-      $location.path('/login');
+      $location.path('/');
     })
 
   //  #7: when the logout succeeds, redirect to the login page

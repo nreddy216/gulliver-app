@@ -199,10 +199,10 @@ app.get('/api/stories/:id', function (req, res) {
 app.delete('/api/stories/:id', function (req, res) {
 
   Story.remove({_id: req.params.id}, function(err, story){
-    if(err){
-      res.status(500).json({error: err.message});
-    }
-    res.json({ deleted: story });
+      if(err){
+        res.status(500).json({error: err.message});
+      }
+      res.json({ deleted: story });
   });
 });
 

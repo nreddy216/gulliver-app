@@ -4,10 +4,9 @@
 	<br>
 	<h3>Your stories</h3>
 	<hr>
-	<p ng-if="home.stories[0].length === 0">No stories yet.</p>
-
-	<div ng-if="home.stories[0].length > 0">
-		<div ng-repeat="story in home.stories[0] | orderBy: '-created_at'" class="your-story card-panel mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp col-md-4">
+	<p ng-if="home.stories.length === 0"> No stories yet.</p>
+	<div ng-if="home.stories.length > 0">
+		<div ng-repeat="story in home.stories | orderBy: '-created_at'" class="your-story card-panel mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp col-md-4">
 			<figure class="mdl-card__media temp-image">
 				<img class="temp-image" src="http://1.bp.blogspot.com/-glzIpdKUoKc/UPFyioQU_qI/AAAAAAAACDw/zPIwG5oV1-Y/s1600/Milford+Sound+thu%E1%BB%99c+C%C3%B4ng+vi%C3%AAn+Qu%E1%BB%91c+gia+Fiorland,+ph%C3%ADa+T%C3%A2y+Nam+New+Zealand.jpg" alt="" />
 			</figure>

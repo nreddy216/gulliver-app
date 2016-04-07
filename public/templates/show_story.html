@@ -4,7 +4,6 @@
 
 <leaflet lf-center="center"  width="100%" height="480px" layers="layers" markers="markers"></leaflet>
 
-
 <div ng-repeat="pin in (filteredItems = (ss.story.pins  | filter:query) | orderBy: 'pin.pinOrder'" >
   <div class="chapterPreview card-panel">Chapter {{$index + 1}} |
     {{pin.locationName | uppercase }}.
