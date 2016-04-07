@@ -2,9 +2,11 @@
 
 <div ng-show="main.currentUser()" >
 	<br>
-	<h3 ng-if="!cc.storyTitle">Create your story</h3>
+	<h4 ng-if="!cc.storyTitle">Create your story</h4>
 	<div ng-if="cc.storyTitle">
-		<h4>{{cc.storyTitle}}</h4><i class="glyphicon glyphicon-edit" ng-click="cc.displayEditTitleForm = true"></i><h6>by {{main.currentUser().firstName}}</h6>
+		<h4>{{cc.storyTitle}}</h4>
+			<i class="material-icons" ng-click="cc.displayEditTitleForm = true">create</i>
+		<i class="material-icons">delete_forever</i><h6>by {{main.currentUser().firstName}}</h6>
 		<!-- EDIT STORY TITLE FORM  -->
 		<form ng-show="cc.displayEditTitleForm" ng-submit="cc.updateTitle(cc.storyTitle)">
 			<div class="form-group" >
@@ -16,24 +18,29 @@
 	</div>
 	<hr>
 
-	<div ng-repeat="pin in cc.locations | orderBy: 'data.pinOrder'">
-		<div class="chapterPreview card-panel">
-			<p>Chapter {{$index + 1}} |
-				{{pin.data.locationName}}. {{pin.data.textContent}}
-				<i class="glyphicon glyphicon-edit" ng-click="cc.displayEditPinForm = true"></i>
-				<i class="glyphicon glyphicon-remove-circle" ng-click="cc.deletePin(pin.data)"></i>
+	<leaflet lf-center="center"  width="100%" height="400px" markers="markers" layers="layers" defaults="defaults"></leaflet>
+
+	<div ng-repeat="pin in cc.locations | orderBy: 'data.pinOrder'" class="chapterPreview card-panel">
+		<p>Chapter {{$index + 1}} |
+			{{pin.data.locationName | uppercase }}.
+			<p>
+				{{pin.data.textContent}}
 			</p>
+			<div class="edit-delete-btns">
+				<i class="material-icons" ng-click="cc.displayEditPinForm = true">create</i>
+				<i class="material-icons" ng-click="cc.deletePin(pin.data)">highlight_off</i>
+			</div>
+		</p>
 
-			<!-- EDIT LOCATION FORM  -->
-			<form ng-show="cc.displayEditPinForm" ng-submit="cc.updatePin(pin.data)">
-				<div class="form-group" >
-					<input type="text" ng-model="pin.data.locationName" class="form-control"  autofocus>
-					<input type="textarea" ng-model="pin.data.textContent" class="form-control" >
-				</div>
-				<input type="submit" value="Update Pin" class="btn btn-block btn-info">
-			</form>
+		<!-- EDIT LOCATION FORM  -->
+		<form ng-show="cc.displayEditPinForm" ng-submit="cc.updatePin(pin.data)">
+			<div class="form-group" >
+				<input type="text" ng-model="pin.data.locationName" class="form-control"  autofocus>
+				<input type="textarea" ng-model="pin.data.textContent" class="form-control" >
+			</div>
+			<input type="submit" value="Update Pin" class="btn btn-block btn-info">
+		</form>
 
-		</div>
 	</div>
 
 
@@ -56,7 +63,7 @@
 
 		<!-- ADD PIN -->
 		<div ng-show="cc.displayPinForm === true">
-			<h4>Chapter {{cc.locations.length + 1}}</h4>
+			<h5>Chapter {{cc.locations.length + 1}}</h5>
 			<form ng-submit="cc.submitLocationForm()">
 				<div class="form-group">
 					<input type="text" ng-model="cc.new_location.locationName" class="form-control" placeholder="Location name" autofocus>
@@ -72,7 +79,7 @@
 	  </div>
 
 		<br />
-		<leaflet lf-center="center"  width="100%" height="480px" markers="markers" layers="layers"></leaflet>
+
 
 	<br />
 </div>

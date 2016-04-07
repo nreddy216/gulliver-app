@@ -208,8 +208,9 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       markers: {
       },
       defaults: {
-        scrollWheelZoom: false,
-        zoomControl: false
+        minZoom: 2,
+        doubleClickZoom: true,
+        markerZoomAnimation: true
       },
       layers: {baselayers: {
                        mapbox_light: {
