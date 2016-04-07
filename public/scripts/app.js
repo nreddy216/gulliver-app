@@ -287,6 +287,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
   //update chapter / pin
   vm.displayEditPinForm = false; //set displayEditForm to false initially
   vm.updatePin = function(pin){
+    // console.log(" HUH ", pin);
     $http.put('/api/pins/' + pin._id, pin).then(function(response) {
         vm.displayEditPinForm = false; //set back to false after edit
       });
@@ -302,6 +303,14 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
     $http.put('/api/stories/' + vm.storyId, updated_title).then(function(response) {
         console.log(response);
         vm.displayEditTitleForm = false; //set back to false after edit
+      });
+  }
+
+  //delete chapter / pin
+  vm.deletePin = function(pin){
+    $http.delete('/api/pins/' + pin._id).then(function(response) {
+        var pinIndex = vm.locations.indexOf(pin);
+        vm.locations.splice(pinIndex, 1);
       });
   }
 };

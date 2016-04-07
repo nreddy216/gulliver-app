@@ -242,6 +242,19 @@ app.put('/api/pins/:id', function (req, res) {
   });
 });
 
+//edit specific pin
+app.delete('/api/pins/:id', function (req, res) {
+  // console.log(req.session);
+
+  Pin.remove({_id: req.params.id}, function(err, deletedPin) {
+      if(err){
+        res.json({message: 'Could not delete pin b/c:' + error});
+      }
+      res.json({message: 'Pin successfully deleted'});
+  });
+});
+
+
 //get specific pin
 app.get('/api/pins/:id', function (req, res) {
   // console.log(req.session);

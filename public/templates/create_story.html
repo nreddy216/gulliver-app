@@ -4,7 +4,7 @@
 	<br>
 	<h3 ng-if="!cc.storyTitle">Create your story</h3>
 	<div ng-if="cc.storyTitle">
-		<h4>{{cc.storyTitle}}</h4><h6>by {{main.currentUser().firstName}}</h6><i class="glyphicon glyphicon-edit" ng-click="cc.displayEditTitleForm = true"></i>
+		<h4>{{cc.storyTitle}}</h4><i class="glyphicon glyphicon-edit" ng-click="cc.displayEditTitleForm = true"></i><h6>by {{main.currentUser().firstName}}</h6>
 		<!-- EDIT STORY TITLE FORM  -->
 		<form ng-show="cc.displayEditTitleForm" ng-submit="cc.updateTitle(cc.storyTitle)">
 			<div class="form-group" >
@@ -16,12 +16,12 @@
 	</div>
 	<hr>
 
-	<div ng-repeat="pin in cc.locations">
+	<div ng-repeat="pin in cc.locations | orderBy: 'data.pinOrder'">
 		<div class="chapterPreview card-panel">
-			<p>Chapter {{pin.data.pinOrder}} |
+			<p>Chapter {{$index + 1}} |
 				{{pin.data.locationName}}. {{pin.data.textContent}}
-				<i class="glyphicon glyphicon-edit" ng-click="cc.displayEditForm = true"></i>
-				<i class="glyphicon glyphicon-remove-circle" ></i>
+				<i class="glyphicon glyphicon-edit" ng-click="cc.displayEditPinForm = true"></i>
+				<i class="glyphicon glyphicon-remove-circle" ng-click="cc.deletePin(pin.data)"></i>
 			</p>
 
 			<!-- EDIT LOCATION FORM  -->
@@ -56,7 +56,7 @@
 
 		<!-- ADD PIN -->
 		<div ng-show="cc.displayPinForm === true">
-			<h4>Chapter {{cc.pinCounter + 1}}</h4>
+			<h4>Chapter {{cc.locations.length + 1}}</h4>
 			<form ng-submit="cc.submitLocationForm()">
 				<div class="form-group">
 					<input type="text" ng-model="cc.new_location.locationName" class="form-control" placeholder="Location name" autofocus>
