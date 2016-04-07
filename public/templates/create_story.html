@@ -5,7 +5,7 @@
 	<div ng-if="cc.storyTitle">
 		<h4>{{cc.storyTitle}}</h4>
 			<i class="material-icons edit-btn" ng-click="cc.displayEditTitleForm = true">create</i>
-		<i class="material-icons delete-btn">delete_forever</i><h6>by {{main.currentUser().firstName}}</h6>
+			<i class="material-icons delete-btn">delete_forever</i><h6>by {{main.currentUser().firstName}}</h6>
 		<!-- EDIT STORY TITLE FORM  -->
 		<form ng-show="cc.displayEditTitleForm" ng-submit="cc.updateTitle(cc.storyTitle)">
 			<div class="form-group" >

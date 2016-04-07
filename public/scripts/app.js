@@ -401,14 +401,16 @@ function HomeController ($http, Account, Story, $scope) {
     //get specific user's stories
     $http.get('/api/users/'+ Account.currentUser()._id +'/stories')
         .then(function (response) {
-          vm.stories.push(response.data);
-          console.log(response.data);
+          vm.stories.push(response.data[0]);
         });
 
-    ///HAVENT DONE THIS YET
+    ///delete story from home page
     vm.deleteStory = function(story){
-      console.log("delete story");
-
+      $http.delete('/api/stories/' + story._id).then(function(response) {
+          //delete story from front view by getting the index in the array and splicing
+          var storyIndex = vm.stories.indexOf(story);
+          vm.stories.splice(storyIndex, 1);
+        });
     }
 }
 

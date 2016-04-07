@@ -17,6 +17,10 @@
   color: red;
 }
 
+.delete-btn-home{
+  float: right;
+}
+
 .edit-btn:hover{
   color: teal;
 }
