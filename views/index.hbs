@@ -32,7 +32,9 @@
    <script type="text/javascript" src="../scripts/mdb/mdb.js"></script>
    {{!-- waves effect mdb --}}
    <script type="text/javascript" src="../scripts/mdb/modules/waves-effect.js"></script>
-    <script type="text/javascript" src="../scripts/mdb/modules/forms-basic.js"></script>
+   <script type="text/javascript" src="../scripts/mdb/modules/forms-basic.js"></script>
+   <script type="text/javascript" src="../scripts/mdb/modules/dropdown.js"></script>
+   <script type="text/javascript" src="../scripts/mdb/modules/collapsible.js"></script>
 
 
 
@@ -98,11 +100,20 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
-          <li ng-show="main.currentUser()"><a ui-sref="home">Stories</a></li>
+          <li ng-show="main.currentUser()"><a ui-sref="landing">Discover</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
-          <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
-          <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              \{{main.currentUser().username}}
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
+              <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
+              <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
+            </div>
+          </div>
         </ul>
       </div>
     </div>

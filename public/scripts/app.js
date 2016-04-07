@@ -464,7 +464,7 @@ function LoginController (Account, $location) {
       .then(function(){
         // console.log("NEW USER ", vm);
         //  #5: redirect to '/home'
-         $location.path('/');
+         $location.path('/create-story');
          //  #4: clear sign up form
          vm.new_user = {};
 
@@ -487,7 +487,7 @@ function SignupController (Account, $location) {
           //  #9: clear sign up form
           vm.new_user = {};
           //  #10: redirect to '/profile'
-          $location.path('/home');
+          $location.path('/');
         }
       );
   };
@@ -651,6 +651,7 @@ function Account($http, $q, $auth) {
 
 
   }
+
 
   function currentUser() {
     if ( self.user ) { return self.user; }
