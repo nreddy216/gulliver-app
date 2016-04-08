@@ -56,3 +56,13 @@ body{
 .temp-image img{
   max-width: 100%;
 }
+
+.create-story-container{
+  background: white;
+  padding: 30px;
+}
+
+.create-chapter-container{
+  background: white;
+  padding: 30px;
+}
