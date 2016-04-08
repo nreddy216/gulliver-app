@@ -7,9 +7,9 @@ var express = require('express'),
     mongoose = require('mongoose'),
     auth = require('./resources/auth'),
     // ~ models
-    User = require('./models/user'),
-    Story = require('./models/story')
-    Pin = require('./models/pin');
+    User = require('./models/User'),
+    Story = require('./models/Story')
+    Pin = require('./models/Pin');
 
 // require and load dotenv
 require('dotenv').load();
@@ -32,9 +32,6 @@ app.set('view engine', 'hbs');
 //                   "mongodb://localhost/travelogue");
 
 
-
-// require User and Post models
-var User = require('./models/user');
 
 var port = process.env.PORT || 3000;
 var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
