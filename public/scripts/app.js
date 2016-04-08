@@ -251,9 +251,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
   angular.extend($scope, {
       //originally sets map in london
       center: {
-          lat: 51.505,
-          lng: -0.09,
-          zoom: 4
+          autoDiscover: true
       },
       markers: {
       },
@@ -442,7 +440,8 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                  lng: pin.longitude,
                  message: embeddedMessage,
                  draggable: false,
-                 focus: true
+                 focus: true,
+                 autoDiscover: true
               }
           });
 
