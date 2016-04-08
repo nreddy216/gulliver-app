@@ -24,13 +24,12 @@
 	<div ng-repeat="pin in cc.locations | orderBy: 'data.pinOrder'" class="chapterPreview card-panel">
 		<p>Chapter {{$index + 1}} |
 			{{pin.data.locationName | uppercase }}.
-			<p>
+			<span>
 				{{pin.data.textContent}}
-				<div class="cc-edit-delete-btns">
-					<i class="material-icons edit-btn" ng-click="cc.displayEditPinForm = true">create</i>
-					<i class="material-icons delete-btn" ng-click="cc.deletePin(pin.data)">highlight_off</i>
-				</div>
-			</p>
+
+			</span>
+			<i class="material-icons edit-btn cc-edit-delete-btns"  ng-click="cc.displayEditPinForm = true">create</i>
+			<i class="material-icons delete-btn cc-edit-delete-btns" ng-click="cc.deletePin(pin.data)">highlight_off</i>
 
 		</p>
 
