@@ -80,7 +80,10 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/create-story',
       templateUrl: 'templates/create_story.html',
       controller: 'CreateStoryController',
-      controllerAs: 'cc'
+      controllerAs: 'cc',
+      resolve: {
+        loginRequired: loginRequired
+      }
     })
     .state('signup', {
       url: '/signup',

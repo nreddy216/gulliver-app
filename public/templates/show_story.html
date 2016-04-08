@@ -1,5 +1,7 @@
 <!-- have to do story bc of the way object is structured  -->
 <h3>{{ss.story.story.title}}</h3>
+<h5 ng-if="ss.story.pins.length > 1">{{ss.story.pins.length}} chapters</h5>
+<h5 ng-if="ss.story.pins.length === 1">Only one chapter in this story.</h5>
 <h6>Created on {{ss.story.story.created_at | date: fullDate }}</h6>
 
 <leaflet lf-center="origin || center"  width="100%" height="480px" layers="layers" markers="markers"></leaflet>
