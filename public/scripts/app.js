@@ -397,7 +397,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pencil'
+                               mapid: 'mapbox.pirates'
                            }
                        },
                        osm: {
@@ -420,36 +420,123 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
           //each story is the response
           vm.story = response.data;
-          vm.story.pins[0].activeChapter = true;
 
-          vm.story.pins.forEach(function(pin){
-            if(vm.story.pins[0] !== pin){
-              pin.activeChapter = false;
-            }
-            var embeddedMessage = "";
-            //if there's no image URL then it embeds only the text content
-            if(pin.photoUrl.length > 0){
-              embeddedMessage += "<img class='embedded-map-images' src='"+ pin.photoUrl + "'></img>";
-            }
+          console.log(vm.story.pins);
 
-            embeddedMessage += "  " + pin.textContent;
+          // vm.story.pins[0].activeChapter = true;
+          // console.log(vm.story.pins[0].activeChapter);
 
-              console.log(" PIN ", pin);
-               $scope.markers[pin.pinOrder] = {
-                 lat: pin.latitude,
-                 lng: pin.longitude,
-                 message: embeddedMessage,
-                 draggable: false,
-                 focus: true,
-                 autoDiscover: true
+          //goes through all story pins and sets them as default to false - they won't be seen
+
+          vm.restartCounter = function(){
+            vm.story.pins.forEach(function(pin, index){
+              if(vm.counter > 0){
+                pin.activeChapter = false; //originally, only one of the pins will be showing
+              } else {
+                pin.activeChapter = true;
+
+                var embeddedMessage = "";
+                //if there's no image URL then it embeds only the text content
+                if(pin.photoUrl){
+                  embeddedMessage += "<img class='embedded-map-images' src='"+ pin.photoUrl + "'></img>";
+                }
+
+                embeddedMessage += "  " + pin.textContent;
+
+                console.log(" PIN ", pin);
+                 $scope.markers[pin.pinOrder] = {
+                   lat: pin.latitude,
+                   lng: pin.longitude,
+                   message: embeddedMessage,
+                   draggable: false,
+                   focus: true,
+                   autoDiscover: true
+                }
               }
+
+            // console.log(pin);
+            });
+
+            return;
+          }
+
+          //initializes count
+          vm.restartCounter();
+
+
+          //keep track of each pin w/counter to see what to display
+          vm.counter = 0;
+
+          vm.showNextStory = function(){
+
+            if(vm.counter > 0){
+                vm.story.pins[vm.counter - 1].activeChapter = false;
+              }
+
+            if(vm.counter >= vm.story.pins.length - 1){
+              vm.counter = 0;
+              vm.restartCounter();
+            } else {
+              vm.counter = vm.counter + 1;
+              console.log(vm.counter);
+              vm.story.pins[vm.counter].activeChapter = true;
+
+              var embeddedMessage = "";
+              //if there's no image URL then it embeds only the text content
+              if(vm.story.pins[vm.counter].photoUrl){
+                embeddedMessage += "<img class='embedded-map-images' src='"+ vm.story.pins[vm.counter].photoUrl + "'></img>";
+              }
+
+              embeddedMessage += "  " + vm.story.pins[vm.counter].textContent;
+
+                console.log(" PIN ", vm.story.pins[vm.counter]);
+                 $scope.markers[vm.story.pins[vm.counter].pinOrder] = {
+                   lat: vm.story.pins[vm.counter].latitude,
+                   lng: vm.story.pins[vm.counter].longitude,
+                   message: embeddedMessage,
+                   draggable: false,
+                   focus: true,
+                   autoDiscover: true
+                }
+              }
+            }
           });
+        }
 
-          console.log($scope.markers);
 
-      });
 
-}
+          //goes through story pins again and individually
+          // vm.story.pins.forEach(function(pin){
+          //
+          //   if(vm.story.pins.indexOf(pin) === vm.counter){
+          //     console.log(pin);
+          //     pin.activeChapter = true;
+          //   }
+          //
+          //   if(vm.counter !== 0){
+          //     vm.story.pins[vm.counter - 1].activeChapter = false;
+          //   }
+          //
+          //   var embeddedMessage = "";
+          //   //if there's no image URL then it embeds only the text content
+          //   if(pin.photoUrl){
+          //     embeddedMessage += "<img class='embedded-map-images' src='"+ pin.photoUrl + "'></img>";
+          //   }
+          //
+          //   embeddedMessage += "  " + pin.textContent;
+          //
+          //     console.log(" PIN ", pin);
+          //      $scope.markers[pin.pinOrder] = {
+          //        lat: pin.latitude,
+          //        lng: pin.longitude,
+          //        message: embeddedMessage,
+          //        draggable: false,
+          //        focus: true,
+          //        autoDiscover: true
+          //     }
+          // });
+
+
 
 
 //==============================================================================

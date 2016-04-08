@@ -4,15 +4,15 @@
 
 <leaflet lf-center="center"  width="100%" height="480px" layers="layers" markers="markers"></leaflet>
 
-<div ng-repeat="pin in ss.story.pins | orderBy: 'pin.pinOrder'" >
-  <div ng-show="pin.activeChapter" class="chapterPreview card-panel">Chapter {{$index + 1}} |
-    {{pin.locationName | uppercase }}.
+<!-- <div ng-repeat="pin in ss.story.pins | orderBy: 'pin.pinOrder'" > -->
+  <div ng-show="ss.story.pins[ss.counter].activeChapter" class="chapterPreview card-panel">Chapter {{ss.counter}} |
+    {{ss.story.pins[ss.counter].locationName | uppercase }}.
     <p>
-      {{pin.textContent}}
+      {{ss.story.pins[ss.counter].textContent}}
     </p>
 
-    <button  ng-click="pin[$index].activeChapter = true">Next</button>
+    <button ng-show="ss.counter < ss.story.pins.length" id="next-chapter" ng-click="ss.showNextStory()">Next</button>
   </div>
 
 
-</div>
+<!-- </div> -->
