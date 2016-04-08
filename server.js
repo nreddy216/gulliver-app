@@ -27,14 +27,19 @@ app.set('view engine', 'hbs');
 // connect to mongodb
 // mongoose.connect('mongodb://localhost/travelogue');
 
-mongoose.connect( process.env.MONGOLAB_URI ||
-                  process.env.MONGOHQ_URL ||
-                  "mongodb://localhost/travelogue");
+// mongoose.connect( process.env.MONGOLAB_URI ||
+//                   process.env.MONGOHQ_URL ||
+//                   "mongodb://localhost/travelogue");
+
+
 
 // require User and Post models
 var User = require('./models/user');
 
 var port = process.env.PORT || 3000;
+var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
+
+mongoose.connect(uri);
 
 /*
  * API Routes
