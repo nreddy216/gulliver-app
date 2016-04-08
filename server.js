@@ -24,18 +24,12 @@ app.use(express.static(__dirname + '/public'));
 // set view engine to hbs (handlebars)
 app.set('view engine', 'hbs');
 
-// connect to mongodb
-// mongoose.connect('mongodb://localhost/travelogue');
 
-// mongoose.connect( process.env.MONGOLAB_URI ||
-//                   process.env.MONGOHQ_URL ||
-//                   "mongodb://localhost/travelogue");
-
-
-
+//connect to specified heroku port or localhost:3000
 var port = process.env.PORT || 3000;
-var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
 
+// connect to mongodb
+var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
 mongoose.connect(uri);
 
 /*
@@ -329,6 +323,7 @@ app.post('/auth/login', function (req, res) {
 /*
  * Catch All Route
  */
+
 app.get('*', function (req, res) {
   res.render('index');
 });

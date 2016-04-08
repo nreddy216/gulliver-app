@@ -1,4 +1,18 @@
+/* MAIN */
 
+#logo{
+  color: white;
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 30px;
+}
+
+/* LANDING */
+
+
+body{
+  background: #d3d3d3;
+  overflow: scroll;
+}
 
 /* CREATE STORY */
 

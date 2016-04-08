@@ -20,8 +20,8 @@ app.controller('MainController', MainController)
     .controller('SignupController', SignupController)
     .controller('LogoutController', LogoutController)
     .controller('ProfileController', ProfileController)
-    .controller('PinController', PinController)
     .controller('LandingController', LandingController)
+    .controller('DiscoverController', DiscoverController)
     .service('Account', Account)
     .factory('Story', StoryFactory)
     .factory('Pin', PinFactory)
@@ -54,6 +54,12 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
     templateUrl: 'templates/landing.html',
     controller: 'LandingController',
     controllerAs: 'landing'
+    })
+  .state('discover', {
+    url: '/discover',
+    templateUrl: 'templates/discover.html',
+    controller: 'DiscoverController',
+    controllerAs: 'discover'
     })
     .state('home', {
       url: '/home',
@@ -157,6 +163,18 @@ function MainController (Account) {
 //Story is embedded as factory but not being used right now
 LandingController.$inject = ["$http", "Account", "$scope"]; // minification protection
 function LandingController ($http, Account, $scope) {
+  var vm = this;
+
+  vm.currentUser = function() {
+   return Account.currentUser();
+  }
+
+}
+
+//==============================================================================
+//Story is embedded as factory but not being used right now
+DiscoverController.$inject = ["$http", "Account", "$scope"]; // minification protection
+function DiscoverController ($http, Account, $scope) {
     var vm = this;
     vm.stories = []; //where all of user's stories will be stored
 
@@ -164,14 +182,12 @@ function LandingController ($http, Account, $scope) {
     $http.get('/api/stories')
         .then(function (response) {
           // vm.stories.push(response.data[0]);
-          // console.log(response.data);
+          console.log(response.data);
           vm.stories = response.data;
         });
 
 
 }
-
-//==============================================================================
 
 //==============================================================================
 
@@ -195,9 +211,11 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
     $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
       .then(function (response) {
         vm.pinCounter = 0; //add counter to pin data
+        console.log(" STORY new ", vm.new_story);
         vm.new_story = {};
         vm.storyId = response.data._id; //get id so that pins can be added to this story
         vm.storyTitle = response.data.title;
+        vm.storyImage = response.data.imageUrl;
         vm.currentStory = response.data;
         vm.stories.push(response.data);
         vm.displayPinForm = true;
@@ -230,18 +248,18 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
      })
   }
 
-  vm.mapAttributes = angular.extend($scope, {
+  angular.extend($scope, {
       //originally sets map in london
       center: {
           lat: 51.505,
           lng: -0.09,
-          zoom: 0
+          zoom: 4
       },
       markers: {
       },
       defaults: {
-        minZoom: 2,
-        doubleClickZoom: true,
+        // minZoom: 2,
+        // doubleClickZoom: true,
         markerZoomAnimation: true
       },
       layers: {baselayers: {
@@ -279,6 +297,8 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       message: vm.new_location.textContent,
       draggable: false,
       focus: true,
+      riseOnHover: true,
+      zoom: 10,
       layers: {
             baselayers: {
                        mapbox_light: {
@@ -287,7 +307,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pencil'
+                               mapid: 'mapbox.pirates'
                            }
                        },
                        osm: {
@@ -297,11 +317,10 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
                       }
                   }
                 },
-        icon: {
-          iconUrl: '../img/black_pin.svg',
-          iconSize: [38, 95],
-          focus: true
-        }
+      icon: {
+        iconUrl: '../img/eye.svg',
+        iconSize: [38, 95]
+      }
 
     }
 
@@ -312,7 +331,6 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
          console.log("location info vm locations !!!! ", vm.locations);
      });
 
-     console.log(vm.mapAttributes);
   }
 
   vm.pins = []; //where all of user's chapters/pins will be stored
@@ -373,8 +391,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
       markers: {
       },
       defaults: {
-        scrollWheelZoom: false,
-        zoomControl: false
       },
       layers: {baselayers: {
                        mapbox_light: {
@@ -392,7 +408,12 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                           type: 'xyz'
                       }
                   }
-                }
+                },
+        icon: {
+          iconUrl: '../img/eye.svg',
+          iconSize: [38, 95],
+          focus: true
+        }
   });
 
   //get specific user's story
@@ -497,7 +518,7 @@ function SignupController (Account, $location) {
           //  #9: clear sign up form
           vm.new_user = {};
           //  #10: redirect to '/profile'
-          $location.path('/');
+          $location.path('/create-story');
         }
       );
   };
@@ -538,31 +559,6 @@ function ProfileController (Account) {
 }
 
 //==============================================================================
-PinController.$inject = ['$http'];
-function PinController ($http){
-  var self = this;
-
-  angular.extend(self , {
-    osloCenter: {
-      lat: 59.91,
-      lng: 10.75,
-      zoom: 12
-    },
-    pins: {
-      osloMarker: {
-        lat: 59,
-        lng: 10,
-        message: "HERE IT IS",
-        focus: true,
-        draggable: false
-      }
-    },
-      defaults: {
-        scrollWheelZoom: false
-      }
-  });
-}
-
 
 
 //////////////
