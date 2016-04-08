@@ -381,7 +381,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
   angular.extend($scope, {
       //originally sets map in london
-      center: {
+      origin: {
           lat: 0,
           lng: 0,
           zoom: 4
@@ -428,9 +428,9 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
           //goes through all story pins and sets them as default to false - they won't be seen
 
-          vm.restartCounter = function(){
+          vm.initializeCounter = function(){
             vm.story.pins.forEach(function(pin, index){
-              if(vm.counter > 0){
+              if(index > 0){
                 pin.activeChapter = false; //originally, only one of the pins will be showing
               } else {
                 pin.activeChapter = true;
@@ -456,12 +456,10 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
             // console.log(pin);
             });
-
-            return;
           }
 
           //initializes count
-          vm.restartCounter();
+          vm.initializeCounter();
 
 
           //keep track of each pin w/counter to see what to display
@@ -475,7 +473,8 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
             if(vm.counter >= vm.story.pins.length - 1){
               vm.counter = 0;
-              vm.restartCounter();
+              $scope.markers = {};
+              vm.initializeCounter();
             } else {
               vm.counter = vm.counter + 1;
               console.log(vm.counter);
@@ -490,13 +489,17 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
               embeddedMessage += "  " + vm.story.pins[vm.counter].textContent;
 
                 console.log(" PIN ", vm.story.pins[vm.counter]);
+                 $scope.center = {
+                   lat: vm.story.pins[vm.counter].latitude,
+                   lng: vm.story.pins[vm.counter].longitude,
+                   zoom: 4
+                 }
                  $scope.markers[vm.story.pins[vm.counter].pinOrder] = {
                    lat: vm.story.pins[vm.counter].latitude,
                    lng: vm.story.pins[vm.counter].longitude,
                    message: embeddedMessage,
                    draggable: false,
-                   focus: true,
-                   autoDiscover: true
+                   focus: true
                 }
               }
             }
