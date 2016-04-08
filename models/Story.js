@@ -10,7 +10,8 @@ var StorySchema = mongoose.Schema({
   centerLatitude: { type: Number },
   centerLongitude: { type: Number },
   centerZoom: Number,
-  pins: [{type: Schema.Types.ObjectId, ref:'Pin'}]
+  pins: [{type: Schema.Types.ObjectId, ref:'Pin'}],
+  user: [{type: Schema.Types.ObjectId, ref:'User'}],
   // sharedAnonymously: Boolean, //icebox
   //likes: Number //icebox
   //comments: [CommentSchema] //icebox

@@ -67,7 +67,6 @@
   {{!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"  /> --}}
 
 
-
   {{!-- more mapbox  --}}
   {{!-- <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> --}}
   {{!-- <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
@@ -79,6 +78,10 @@
 
 <!-- custom script (mapbox keys) -->
 {{!-- <script type="text/javascript" src="scripts/mapbox_keys.js"></script> --}}
+
+  {{!-- UPLOAD CARE --}}
+  <script charset="utf-8" src="//ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js"></script>
+  <script type="text/javascript" src="scripts/uploadCare.js"></script>
 
   <title>AtLast</title>
 </head>
@@ -104,11 +107,11 @@
           <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
           <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
           <!-- Single button -->
-          <div class="btn-group">
+          <div ng-show="main.currentUser()" class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               \{{main.currentUser().username}}
             </button>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" id="dropdown">
               <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
               <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
               <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>

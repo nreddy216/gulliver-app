@@ -1,4 +1,4 @@
-<h4>Welcome!</h4>
+<h5>Welcome! Create and share stories from others here.</h5>
 
 <div ng-repeat="story in landing.stories | orderBy: '-created_at'" class="your-story card-panel mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp col-md-4">
   <figure class="mdl-card__media temp-image">
@@ -6,11 +6,6 @@
   </figure>
   <div class="mdl-card__title">
     <h6 class="mdl-card__title-text"<a ui-sref="show-story({id: story._id})"><strong>{{story.title}}</strong></a></h6>
-          <i ng-show="main.currentUser()" class="material-icons delete-btn delete-btn-landing" ng-click="landing.deleteStory(story)">delete_forever</i>
-  </div>
-  <div class="supporting-text">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam accusamus, consectetur.</p>
-
   </div>
 
 </div>

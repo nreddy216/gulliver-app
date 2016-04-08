@@ -25,10 +25,16 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs');
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/travelogue');
+// mongoose.connect('mongodb://localhost/travelogue');
+
+mongoose.connect( process.env.MONGOLAB_URI ||
+                  process.env.MONGOHQ_URL ||
+                  "mongodb://localhost/travelogue");
 
 // require User and Post models
 var User = require('./models/user');
+
+var port = process.env.PORT || 3000;
 
 /*
  * API Routes
@@ -37,7 +43,8 @@ var User = require('./models/user');
 
 app.get('/api/me', auth.ensureAuthenticated, function (req, res) {
   User.findById(req.user, function (err, user) {
-    res.send(user.populate('stories'));
+    // res.send(user.populate('stories'));
+    res.send(user);
   });
 });
 
@@ -51,7 +58,8 @@ app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.save(function(err) {
-      res.send(user.populate('stories'));
+      // res.send(user.populate('stories'));
+      res.send(user);
     });
   });
 });
@@ -106,21 +114,21 @@ app.post('/api/users/:id/stories', function(req, res){
 });
 
 //GET PINS FROM SPECIFIC USER -- double nested version
-// app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
-//   User.findById({_id: req.params.userId}, function (err, user) {
-//     Story.find({_id: req.params.storyId}, function(err, story){
-//
-//       // console.log(story[0].pins);
-//       Pin.find({_id: { $in: story.pins}}, function(err, pins){
-//         if(err){
-//           console.log("Error: ", err);
-//         }
-//         res.send(pins);
-//       })
-//     })
-//
-//   });
-// });
+app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
+  User.findById({_id: req.params.userId}, function (err, user) {
+    Story.find({_id: { $in: user.stories}}, function(err, story){
+
+      // console.log(story[0].pins);
+      Pin.find({_id: { $in: story.pins}}, function(err, pins){
+        if(err){
+          console.log("Error: ", err);
+        }
+        res.send(pins);
+      })
+    })
+
+  });
+});
 
 //GET PINS FROM SPECIFIC STORY -- only getting from story id
 app.get('/api/stories/:storyId/pins', function(req, res){
@@ -327,6 +335,6 @@ app.get('*', function (req, res) {
 /*
  * Listen on localhost:3000
  */
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log('server started');
 });

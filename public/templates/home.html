@@ -1,5 +1,5 @@
 
-
+<!-- Only YOUR stories -->
 <div ng-show="main.currentUser()">
 	<br>
 	<h3>Your stories</h3>
@@ -14,10 +14,10 @@
 				<h6 class="mdl-card__title-text"<a ui-sref="show-story({id: story._id})"><strong>{{story.title}}</strong></a></h6>
 							<i class="material-icons delete-btn delete-btn-home" ng-click="home.deleteStory(story)">delete_forever</i>
 			</div>
-			<div class="supporting-text">
+			<!-- <div class="supporting-text">
 		    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam accusamus, consectetur.</p>
 
-		  </div>
+		  </div> -->
 
 		</div>
 

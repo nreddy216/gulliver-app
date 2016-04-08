@@ -363,8 +363,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
   vm.story = {};
 
-  vm.counter = 1; //display only one chapter at a time
-
   angular.extend($scope, {
       //originally sets map in london
       center: {
@@ -403,13 +401,25 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
           //each story is the response
           vm.story = response.data;
+          vm.story.pins[0].activeChapter = true;
 
           vm.story.pins.forEach(function(pin){
+            if(vm.story.pins[0] !== pin){
+              pin.activeChapter = false;
+            }
+            var embeddedMessage = "";
+            //if there's no image URL then it embeds only the text content
+            if(pin.photoUrl.length > 0){
+              embeddedMessage += "<img class='embedded-map-images' src='"+ pin.photoUrl + "'></img>";
+            }
+
+            embeddedMessage += "  " + pin.textContent;
+
               console.log(" PIN ", pin);
                $scope.markers[pin.pinOrder] = {
                  lat: pin.latitude,
                  lng: pin.longitude,
-                 message: pin.pinOrder + ": " + pin.textContent,
+                 message: embeddedMessage,
                  draggable: false,
                  focus: true
               }

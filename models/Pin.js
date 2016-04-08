@@ -8,9 +8,9 @@ var PinSchema = mongoose.Schema({
   zoom: { type: Number},
   zipcode: { type: String },
   textContent: { type: String, default: ''}, //actual story
-  photoUrl: [], //array with all the photos for the pin
-  videoUrl: [],
-  audioUrl: []
+  photoUrl: String, //array with all the photos for the pin
+  videoUrl: String,
+  audioUrl: String
 })
 
 module.exports = mongoose.model('Pin', PinSchema);
