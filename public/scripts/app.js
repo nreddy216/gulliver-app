@@ -381,7 +381,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
   angular.extend($scope, {
       //originally sets map in london
-      origin: {
+      center: {
           lat: 0,
           lng: 0,
           zoom: 4
@@ -390,6 +390,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
       },
       defaults: {
       },
+      scrollWheelZoom: false,
       layers: {baselayers: {
                        mapbox_light: {
                            name: 'Mapbox Light',
@@ -452,6 +453,8 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                    focus: true,
                    autoDiscover: true
                 }
+
+
               }
 
             // console.log(pin);

@@ -5,13 +5,14 @@
 <leaflet lf-center="origin || center"  width="100%" height="480px" layers="layers" markers="markers"></leaflet>
 
 <!-- <div ng-repeat="pin in ss.story.pins | orderBy: 'pin.pinOrder'" > -->
-  <div ng-show="ss.story.pins[ss.counter].activeChapter" class="chapterPreview card-panel">Chapter {{ss.counter}} |
+  <div ng-show="ss.story.pins[ss.counter].activeChapter" class="chapterPreview card-panel">Chapter {{ss.counter + 1}} |
     {{ss.story.pins[ss.counter].locationName | uppercase }}.
     <p>
       {{ss.story.pins[ss.counter].textContent}}
     </p>
 
-    <button ng-show="ss.counter < ss.story.pins.length" id="next-chapter" ng-click="ss.showNextStory()">Next</button>
+    <input type="button" value="Next" ng-show="ss.counter < ss.story.pins.length - 1" id="next-chapter" ng-click="ss.showNextStory()"></input>
+    <input type="button" value="Restart the adventure" ng-show="ss.counter === ss.story.pins.length - 1" id="next-chapter" ng-click="ss.showNextStory()"></input>
   </div>
 
 
