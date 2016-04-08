@@ -247,7 +247,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       layers: {baselayers: {
                        mapbox_light: {
                            name: 'Mapbox Light',
-                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
@@ -256,7 +256,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
                        },
                        osm: {
                           name: 'OpenStreetMap',
-                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                           type: 'xyz'
                       }
                   }
@@ -283,7 +283,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
             baselayers: {
                        mapbox_light: {
                            name: 'Mapbox Light',
-                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
@@ -292,7 +292,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
                        },
                        osm: {
                           name: 'OpenStreetMap',
-                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                           type: 'xyz'
                       }
                   }
@@ -379,7 +379,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
       layers: {baselayers: {
                        mapbox_light: {
                            name: 'Mapbox Light',
-                           url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                           url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
@@ -388,7 +388,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                        },
                        osm: {
                           name: 'OpenStreetMap',
-                          url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                           type: 'xyz'
                       }
                   }
