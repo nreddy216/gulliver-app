@@ -3,33 +3,38 @@
 
 Geography and distance is a large part of what forms our opinions, shifts our narratives, and fundamentally molds our personalities. Where you are born changes your entire world perspective, and where you go from there is just as important.
 
-Gulliver is an interactive storytelling application where users tell stories through locations. Each 'chapter' of their story is a point on a map.
+Gulliver is an interactive storytelling application where users can tell stories based on their locations. Each 'chapter' of their story is a point on a map.
 
 ### Planning / UX
 
 Below are a few wireframes that map out (punintended) the overall user interface.
 
+Trello: https://trello.com/b/IuXD8UrZ/gulliver-app
+
 #### Wireframes
 
+While these are the original wireframes I created in Balsamiq, there are some changes I made for the MVP.  Currently, there are no comments and likes. Also, the view of the map is different from how I eventually want to create it.
+
 ##### Landing page (not logged in)
-![landing page wireframe](./wireframes/home.png)
+![landing page wireframe](./wireframes/landing.png)
 
 ##### Home page (logged in)
-![logged in home wireframe](./wireframes/loggedin_home.png)
+![logged in home wireframe](./wireframes/logged_in_home.png)
 
 ##### Profile page
-![profile wireframe](./wireframes/profile.png)
+![profile wireframe](./wireframes/view_your_own_stories.png)
 
 ##### Edit one story
-![edit story wireframe](./wireframes/edit.png)
+![edit story wireframe](./wireframes/logged_in_create_story.png)
 
 ##### View another's story
-![view another's story wireframe](./wireframes/othersprofile.png)
+![view another's story wireframe](./wireframes/view_others_stories.png)
 
 
 ## Technologies
 
 * Mapbox API
+* Leaflet API
 * MongoDB
 * Express & Node.js
 * Angular
@@ -41,6 +46,6 @@ Below are a few wireframes that map out (punintended) the overall user interface
 * Balsamiq (for wireframes)
 * Adobe Illustrator (for visual designs)
 
-## How to contribute
+## Contribute
 
-If you're interested in contributing, fork this project and send me a pull request. You can also make an issue, and I'll get to it as soon as I can.
+Though I want this project to be open source eventually, it's still in its early stages. For now, feel free to fork this project and send me pull requests.
