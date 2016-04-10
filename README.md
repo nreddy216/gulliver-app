@@ -1,9 +1,9 @@
-## Travelogue
+## Gulliver
 #### Create and share stories using interactive maps.
 
 Geography and distance is a large part of what forms our opinions, shifts our narratives, and fundamentally molds our personalities. Where you are born changes your entire world perspective, and where you go from there is just as important.
 
-Travelogue is an interactive storytelling application where users tell stories through locations. Each 'chapter' of their story is a point on a map.
+Gulliver is an interactive storytelling application where users tell stories through locations. Each 'chapter' of their story is a point on a map.
 
 ### Planning / UX
 
