@@ -55,12 +55,6 @@
   <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
   <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' >
 
-  <!-- custom script (angular app) -->
-  <script type="text/javascript" src="scripts/app.js"></script>
-
-  <!-- custom styles -->
-  <link rel="stylesheet" type="text/css" href="./styles/main.css">
-
 
   {{!-- ANGULAR LEAFLET DIRECTIVE MAPBOX --}}
   <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
@@ -83,6 +77,21 @@
   {{!-- UPLOAD CARE --}}
   <script charset="utf-8" src="//ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js"></script>
   <script type="text/javascript" src="scripts/uploadCare.js"></script>
+
+  <!-- custom script (google api key) -->
+  <script type="text/javascript" src="scripts/google_maps_keys.js"></script>
+
+  {{!-- GOOGLE MAPS API TO USE ANGULAR GMAPS DIRECTIVE --}}
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+  {{!-- BOWER MODULE ANGULAR GOOGLE MAPS AUTOCOMPLETE DIRECTIVE --}}
+  <script type="text/javascript" src="scripts/vs-google-autocomplete.js" charset="utf-8"></script>
+
+  <!-- custom script (angular app) -->
+  <script type="text/javascript" src="scripts/app.js"></script>
+
+  <!-- custom styles -->
+  <link rel="stylesheet" type="text/css" href="./styles/main.css">
 
   <title>gulliver</title>
 </head>

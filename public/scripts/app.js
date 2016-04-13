@@ -8,8 +8,7 @@
 
 var app = angular
   .module('TravelogueApp', [
-    'ui.router', 'satellizer', 'leaflet-directive', 'ngResource'
-    // #2: Add satellizer module
+    'ui.router', 'satellizer', 'leaflet-directive', 'ngResource', 'vsGoogleAutocomplete'
   ]);
 
 app.controller('MainController', MainController)
@@ -300,24 +299,6 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       focus: true,
       riseOnHover: true,
       zoom: 10,
-      layers: {
-            baselayers: {
-                       mapbox_light: {
-                           name: 'Mapbox Light',
-                           url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                           type: 'xyz',
-                           layerOptions: {
-                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pirates'
-                           }
-                       },
-                       osm: {
-                          name: 'OpenStreetMap',
-                          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                          type: 'xyz'
-                      }
-                  }
-                },
       icon: {
         iconUrl: '../img/eye.svg',
         iconSize: [38, 95]
