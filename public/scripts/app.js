@@ -7,7 +7,7 @@
 //==============================================================================
 
 var app = angular
-  .module('TravelogueApp', [
+  .module('GulliverApp', [
     'ui.router', 'satellizer', 'leaflet-directive', 'ngResource', 'vsGoogleAutocomplete'
   ]);
 
