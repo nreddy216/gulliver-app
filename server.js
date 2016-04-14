@@ -189,13 +189,18 @@ app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
 
 //get specific story with the pins
 app.get('/api/stories/:id', function (req, res) {
+
     Story.findById({_id: req.params.id}, function (err, story) {
-      Pin.find({_id: { $in: story.pins}}, function(err, pins){
-        if(err){
-          console.log("Error: ", err);
-        }
-        res.json({story: story, pins: pins});
-        })
+      if(err || story==null){
+        res.status(201).json({story: "this story has been deleted"});
+      } else {
+        Pin.find({_id: { $in: story.pins}}, function(err, pins){
+          if(err){
+            console.log("Error: ", err);
+          }
+          res.json({story: story, pins: pins});
+          })
+        };
       });
 });
 
