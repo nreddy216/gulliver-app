@@ -39,8 +39,8 @@ mongoose.connect(uri);
 
 app.get('/api/me', auth.ensureAuthenticated, function (req, res) {
   User.findById(req.user, function (err, user) {
-    // res.send(user.populate('stories'));
-    res.send(user);
+    res.send(user.populate('stories'));
+    // res.send(user);
   });
 });
 
@@ -54,8 +54,8 @@ app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     user.save(function(err) {
-      // res.send(user.populate('stories'));
-      res.send(user);
+      res.send(user.populate('stories'));
+      // res.send(user);
     });
   });
 });
@@ -79,6 +79,7 @@ app.get('/api/users/:id', function(req, res){
     if(err){
       console.log(err);
     } else {
+      user.populate('stories');
       res.json(user);
     }
   })
