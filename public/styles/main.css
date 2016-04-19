@@ -123,3 +123,12 @@ body{
   opacity: 0.4;
   width: cover;
 }*/
+
+
+.login .form-group{
+  background: rgba(250, 250, 250, 0.4);
+}
+
+.signup .form-group{
+  background: rgba(250, 250, 250, 0.4);
+}
