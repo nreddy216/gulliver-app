@@ -1,11 +1,11 @@
 <h5>Welcome! Create and share stories from others here.</h5>
 
 <div ng-repeat="story in discover.stories | orderBy: '-created_at'" class="your-story
- card-panel mdl-card  mdl-cell mdl-cell--12-col mdl-cell--4-col-tablet mdl-shadow--2dp col-md-4">
+ card-panel mdl-card col-md-6 col-lg-6 col-sm-6">
   <!-- <figure class="mdl-card__media temp-image">
     <img class="temp-image" src="http://1.bp.blogspot.com/-glzIpdKUoKc/UPFyioQU_qI/AAAAAAAACDw/zPIwG5oV1-Y/s1600/Milford+Sound+thu%E1%BB%99c+C%C3%B4ng+vi%C3%AAn+Qu%E1%BB%91c+gia+Fiorland,+ph%C3%ADa+T%C3%A2y+Nam+New+Zealand.jpg" alt="" />
   </figure> -->
-  <div class="mdl-card__title">
+  <div class="mdl-card__title ">
     <h6 class="mdl-card__title-text"<a ui-sref="show-story({id: story._id})"><strong>{{story.title}}</strong></a></h6>
   </div>
 
