@@ -13,38 +13,35 @@ Trello: https://trello.com/b/IuXD8UrZ/gulliver-app
 
 #### Wireframes
 
-While these are the original wireframes I created in Balsamiq, there are some changes I made for the MVP.  Currently, there are no comments and likes. Also, the view of the map is different from how I eventually want to create it.
+While these are the original wireframes I created in Balsamiq, there are some changes I made for the MVP due to time restraints.  Currently, there are no comments or likes. Also, the view of the map is different from how I eventually want to create it.
 
 ##### Landing page (not logged in)
-![landing page wireframe](./wireframes/landing.png)
+![landing page wireframe](./wireframes/v2/landing.png)
 
-##### Home page (logged in)
-![logged in home wireframe](./wireframes/logged_in_home.png)
+##### Discover page (logged in)
+![logged in discover wireframe](./wireframes/v2/newsfeed.png)
 
-##### Profile page
-![profile wireframe](./wireframes/view_your_own_stories.png)
+##### My stories page
+![my stories wireframe](./wireframes/v2/mystories.png)
 
 ##### Edit one story
-![edit story wireframe](./wireframes/logged_in_create_story.png)
+![create story wireframe](./wireframes/v2/create.png)
 
 ##### View another's story
-![view another's story wireframe](./wireframes/view_others_stories.png)
+![view another's story wireframe](./wireframes/v2/otherprofile.png)
 
 
 ## Technologies
 
-* Mapbox API
-* Leaflet API
 * MongoDB
 * Express & Node.js
 * Angular
+* Mapbox API
+* Leaflet API
 * JavaScript
-* jQuery UI
 * Material Design + Bootstrap
 * HTML5 / CSS3
-* SASS
 * Balsamiq (for wireframes)
-* Adobe Illustrator (for visual designs)
 
 ## Contribute
 
