@@ -3,4 +3,4 @@ node_modules/
 thingsIllNeedLater
 public/scripts/mapbox_keys.js
 public/scripts/google_maps_keys.js
-wireframes/
+wireframes/v1/
