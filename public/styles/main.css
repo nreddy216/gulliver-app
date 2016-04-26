@@ -6,27 +6,31 @@
   font-size: 40px;
 }
 
+.top-nav{
+  margin-bottom: 40px!important;
+}
+
 /* LANDING */
 
-.landing-container{
+.landing-text{
   color: white;
 }
 
 .landing-image img{
-  width: 5%;
+  /*margin: 4%;*/
+  width: 100%;
 }
 
 .landing-container input{
-  height: 15%;
-  width: 30%;
-
+  margin: 5px;
+  width: 100%;
 }
 
 
 body{
-  /*background: #d3d3d3;*/
-  /*solves a weird bug with scrolling*/
-  height: 100vh;
+  /*solves a weird bug with scrolling sometimes?*/
+  height: 120vh;
+
   background-size: cover;
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7aa6e2+0,f6e0fc+92,f7f2de+100 */
@@ -91,7 +95,7 @@ body{
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2)), url("https://athomewithbethany.files.wordpress.com/2012/04/world-map-living-room.jpg");
     opacity: 0.2;
     border-radius: 10px;
-    height: 600px;
+    /*height: 600px;*/
     width: cover;
     position:absolute;
     top: 0; /* Add a top and bottom position so the element */

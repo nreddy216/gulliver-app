@@ -46,8 +46,8 @@
   <script src="https://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
 
   {{!-- UPLOAD CARE --}}
-  <script charset="utf-8" src="//ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js"></script>
-  <script type="text/javascript" src="scripts/uploadCare.js"></script>
+  {{!-- <script charset="utf-8" src="//ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js"></script>
+  <script type="text/javascript" src="scripts/uploadCare.js"></script> --}}
 
   <!-- custom script (google api key) -->
   <script type="text/javascript" src="scripts/google_maps_keys.js"></script>
@@ -76,7 +76,7 @@
     <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
     <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
   </ul>
-  <nav>
+  <nav class="top-nav">
     <div class="nav-wrapper blue">
       <a class="navbar-brand brand-logo center" id="logo" href="/">gulliver</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
