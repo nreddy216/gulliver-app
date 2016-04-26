@@ -53,8 +53,8 @@ html{
 
 .chapterPreview{
   padding: 20px;
-  margin: 20px;
   /*float: right;*/
+  width: 100%;
 }
 
 .cc-edit-delete-btns{
@@ -80,6 +80,19 @@ html{
 
 /* your stories */
 
+#create-story-form{
+  padding-bottom: 30px;
+}
+
+#next-pin-btn{
+  float:right;
+}
+
+#submit-story{
+  margin-top: 10px;
+  width: 100%;
+}
+
 .your-story{
 
 }
@@ -90,7 +103,8 @@ html{
 
 .create-story-container{
   background: white;
-  padding: 30px;
+  padding: 0px 30px 30px 30px;
+
 }
 
 .create-chapter-container{
