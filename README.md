@@ -7,7 +7,7 @@ Gulliver is an interactive storytelling application where users can tell stories
 
 ### Planning / UX
 
-Below are a few wireframes that map out (punintended) the overall user interface.
+Below are a few wireframes that map out (pun intended) the overall user interface.
 
 Trello: https://trello.com/b/IuXD8UrZ/gulliver-app
 
@@ -42,7 +42,3 @@ While these are the original wireframes I created in Balsamiq, there are some ch
 * Material Design + Bootstrap
 * HTML5 / CSS3
 * Balsamiq (for wireframes)
-
-## Contribute
-
-Though I want this project to be open source eventually, it's still in its early stages. For now, feel free to fork this project and send me pull requests.
