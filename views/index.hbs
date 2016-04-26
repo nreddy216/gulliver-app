@@ -71,40 +71,6 @@
 </head>
 
 <body ng-controller="MainController as main">
-  {{!-- <nav class="navbar blue">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" id="logo" href="/">gulliver</a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
-          <li><a ui-sref="discover">Discover</a></li>
-          <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
-          <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
-          <!-- Single button -->
-          <div ng-show="main.currentUser()" class="btn-group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              \{{main.currentUser().firstName}}
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" id="dropdown">
-              <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
-              <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
-              <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
-            </div>
-          </div>
-        </ul>
-      </div>
-    </div>
-  </nav> --}}
-
-
   <ul id="dropdown1" class="dropdown-content">
     <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
     <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
@@ -112,7 +78,7 @@
   </ul>
   <nav>
     <div class="nav-wrapper blue">
-      <a class="navbar-brand" id="logo" href="/">gulliver</a>
+      <a class="navbar-brand brand-logo center" id="logo" href="/">gulliver</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
