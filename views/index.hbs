@@ -13,30 +13,15 @@
   <!-- jquery -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 
-  <!-- material design icons -->
+
+  <!-- Materialize minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+  <!-- Materialize minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+  {{!-- Materialize icons --}}
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
-  <!-- Bootstrap core CSS -->
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-  <!-- MDB core CSS -->
-  {{!-- <link href="../styles/mdb/bootstrap.css" rel="stylesheet"> --}}
-  <link href="../styles/mdb/mdb.css" rel="stylesheet">
-
-  <!-- JQuery -->
-   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-   <!-- Bootstrap core JavaScript -->
-   <script type="text/javascript" src="../scripts/mdb/bootstrap.min.js"></script>
-   <!-- MDB core JavaScript -->
-   <script type="text/javascript" src="../scripts/mdb/mdb.js"></script>
-   {{!-- waves effect mdb --}}
-   <script type="text/javascript" src="../scripts/mdb/modules/waves-effect.js"></script>
-   <script type="text/javascript" src="../scripts/mdb/modules/forms-basic.js"></script>
-   <script type="text/javascript" src="../scripts/mdb/modules/dropdown.js"></script>
-   <script type="text/javascript" src="../scripts/mdb/modules/collapsible.js"></script>
-
-
-
 
 
   <!-- angular -->
@@ -59,20 +44,6 @@
   {{!-- ANGULAR LEAFLET DIRECTIVE MAPBOX --}}
   <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
   <script src="https://tombatossals.github.io/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
-  {{!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"  /> --}}
-
-
-  {{!-- more mapbox  --}}
-  {{!-- <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' /> --}}
-  {{!-- <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> --}}
-
-{{!-- GEO CODER --}}
-{{!-- <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v1.0.0/mapbox-gl-geocoder.css' type='text/css' /> --}}
-
-<!-- custom script (mapbox keys) -->
-{{!-- <script type="text/javascript" src="scripts/mapbox_keys.js"></script> --}}
 
   {{!-- UPLOAD CARE --}}
   <script charset="utf-8" src="//ucarecdn.com/widget/2.8.2/uploadcare/uploadcare.full.min.js"></script>
@@ -90,13 +61,17 @@
   <!-- custom script (angular app) -->
   <script type="text/javascript" src="scripts/app.js"></script>
 
+  <!-- custom script (interactions for UI) -->
+  <script type="text/javascript" src="scripts/interactions.js"></script>
+
   <!-- custom styles -->
   <link rel="stylesheet" type="text/css" href="./styles/main.css">
 
-  <title>gulliver</title>
+  <title>Gulliver</title>
 </head>
+
 <body ng-controller="MainController as main">
-  <nav class="navbar blue">
+  {{!-- <nav class="navbar blue">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -127,14 +102,37 @@
         </ul>
       </div>
     </div>
+  </nav> --}}
+
+
+  <ul id="dropdown1" class="dropdown-content">
+    <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
+    <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
+    <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
+  </ul>
+  <nav>
+    <div class="nav-wrapper blue">
+      <a class="navbar-brand" id="logo" href="/">gulliver</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
+        <li><a ui-sref="discover">Discover</a></li>
+        <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
+        <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
+        <li ng-show="main.currentUser()"><a class="dropdown-button" href="#!" data-activates="dropdown1">\{{main.currentUser().firstName}}<i class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
+        <li><a ui-sref="discover">Discover</a></li>
+        <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
+        <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
+      </ul>
+    </div>
   </nav>
+
   <div class="container">
     <div class="row">
-      {{!-- <div id="map">
-
-      </div> --}}
-      {{!-- <div class="col-md-6 col-md-offset-3"> --}}
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col s12 m12 l12">
         <ui-view>
       </div>
     </div>
