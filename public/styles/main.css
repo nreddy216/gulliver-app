@@ -10,6 +10,10 @@
   margin-bottom: 40px!important;
 }
 
+#dropdown1 li a{
+  color: #6a1b9a!important;
+}
+
 /* LANDING */
 
 .landing-text{
@@ -24,20 +28,23 @@
 .landing-container input{
   margin: 5px;
   width: 100%;
+  height: 70px;
 }
 
-
-body{
+html{
+  margin: 0 auto!important;
   /*solves a weird bug with scrolling sometimes?*/
-  height: 120vh;
+  /*height: 105vh;*/
 
   background-size: cover;
 
+  min-height: 100%
+
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7aa6e2+0,f6e0fc+92,f7f2de+100 */
   background: #7aa6e2; /* Old browsers */
-  background: -moz-linear-gradient(top,  #7aa6e2 0%, #f6e0fc 92%, #f7f2de 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: -moz-linear-gradient(top,  #7aa6e2 0%, #f6e0fc 92%, #f7f2de 100%) no-repeat; /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7aa6e2', endColorstr='#f7f2de',GradientType=0 ); /* IE6-9 */
 
 }
@@ -116,12 +123,6 @@ body{
 .your-story{
   margin-right: 10px;
 }
-
-/*#map-overlay{
-  opacity: 0.4;
-  width: cover;
-}*/
-
 
 .login .form-group{
   background: rgba(250, 250, 250, 0.4);
