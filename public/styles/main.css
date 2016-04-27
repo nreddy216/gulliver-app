@@ -49,6 +49,7 @@ hr{
 
 .landing-text{
   color: white;
+  opacity: 1;
 }
 
 .landing-image img{
@@ -62,6 +63,10 @@ hr{
   height: 70px;
 }
 
+.landing-container{
+  width: cover;
+  position: relative;
+}
 
 
 /* CREATE STORY */
@@ -110,9 +115,6 @@ hr{
   width: 100%;
 }
 
-.your-story{
-
-}
 
 .temp-image img{
   max-width: 100%;
@@ -142,20 +144,12 @@ hr{
 
 }
 
-#landing-text{
-  opacity: 1;
-}
-
-.landing-container{
-  width: cover;
-  position: relative;
-}
 
 .your-story{
   margin-right: 10px;
 }
 
-
+/*------------FORMS AND PLACEHOLDER ----------*/
 .form-group input{
   padding-left: 10px;
   background: rgba(250, 250, 250, 0.4);
@@ -175,4 +169,41 @@ hr{
 
 :-ms-input-placeholder {
    color: teal;
+}
+
+
+/*--------------ABOUT PAGE------------------*/
+
+.about-container{
+  /*padding-bottom: 100px;*/
+}
+
+.about-image img{
+  width: 100%;
+}
+
+.about-icons li{
+  display: inline-block;
+  padding: 2px;
+  font-size: 45px;
+}
+
+.about-icons i{
+  color: #2196f3;
+}
+
+.about-icons i:hover{
+  color: #ab47bc;
+}
+
+.about-text{
+  color: white;
+}
+
+.about-text a{
+  color: #ab47bc;
+}
+
+.about-text a:hover{
+  color: #2196f3;
 }
