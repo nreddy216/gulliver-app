@@ -119,6 +119,10 @@ function configRoutes($stateProvider, $urlRouterProvider, $locationProvider) {
         loginRequired: loginRequired
       }
     })
+    .state('about', {
+      url: '/about',
+      templateUrl: 'templates/about.html'
+    })
 
 
     function skipIfLoggedIn($q, $auth) {

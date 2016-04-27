@@ -70,38 +70,47 @@
   <title>Gulliver</title>
 </head>
 
-<body ng-controller="MainController as main">
-  <ul id="dropdown1" class="dropdown-content">
-    <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
-    <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
-    <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
-  </ul>
-  <nav class="top-nav">
-    <div class="nav-wrapper blue">
-      <a class="navbar-brand brand-logo center" id="logo" href="/">gulliver</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
-        <li><a ui-sref="discover">Discover</a></li>
-        <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
-        <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
-        <li ng-show="main.currentUser()"><a class="dropdown-button" href="#!" data-activates="dropdown1">\{{main.currentUser().firstName}}<i class="material-icons right">arrow_drop_down</i></a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
-        <li><a ui-sref="discover">Discover</a></li>
-        <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
-        <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
-      </ul>
-    </div>
-  </nav>
+  <body ng-controller="MainController as main">
+    <ul id="dropdown1" class="dropdown-content">
+      <li ng-show="main.currentUser()"><a ui-sref="home">My Stories</a></li>
+      <li ng-show="main.currentUser()"><a ui-sref="profile">Account</a></li>
+      <li ng-show="main.currentUser()"><a ui-sref="logout">Log Out</a></li>
+    </ul>
+    <nav class="top-nav">
+      <div class="nav-wrapper blue">
+        <a class="navbar-brand brand-logo center" id="logo" href="/">gulliver</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
+          <li><a ui-sref="discover">Discover</a></li>
+          <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
+          <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
+          <li ng-show="main.currentUser()"><a class="dropdown-button" href="#!" data-activates="dropdown1">\{{main.currentUser().firstName}}<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li ng-show="main.currentUser()"><a ui-sref="create-story">Create</a></li>
+          <li><a ui-sref="discover">Discover</a></li>
+          <li ng-show="!main.currentUser()"><a ui-sref="signup">Sign Up</a></li>
+          <li ng-show="!main.currentUser()"><a ui-sref="login">Log In</a></li>
+        </ul>
+      </div>
+    </nav>
 
-  <div class="container">
-    <div class="row">
-      <ui-view>
+    <div class="container">
+      <div class="row">
+        <ui-view>
+      </div>
     </div>
-  </div>
 
-  <div id='map'></div>
-</body>
+    <div id='map'></div>
+
+    <footer class="col center">
+      <p>
+        <a ui-sref="about">About</a> | <a href="mailto:nidhi.sama.reddy@gmail.com">Contact</a>
+      </p>
+      <p>
+        Handcrafted by Nidhi Reddy © 2016
+      </p>
+    </footer>
+  </body>
 </html>
