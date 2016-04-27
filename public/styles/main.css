@@ -1,5 +1,27 @@
 /* MAIN */
 
+html{
+  margin: 0 auto!important;
+  /*solves a weird bug with scrolling sometimes?*/
+  /*height: 105vh;*/
+
+  background-size: cover;
+
+  min-height: 100%;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7aa6e2+0,f6e0fc+92,f7f2de+100 */
+  background: #7aa6e2; /* Old browsers */
+  background: -moz-linear-gradient(top,  #7aa6e2 0%, #f6e0fc 92%, #f7f2de 100%) no-repeat; /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7aa6e2', endColorstr='#f7f2de',GradientType=0 ); /* IE6-9 */
+
+}
+
+body{
+  min-height: 100%;
+}
+
 #logo{
   color: white;
   font-family: 'Fredericka the Great', cursive;
@@ -12,6 +34,10 @@
 
 #dropdown1 li a{
   color: #6a1b9a!important;
+}
+
+hr{
+  border: 0.1px lightblue solid;
 }
 
 /* LANDING */
@@ -31,23 +57,7 @@
   height: 70px;
 }
 
-html{
-  margin: 0 auto!important;
-  /*solves a weird bug with scrolling sometimes?*/
-  /*height: 105vh;*/
 
-  background-size: cover;
-
-  min-height: 100%
-
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7aa6e2+0,f6e0fc+92,f7f2de+100 */
-  background: #7aa6e2; /* Old browsers */
-  background: -moz-linear-gradient(top,  #7aa6e2 0%, #f6e0fc 92%, #f7f2de 100%) no-repeat; /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  #7aa6e2 0%,#f6e0fc 92%,#f7f2de 100%) no-repeat; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7aa6e2', endColorstr='#f7f2de',GradientType=0 ); /* IE6-9 */
-
-}
 
 /* CREATE STORY */
 
@@ -67,6 +77,8 @@ html{
 }
 
 .delete-btn-home{
+  padding-top: 5px;
+  font-size: 30px;
   float: right;
 }
 
@@ -138,10 +150,24 @@ html{
   margin-right: 10px;
 }
 
-.login .form-group{
+
+.form-group input{
+  padding-left: 10px;
   background: rgba(250, 250, 250, 0.4);
 }
 
-.signup .form-group{
-  background: rgba(250, 250, 250, 0.4);
+::-webkit-input-placeholder {
+   color: teal;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: teal;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: teal;
+}
+
+:-ms-input-placeholder {
+   color: teal;
 }
