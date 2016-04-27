@@ -257,23 +257,25 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
   angular.extend($scope, {
       //originally sets map in london
       center: {
-          autoDiscover: true
       },
       markers: {
       },
       defaults: {
         // minZoom: 2,
         // doubleClickZoom: true,
-        markerZoomAnimation: true
+        scrollWheelZoom: 'center', //zooms to the 'center'
+        markerZoomAnimation: true, //zooms to whatever marker is rendered
+        autoPan: true, //pans to whatever marker is clicked
+        watch: true
       },
       layers: {baselayers: {
                        mapbox_light: {
-                           name: 'Mapbox Light',
+                           name: 'Mapbox Streets',
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pirates'
+                               mapid: 'mapbox.streets'
                            }
                        },
                        osm: {
@@ -294,6 +296,12 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
     vm.new_location.longitude = coordinates[0];
     vm.new_location.latitude = coordinates[1];
 
+    $scope.center = {
+      lat: vm.new_location.latitude,
+      lng: vm.new_location.longitude,
+      zoom: 6
+    }
+
 
     $scope.markers[vm.pinCounter] = {
       lat: vm.new_location.latitude,
@@ -301,12 +309,7 @@ function CreateStoryController ($http, Account, Story, $scope, Pin) {
       message: vm.new_location.textContent,
       draggable: false,
       focus: true,
-      riseOnHover: true,
-      zoom: 10,
-      icon: {
-        iconUrl: '../img/eye.svg',
-        iconSize: [38, 95]
-      }
+      riseOnHover: true
 
     }
 
@@ -375,18 +378,20 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
           zoom: 4
       },
       markers: {
+
       },
       defaults: {
+        scrollWheelZoom: 'center',
+        autoPan: true
       },
-      scrollWheelZoom: false,
       layers: {baselayers: {
                        mapbox_light: {
-                           name: 'Mapbox Light',
+                           name: 'Mapbox Streets',
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
                                apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
-                               mapid: 'mapbox.pirates'
+                               mapid: 'mapbox.streets'
                            }
                        },
                        osm: {
@@ -395,12 +400,8 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                           type: 'xyz'
                       }
                   }
-                },
-        icon: {
-          iconUrl: '../img/eye.svg',
-          iconSize: [38, 95],
-          focus: true
-        }
+                }
+
   });
 
   //get specific user's story
@@ -432,14 +433,19 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
                 embeddedMessage += "  " + pin.textContent;
 
+                $scope.center = {
+                  lat: pin.latitude,
+                  lng: pin.longitude,
+                  zoom: 6
+                }
+
                 console.log(" PIN ", pin);
                  $scope.markers[pin.pinOrder] = {
                    lat: pin.latitude,
                    lng: pin.longitude,
                    message: embeddedMessage,
                    draggable: false,
-                   focus: true,
-                   autoDiscover: true
+                   focus: true
                 }
 
 
@@ -525,8 +531,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
           //        lng: pin.longitude,
           //        message: embeddedMessage,
           //        draggable: false,
-          //        focus: true,
-          //        autoDiscover: true
+          //        focus: true
           //     }
           // });
 
