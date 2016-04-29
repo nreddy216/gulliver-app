@@ -15,24 +15,24 @@ Weirdly interesting in my super-organized Trello board? [Check it out](https://t
 
 ##### Landing page (not logged in)
 <!-- ![landing page wireframe](./wireframes/v2/landing.png) -->
-<img src="./wireframes/v2/landing.png" width="450">
+<img src="./wireframes/v2/landing.png" width="650">
 
 
 ##### Discover page (logged in)
 <!-- ![logged in discover wireframe](./wireframes/v2/newsfeed.png) -->
-<img src="./wireframes/v2/newsfeed.png" width="450">
+<img src="./wireframes/v2/newsfeed.png" width="650">
 
 ##### My stories page
 <!-- ![my stories wireframe](./wireframes/v2/mystories.png) -->
-<img src="./wireframes/v2/mystories.png" width="450">
+<img src="./wireframes/v2/mystories.png" width="650">
 
 ##### Edit one story
 <!-- ![create story wireframe](./wireframes/v2/create.png) -->
-<img src="./wireframes/v2/create.png" width="450">
+<img src="./wireframes/v2/create.png" width="650">
 
 ##### View another's story
 <!-- ![view another's story wireframe](./wireframes/v2/otherprofile.png) -->
-<img src="./wireframes/v2/otherprofile.png" width="450">
+<img src="./wireframes/v2/otherprofile.png" width="650">
 
 
 ## Technologies
