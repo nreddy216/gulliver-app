@@ -1,48 +1,40 @@
-// require express and other modules
 var express = require('express'),
-    router = express.Router(), //router ~
-    app = express(),
+    router = express.Router(),
     bodyParser = require('body-parser'),
-    hbs = require('hbs'),
-    mongoose = require('mongoose'),
-    auth = require('./resources/auth'),
-    // ~ models
-    User = require('./models/User'),
-    Story = require('./models/Story')
-    Pin = require('./models/Pin');
+    methodOverride = require('method-override');
 
-// require and load dotenv
-require('dotenv').load();
+    var usersController = require('../controllers/users');
+    var storiesController = require('../controllers/stories');
+    var pinsController = require('../controllers/pins');
+    var auth = require('../resources/auth');
 
-// configure bodyParser (for receiving form data)
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+router.route('/api/locations')
+    .get(locationsController.index);
+router.route('/api/users')
+    .get(usersController.getUsers)
+router.route('/api/user/:id')
+    .get(usersController.getUser)
+router.route('/api/user/:id/locations')
+    .get(usersController.getLocations)
+    .post(usersController.addLocation);
+router.route('/api/me')
+    .get(auth.ensureAuthenticated, usersController.currentUser)
+    .put(auth.ensureAuthenticated, usersController.addUser);
+router.route('/auth/signup')
+    .post(usersController.signUp);
+router.route('/auth/login')
+    .post(usersController.logIn);
 
-// serve static files from public folder
-app.use(express.static(__dirname + '/public'));
-
-// set view engine to hbs (handlebars)
-app.set('view engine', 'hbs');
-
-
-//connect to specified heroku port or localhost:3000
-var port = process.env.PORT || 3000;
-
-// connect to mongodb
-var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
-mongoose.connect(uri);
 
 /*
  * API Routes
  */
 
+router.route('/api/me')
+      .get(auth.ensureAuthenticated)
+      .
 
-app.get('/api/me', auth.ensureAuthenticated, function (req, res) {
-  User.findById(req.user, function (err, user) {
-    res.send(user.populate('stories'));
-    // res.send(user);
-  });
-});
+app.get('/api/me', auth.ensureAuthenticated);
 
 app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
   // console.log(req.session);
@@ -84,8 +76,6 @@ app.get('/api/users/:id', function(req, res){
     }
   })
 });
-
-/// stories now
 
 //GET STORIES FROM SPECIFIC USER
 app.get('/api/users/:id/stories', function(req, res){
@@ -327,19 +317,4 @@ app.post('/auth/login', function (req, res) {
   });
 });
 
-
-/*
- * Catch All Route
- */
-
-app.get('*', function (req, res) {
-  res.render('index');
-});
-
-
-/*
- * Listen on localhost:3000
- */
-app.listen(port, function() {
-  console.log('server started');
-});
+module.exports = router;
