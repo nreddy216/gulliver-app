@@ -51,7 +51,7 @@ First, here's how you render a map to your page:
 
 * Include this tag within your HTML.
 
-> `<leaflet lf-center="center"  width="100%" height="350px" markers="markers" icon="icon" layers="layers" defaults="defaults"></leaflet>`
+         <leaflet lf-center="center"  width="100%" height="350px" markers="markers" icon="icon" layers="layers" defaults="defaults"></leaflet>
 
 * The attributes `markers`, `center`, etc. refer to what's attached to your controller's `$scope`.  Here's what that looks like in your client-side controller  (i.e. `CreateStoryController.js`)
 
