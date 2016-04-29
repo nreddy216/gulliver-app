@@ -55,30 +55,30 @@ First, here's how you render a map to your page:
 
 * The attributes `markers`, `center`, etc. refer to what's attached to your controller's `$scope`.  Here's what that looks like in your client-side controller  (i.e. `CreateStoryController.js`)
 
-      angular.extend($scope, {
-          center: {
-            //where the map will be centered
-            lat: 40.095,
-            lng: -3.823,
-            zoom: 4
-          },
-          markers: {
-          //where you add your markers!
-            {
-              lat: 40,
-              lng: -3,
-              message: "Hi, I'm a point on a map!" //the message added to each point
+          angular.extend($scope, {
+              center: {
+                //where the map will be centered
+                lat: 40.095,
+                lng: -3.823,
+                zoom: 4
+              },
+              markers: {
+              //where you add your markers!
+                {
+                  lat: 40,
+                  lng: -3,
+                  message: "Hi, I'm a point on a map!" //the message added to each point
 
-            }
-          },
-          defaults: {
-            // checkout the Leaflet docs for more default settings
-            scrollWheelZoom: 'center',
-            markerZoomAnimation: true,
-            autoPan: true,
-            watch: true
-          }
-      });
+                }
+              },
+              defaults: {
+                // checkout the Leaflet docs for more default settings
+                scrollWheelZoom: 'center',
+                markerZoomAnimation: true,
+                autoPan: true,
+                watch: true
+              }
+          });
 
 * To render a place new points, all you have to do is push new markers into the `$scope.markers`.
 
