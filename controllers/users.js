@@ -6,7 +6,7 @@ var usersController = {
   getUser : function(req, res) {
     User.findById(req.user, function (err, user) {
       res.send(user.populate('stories'));
-    }
+    });
   },
   addUser: function(req, res) {
     User.findById(req.user, function (err, user) {
@@ -39,7 +39,7 @@ var usersController = {
         user.populate('stories');
         res.json(user);
       }
-    })
+    });
   },
   currentUser: function(req, res) {
     User.findById(req.user, function(err, user) {
@@ -63,7 +63,7 @@ var usersController = {
         }
         res.send({ token: auth.createJWT(result) });
       });
-    })
+    });
   },
   logIn: function(req, res) {
     User.findOne({ email: req.body.email }, '+password', function (err, user) {
@@ -78,7 +78,7 @@ var usersController = {
         console.log(user)
 
       });
-    })
+    });
   }
 }
 

@@ -4,7 +4,7 @@ var Pin = require('../models/Pin');
 var auth = require('../resources/auth');
 
 var pinsController = {
-  getStoryPins : function(req, res) { //GET PINS FROM SPECIFIC STORY -- only getting from story id
+  getStoryPins: function(req, res) { //GET PINS FROM SPECIFIC STORY -- only getting from story id
     Story.findById({_id: req.params.storyId}, function (err, story) {
       Pin.find({_id: { $in: story.pins}}, function(err, pins){
         if(err){
@@ -13,7 +13,6 @@ var pinsController = {
         res.send(pins);
         })
       });
-    }
   },
   getUserPins: function(req, res) { //GET PINS FROM SPECIFIC USER -- double nested version
     User.findById({_id: req.params.userId}, function (err, user) {
@@ -26,7 +25,7 @@ var pinsController = {
           }
           res.send(pins);
         })
-      })
+      });
 
     });
   },
