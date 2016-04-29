@@ -108,6 +108,3 @@ Special thanks to...
 * [Ilias Tsangaris](https://github.com/iliastsangaris) for explaining promises and callback functions
 * [Dani Zaghian](https://github.com/DaniZaghian) for her mentorship and convincing me to use Materialize
 * [Annabelle Thaddeus](https://github.com/thaddak0) for singing Avril with me in the mornings to brighten our moods
-
-
-<img src="https://github.com/favicon.ico" width="48">
