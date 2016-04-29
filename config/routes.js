@@ -8,313 +8,54 @@ var express = require('express'),
     var pinsController = require('../controllers/pins');
     var auth = require('../resources/auth');
 
-router.route('/api/locations')
-    .get(locationsController.index);
-router.route('/api/users')
-    .get(usersController.getUsers)
-router.route('/api/user/:id')
-    .get(usersController.getUser)
-router.route('/api/user/:id/locations')
-    .get(usersController.getLocations)
-    .post(usersController.addLocation);
+/*
+ * API Routes
+ */
+
+//USERS==================================================================
+//authentication
 router.route('/api/me')
-    .get(auth.ensureAuthenticated, usersController.currentUser)
-    .put(auth.ensureAuthenticated, usersController.addUser);
+      .get(auth.ensureAuthenticated, usersController.currentUser)
+      .put(auth.ensureAuthenticated, usersController.addUser);
 router.route('/auth/signup')
     .post(usersController.signUp);
 router.route('/auth/login')
     .post(usersController.logIn);
 
+//user routes so that no login is required to see others' profiles
+router.route('/api/users')
+    .get(usersController.getAllUsers);
+router.route('/api/users/:id')
+    .get(usersController.getOneUser);
 
-/*
- * API Routes
- */
+//STORIES==================================================================
+//stories routes
+router.route('/api/users/:id/stories')
+    .get(storiesController.getUserStories)
+    .post(storiesController.addStory);
 
-router.route('/api/me')
-      .get(auth.ensureAuthenticated)
-      .
+router.route('/api/stories')
+    .get(storiesController.getAllStories);
 
-app.get('/api/me', auth.ensureAuthenticated);
+router.route('/api/stories/:id')
+      .get(storiesController.getOneStory)
+      .delete(storiesController.deleteStory)
+      .put(storiesController.editStory);
 
-app.put('/api/me', auth.ensureAuthenticated, function (req, res) {
-  // console.log(req.session);
-  User.findById(req.user, function (err, user) {
-    if (!user) {
-      return res.status(400).send({ message: 'User not found.' });
-    }
-    user.firstName = req.body.firstName || user.firstName;
-    user.username = req.body.username || user.username;
-    user.email = req.body.email || user.email;
-    user.save(function(err) {
-      res.send(user.populate('stories'));
-      // res.send(user);
-    });
-  });
-});
+//PINS==================================================================
+//pins routes
+router.route('/api/users/:userId/stories/:storyId/pins')
+    .get(pinsController.getUserPins);
 
-
-//testing users data
-app.get('/api/users', function (req, res) {
-
-  User.find({}, function(err, users){
-    if(err){
-      console.log(err);
-    }
-    res.send(users);
-  });
-});
+router.route('/api/stories/:storyId/pins')
+    .get(pinsController.getStoryPins)
+    .post(pinsController.addPinToStory);
 
 
-//testing retrieving stories in user
-app.get('/api/users/:id', function(req, res){
-  User.find({_id: req.params.id}, function(err, user){
-    if(err){
-      console.log(err);
-    } else {
-      user.populate('stories');
-      res.json(user);
-    }
-  })
-});
-
-//GET STORIES FROM SPECIFIC USER
-app.get('/api/users/:id/stories', function(req, res){
-  User.findById({_id: req.params.id}, function (err, user) {
-      Story.find({_id: { $in: user.stories}}, function(err, stories){
-        res.send(stories);
-      })
-  });
-});
-
-//ADD STORIES FROM SPECIFIC USER
-app.post('/api/users/:id/stories', function(req, res){
-  User.findById({_id: req.params.id}, function (err, user) {
-    var newStory = new Story(req.body);
-    newStory.save(function (err, savedStory) {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        user.stories.push(newStory);
-        user.save();
-        res.json(savedStory);
-      }
-    });
-  });
-});
-
-//GET PINS FROM SPECIFIC USER -- double nested version
-app.get('/api/users/:userId/stories/:storyId/pins', function(req, res){
-  User.findById({_id: req.params.userId}, function (err, user) {
-    Story.find({_id: { $in: user.stories}}, function(err, story){
-
-      // console.log(story[0].pins);
-      Pin.find({_id: { $in: story.pins}}, function(err, pins){
-        if(err){
-          console.log("Error: ", err);
-        }
-        res.send(pins);
-      })
-    })
-
-  });
-});
-
-//GET PINS FROM SPECIFIC STORY -- only getting from story id
-app.get('/api/stories/:storyId/pins', function(req, res){
-  Story.findById({_id: req.params.storyId}, function (err, story) {
-    Pin.find({_id: { $in: story.pins}}, function(err, pins){
-      if(err){
-        console.log("Error: ", err);
-      }
-      res.send(pins);
-      })
-    })
-  });
-
-//POST PINS FROM SPECIFIC STORY -- only getting from story id
-app.post('/api/stories/:storyId/pins', function(req, res){
-    Story.findById({_id: req.params.storyId}, function (err, story) {
-      if (err) {
-        return res.status(400).send({ message: 'Story not found.' });
-      }
-      var newPin = new Pin(req.body);
-      newPin.save(function (err, savedPin) {
-        if (err) {
-          res.status(500).json({ error: err.message });
-        } else {
-          story.pins.push(newPin);
-          story.save();
-          res.json(savedPin);
-        }
-    });
-
-  });
-});
-
-//testing stories data
-app.get('/api/stories', function (req, res) {
-
-  Story.find({}, function(err, allStories){
-    if(err){
-      console.log(err);
-    }
-    res.json(allStories);
-  });
-});
-
-//post to user stories
-//auth.ensureAuthenticated,
-app.post('/api/stories', auth.ensureAuthenticated, function (req, res) {
-  console.log(" USER ", req);
-  User.findById(req.user, function (err, user) {
-    var newStory = new Story(req.body);
-    newStory.save(function (err, savedStory) {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        user.stories.push(newStory);
-        user.save();
-        res.json(savedStory);
-      }
-    });
-  });
-});
-
-//get specific story with the pins
-app.get('/api/stories/:id', function (req, res) {
-
-    Story.findById({_id: req.params.id}, function (err, story) {
-      if(err || story==null){
-        res.status(201).json({story: "this story has been deleted"});
-      } else {
-        Pin.find({_id: { $in: story.pins}}, function(err, pins){
-          if(err){
-            console.log("Error: ", err);
-          }
-          res.json({story: story, pins: pins});
-          })
-        };
-      });
-});
-
-//delete specific story
-app.delete('/api/stories/:id', function (req, res) {
-
-  Story.remove({_id: req.params.id}, function(err, story){
-      if(err){
-        res.status(500).json({error: err.message});
-      }
-      res.json({ deleted: story });
-  });
-});
-
-//edit specific story
-app.put('/api/stories/:id', function (req, res) {
-  // console.log(req.session);
-  Story.findById({_id: req.params.id}, function (err, story) {
-    if (err) {
-      return res.status(400).send({ message: 'Story not found.' });
-    }
-    story.title = req.body.title || story.title;
-    story.save(function(err) {
-      if(err){
-        res.send(err);
-      }
-      res.send(story);
-    });
-  });
-});
+router.route('/api/pins/:id')
+    .put(pinsController.editPin)
+    .delete(pinsController.deletePin);
 
 
-//edit specific pin
-app.put('/api/pins/:id', function (req, res) {
-  // console.log(req.session);
-  Pin.findById({_id: req.params.id}, function (err, pin) {
-    if (err) {
-      return res.status(400).send({ message: 'Pin not found.' });
-    }
-    pin.locationName = req.body.locationName || pin.locationName;
-    pin.textContent = req.body.textContent || pin.textContent;
-    pin.save(function(err) {
-      if(err){
-        res.send(err);
-      }
-      res.send(pin);
-    });
-  });
-});
-
-//edit specific pin
-app.delete('/api/pins/:id', function (req, res) {
-  // console.log(req.session);
-
-  Pin.remove({_id: req.params.id}, function(err, deletedPin) {
-      if(err){
-        res.json({message: 'Could not delete pin b/c:' + error});
-      }
-      res.json({message: 'Pin successfully deleted'});
-  });
-});
-
-
-//get specific pin
-app.get('/api/pins/:id', function (req, res) {
-  // console.log(req.session);
-  Pin.findById({_id: req.params.id}, function (err, pin) {
-    res.json(pin);
-  });
-});
-
- //get all  pins
-app.get('/api/pins', function (req, res) {
-  // console.log(req.session);
-  Pin.find({}, function (err, pins) {
-    res.json(pins);
-  });
-});
-
-
-
-/*
- * Auth Routes
- */
-
-//sign up and login
-app.post('/auth/signup', function (req, res) {
-  User.findOne({ email: req.body.email }, function (err, existingUser) {
-    if (existingUser) {
-      return res.status(409).send({ message: 'Email is already taken.' });
-    }
-    var user = new User({
-      firstName: req.body.firstName,
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    });
-    user.save(function (err, result) {
-      if (err) {
-        res.status(500).send({ message: err.message });
-      }
-      res.send({ token: auth.createJWT(result) });
-    });
-  });
-});
-
-//login
-app.post('/auth/login', function (req, res) {
-  User.findOne({ email: req.body.email }, '+password', function (err, user) {
-    if (!user) {
-      return res.status(401).send({ message: 'Invalid email or password.' });
-    }
-    user.comparePassword(req.body.password, function (err, isMatch) {
-      if (!isMatch) {
-        return res.status(401).send({ message: 'Invalid email or password.' });
-      }
-      res.send({ token: auth.createJWT(user)});
-      console.log(user)
-
-    });
-  });
-});
 
 module.exports = router;
