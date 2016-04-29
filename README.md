@@ -14,19 +14,25 @@ Weirdly interesting in my super-organized Trello board? [Check it out](https://t
 #### Wireframes
 
 ##### Landing page (not logged in)
-![landing page wireframe](./wireframes/v2/landing.png)
+<!-- ![landing page wireframe](./wireframes/v2/landing.png) -->
+<img src="./wireframes/v2/landing.png" width="300">
+
 
 ##### Discover page (logged in)
-![logged in discover wireframe](./wireframes/v2/newsfeed.png)
+<!-- ![logged in discover wireframe](./wireframes/v2/newsfeed.png) -->
+<img src="./wireframes/v2/newsfeed.png" width="300">
 
 ##### My stories page
-![my stories wireframe](./wireframes/v2/mystories.png)
+<!-- ![my stories wireframe](./wireframes/v2/mystories.png) -->
+<img src="./wireframes/v2/mystories.png" width="300">
 
 ##### Edit one story
-![create story wireframe](./wireframes/v2/create.png)
+<!-- ![create story wireframe](./wireframes/v2/create.png) -->
+<img src="./wireframes/v2/create.png" width="300">
 
 ##### View another's story
-![view another's story wireframe](./wireframes/v2/otherprofile.png)
+<!-- ![view another's story wireframe](./wireframes/v2/otherprofile.png) -->
+<img src="./wireframes/v2/otherprofile.png" width="300">
 
 
 ## Technologies
@@ -102,3 +108,6 @@ Special thanks to...
 * [Ilias Tsangaris](https://github.com/iliastsangaris) for explaining promises and callback functions
 * [Dani Zaghian](https://github.com/DaniZaghian) for her mentorship and convincing me to use Materialize
 * [Annabelle Thaddeus](https://github.com/thaddak0) for singing Avril with me in the mornings to brighten our moods
+
+
+<img src="https://github.com/favicon.ico" width="48">
