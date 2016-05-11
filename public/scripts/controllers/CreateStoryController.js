@@ -3,30 +3,38 @@
 'use strict';
 
 var app = angular.module('GulliverApp');
-
-
 app.controller('CreateStoryController', CreateStoryController);
 
 CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope"]; // minification protection
 function CreateStoryController ($http, Account, YourStoryService, $scope) {
+
   var vm = this;
-  vm.new_story = {}; //object where form data is stored
-  vm.storyId = ""; //the id of the story in api/stories
-  vm.storyTitle = ""; //the title of the story
 
-  vm.displayPinForm = false; //edit form is hidden if edit is not clicked
+  //object where form data is stored
+  vm.new_story = {};
+  vm.storyId = "";
+  vm.storyTitle = "";
 
-  //create the initial story with only its title
+  //edit form is hidden if edit is not clicked
+  vm.displayPinForm = false;
+
+  //create the initial story (saves to the DB) with only its title saved
   vm.createStory = function(){
-    //YourStoryService accesses api/users/CURRENTUSERID/stories
+    //posts to api/users/CURRENTUSERID/stories
     YourStoryService.save(vm.new_story, (function (response) {
-        vm.pinCounter = 0; //add counter to pin data (tracks the order of the pins)
+        //add counter to pin data (will track the order of the pins)
+        vm.pinCounter = 0;
+
+        //save variables for later use with pins and editing form data
         vm.storyId = response._id;
         vm.storyTitle = response.title;
-        vm.displayPinForm = true;
-        vm.new_story = {}; //clears out new story after submit is pressed
-      }));
 
+        //once submitted, the chapter form is shown
+        vm.displayPinForm = true;
+
+        //clears out new story after submit is pressed
+        vm.new_story = {};
+      }));
   }
 
   //marker data for the current story
@@ -131,7 +139,6 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
   //update chapter / pin
   vm.displayEditPinForm = false; //set displayEditForm to false initially
   vm.updatePin = function(pin){
-    // console.log(" HUH ", pin);
     $http.put('/api/pins/' + pin._id, pin).then(function(response) {
         vm.displayEditPinForm = false; //set back to false after edit
       });
