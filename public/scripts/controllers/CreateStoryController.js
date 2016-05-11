@@ -3,10 +3,12 @@
 'use strict';
 
 var app = angular.module('GulliverApp');
+
+
 app.controller('CreateStoryController', CreateStoryController);
 
-CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope", "Pin"]; // minification protection
-function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
+CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope"]; // minification protection
+function CreateStoryController ($http, Account, YourStoryService, $scope) {
   var vm = this;
   vm.new_story = {}; //object where form data is stored
   vm.storyId = ""; //the id of the story in api/stories
@@ -39,22 +41,18 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
 
   //GET LOCATION FROM QUERY
   vm.geocode = function(addMapData) {
-    //api from mapbox with access token
+    //get MAPBOX API with access token (in hidden file)
     var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=' + MAPBOX_API_TOKEN + '&autocomplete=true'
 
-   //ajax call to get location data from the zipcode
-   $http.get(apiEndpoint)
-     .then(function(mapData) {
-       var coordinates = mapData.data.features[0].center; //array [long, lat]
-       console.log("vm.location.locationName", vm.new_location.locationName);
-       console.log(apiEndpoint);
-       console.log("res map", mapData);
-       addMapData(coordinates);// callback function that is called only after http call is receives data
-     })
+    //ajax call to get location data from the zipcode
+     $http.get(apiEndpoint)
+       .then(function(mapData) {
+         var coordinates = mapData.data.features[0].center; //array [long, lat]
+         addMapData(coordinates);// callback function that is called only after http call is receives data
+       });
   }
 
   angular.extend($scope, {
-      //originally sets map in london
       center: {
       },
       markers: {
@@ -68,12 +66,12 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
         watch: true
       },
       layers: {baselayers: {
-                       mapbox_light: {
+                       mapbox_light: { //Mapbox Streets is the default
                            name: 'Mapbox Streets',
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
+                               apikey: MAPBOX_API_TOKEN,
                                mapid: 'mapbox.streets'
                            }
                        },
@@ -88,20 +86,22 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
 
 
 
-   //adding pin
+ //adding pin
   vm.addPin = function(coordinates){
     vm.pinCounter += 1;
+    //sets the new_location properties of order, longitude, and latitude
     vm.new_location.pinOrder = vm.pinCounter;
     vm.new_location.longitude = coordinates[0];
     vm.new_location.latitude = coordinates[1];
 
+    //each time a pin is added, a new center is rendered
     $scope.center = {
       lat: vm.new_location.latitude,
       lng: vm.new_location.longitude,
       zoom: 6
     }
 
-
+    //this adds the marker to the map in the UI
     $scope.markers[vm.pinCounter] = {
       lat: vm.new_location.latitude,
       lng: vm.new_location.longitude,
@@ -112,12 +112,11 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
 
     }
 
-     $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
-       .then(function(data) {
-         vm.locations.push(data);
-         vm.new_location = {};
-         console.log("location info vm locations !!!! ", vm.locations);
-     });
+    $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
+         .then(function(data) {
+           vm.locations.push(data);
+           vm.new_location = {};
+    });
 
   }
 
