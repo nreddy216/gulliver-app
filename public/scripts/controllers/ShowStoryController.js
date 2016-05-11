@@ -12,7 +12,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
   vm.story = {};
 
   angular.extend($scope, {
-      //originally sets map in london
       center: {
           lat: 0,
           lng: 0,
@@ -31,7 +30,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
+                               apikey:  MAPBOX_API_TOKEN,
                                mapid: 'mapbox.streets'
                            }
                        },
@@ -52,10 +51,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
           //each story is the response
           vm.story = response.data;
 
-          console.log(vm.story.pins);
-
-          // vm.story.pins[0].activeChapter = true;
-          // console.log(vm.story.pins[0].activeChapter);
 
           //goes through all story pins and sets them as default to false - they won't be seen
 
@@ -80,7 +75,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                   zoom: 6
                 }
 
-                console.log(" PIN ", pin);
                  $scope.markers[pin.pinOrder] = {
                    lat: pin.latitude,
                    lng: pin.longitude,
@@ -92,7 +86,6 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
 
               }
 
-            // console.log(pin);
             });
           }
 
@@ -143,35 +136,3 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
             }
           });
         }
-
-
-
-          //goes through story pins again and individually
-          // vm.story.pins.forEach(function(pin){
-          //
-          //   if(vm.story.pins.indexOf(pin) === vm.counter){
-          //     console.log(pin);
-          //     pin.activeChapter = true;
-          //   }
-          //
-          //   if(vm.counter !== 0){
-          //     vm.story.pins[vm.counter - 1].activeChapter = false;
-          //   }
-          //
-          //   var embeddedMessage = "";
-          //   //if there's no image URL then it embeds only the text content
-          //   if(pin.photoUrl){
-          //     embeddedMessage += "<img class='embedded-map-images' src='"+ pin.photoUrl + "'></img>";
-          //   }
-          //
-          //   embeddedMessage += "  " + pin.textContent;
-          //
-          //     console.log(" PIN ", pin);
-          //      $scope.markers[pin.pinOrder] = {
-          //        lat: pin.latitude,
-          //        lng: pin.longitude,
-          //        message: embeddedMessage,
-          //        draggable: false,
-          //        focus: true
-          //     }
-          // });
