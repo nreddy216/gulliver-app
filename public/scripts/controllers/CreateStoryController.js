@@ -5,51 +5,42 @@
 var app = angular.module('GulliverApp');
 app.controller('CreateStoryController', CreateStoryController);
 
-CreateStoryController.$inject = ["$http", "Account", "Story", "$scope", "Pin"]; // minification protection
-function CreateStoryController ($http, Account, Story, $scope, Pin) {
+CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope", "Pin"]; // minification protection
+function CreateStoryController ($http, Account, YourStoryService, $scope, Pin) {
   var vm = this;
-  vm.stories = []; //where all of user's stories will be stored
-  vm.new_story = {}; //form data
-  vm.storyId = "";
-  vm.storyTitle = "";
-  vm.currentStory = {};
-  vm.pinCounter = 0;
+  vm.new_story = {}; //object where form data is stored
+  vm.storyId = ""; //the id of the story in api/stories
+  vm.storyTitle = ""; //the title of the story
 
-  vm.new_location = {};
-  vm.locations = [];
+  vm.displayPinForm = false; //edit form is hidden if edit is not clicked
 
-  vm.displayPinForm = false;
-
+  //create the initial story with only its title
   vm.createStory = function(){
-    console.log("create story: ", vm.new_story);
-    $http.post('/api/users/' + Account.currentUser()._id + '/stories', vm.new_story)
-      .then(function (response) {
-        vm.pinCounter = 0; //add counter to pin data
-        console.log(" STORY new ", vm.new_story);
-        vm.new_story = {};
-        vm.storyId = response.data._id; //get id so that pins can be added to this story
-        vm.storyTitle = response.data.title;
-        vm.storyImage = response.data.imageUrl;
-        vm.currentStory = response.data;
-        vm.stories.push(response.data);
+    //YourStoryService accesses api/users/CURRENTUSERID/stories
+    YourStoryService.save(vm.new_story, (function (response) {
+        vm.pinCounter = 0; //add counter to pin data (tracks the order of the pins)
+        vm.storyId = response._id;
+        vm.storyTitle = response.title;
         vm.displayPinForm = true;
-      });
+        vm.new_story = {}; //clears out new story after submit is pressed
+      }));
 
   }
 
-
+  //marker data for the current story
   vm.new_location = {};
+  vm.locations = []; //where all the marker data will be added
   vm.displayStoriesBtn = false;
 
   vm.submitLocationForm = function(){
-    vm.geocode(vm.addPin);
-    vm.displayStoriesBtn = true;
+    vm.geocode(vm.addPin); //calls geocode function to add the pin after it gets data from API
+    vm.displayStoriesBtn = true; //once the title is submitted, the form for the markers/locations shows
   }
 
   //GET LOCATION FROM QUERY
   vm.geocode = function(addMapData) {
     //api from mapbox with access token
-    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg&autocomplete=true'
+    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=' + MAPBOX_API_TOKEN + '&autocomplete=true'
 
    //ajax call to get location data from the zipcode
    $http.get(apiEndpoint)

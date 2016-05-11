@@ -21,6 +21,7 @@ router.route('/auth/signup')
 router.route('/auth/login')
     .post(usersController.logIn);
 
+
 //user routes so that no login is required to see others' profiles
 router.route('/api/users')
     .get(usersController.getAllUsers);
