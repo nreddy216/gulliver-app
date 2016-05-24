@@ -1,8 +1,6 @@
 //=============================Account Service==============================
 var app = angular.module('GulliverApp');
-app.service('Account', Account)
-   .factory('Story', StoryFactory)
-   .factory('Pin', PinFactory);
+app.service('Account', Account);
 
 //==============================================================================
 
@@ -10,25 +8,6 @@ app.service('Account', Account)
 //////////////
 // Services //
 //////////////
-
-
-// STORY FACTORY ============================================
-StoryFactory.$inject = ["$resource"]; // minification protection
-function StoryFactory($resource) {
-  return $resource('/api/stories/:id', {id: '@_id'},
-    {
-      'update': {method: 'PUT'}
-    });
-}
-
-// Pin FACTORY ============================================
-PinFactory.$inject = ["$resource"]; // minification protection
-function PinFactory($resource) {
-  return $resource('/api/pins/:id', {id: '@_id'},
-    {
-      'update': {method: 'PUT'}
-    });
-}
 
 
 // ACCOUNT SERVICE ===================================================

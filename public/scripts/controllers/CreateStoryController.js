@@ -50,7 +50,7 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
   //GET LOCATION FROM QUERY
   vm.geocode = function(addMapData) {
     //get MAPBOX API with access token (in hidden file)
-    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=' + MAPBOX_API_TOKEN + '&autocomplete=true'
+    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=' + process.env.MAPBOX_API_TOKEN + '&autocomplete=true'
 
     //ajax call to get location data from the zipcode
      $http.get(apiEndpoint)
@@ -79,7 +79,7 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey: MAPBOX_API_TOKEN,
+                               apikey: process.env.MAPBOX_API_TOKEN,
                                mapid: 'mapbox.streets'
                            }
                        },

@@ -30,7 +30,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey:  MAPBOX_API_TOKEN,
+                               apikey:  process.env.MAPBOX_API_TOKEN,
                                mapid: 'mapbox.streets'
                            }
                        },
