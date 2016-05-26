@@ -4,3 +4,4 @@ thingsIllNeedLater
 public/scripts/mapbox_keys.js
 public/scripts/google_maps_keys.js
 wireframes/v1/
+config/config.js

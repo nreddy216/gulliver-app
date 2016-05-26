@@ -2,10 +2,11 @@ var express = require('express'),
     router = express.Router(),
     bodyParser = require('body-parser');
 
-    var usersController = require('../controllers/users');
-    var storiesController = require('../controllers/stories');
-    var pinsController = require('../controllers/pins');
-    var auth = require('../resources/auth');
+var usersController = require('../controllers/users');
+var storiesController = require('../controllers/stories');
+var pinsController = require('../controllers/pins');
+var auth = require('../resources/auth');
+
 
 /*
  * API Routes
