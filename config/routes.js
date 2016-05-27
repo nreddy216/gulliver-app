@@ -60,7 +60,7 @@ router.route('/search/:locationName')
     .get(pinsController.getLocationFromMapbox);
 
 router.route('/api/mapboxToken')
-    .get(auth.ensureAuthenticated, pinsController.getMapboxToken);
+    .get(pinsController.getMapboxToken);
 
 
 

@@ -5,8 +5,8 @@
 var app = angular.module('GulliverApp');
 app.controller('CreateStoryController', CreateStoryController);
 
-CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope", "$rootScope"]; // minification protection
-function CreateStoryController ($http, Account, YourStoryService, $scope, $rootScope) {
+CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope"]; // minification protection
+function CreateStoryController ($http, Account, YourStoryService, $scope) {
 
   var vm = this;
 
@@ -58,10 +58,7 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, $rootS
        });
   }
 
-  $http.get('/api/mapboxToken')
-       .then(function(token){
-         $rootScope.apikey = token;
-       });
+  console.log($scope.mapbox_token);
 
 
   angular.extend($scope, {
@@ -83,7 +80,7 @@ function CreateStoryController ($http, Account, YourStoryService, $scope, $rootS
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey: MAPBOX_API_TOKEN,
+                               apikey: 'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
                                mapid: 'mapbox.streets'
                            }
                        },

@@ -1,6 +1,7 @@
 var app = angular.module('GulliverApp');
 app.service('StoryService', StoryService);
 app.service('YourStoryService', YourStoryService);
+app.factory('TokenFactory', TokenFactory);
 
 // STORY SERVICE ============================================
 StoryService.$inject = ["$resource"]; // minification protection
@@ -18,4 +19,17 @@ function YourStoryService($resource, Account) {
     {
       'update': {method: 'PUT'}
     });
+}
+
+// Get Mapbox Token to use for Map JSON============================================
+
+TokenFactory.$inject = ["$http"];
+function TokenFactory($http){
+
+    return {
+      getMapboxToken: function(){
+        return $http.get('/api/mapboxToken');
+      }
+    }
+
 }
