@@ -19,9 +19,13 @@
     "hbs": "^4.0.0",
     "jwt-simple": "^0.4.1",
     "moment": "^2.11.1",
-    "mongoose": "^4.3.7"
+    "mongoose": "^4.3.7",
+    "request": "^2.72.0"
   },
   "devDependencies": {
-    "angular-leaflet-directive": "^0.10.0"
+    "angular-leaflet-directive": "^0.10.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-ng-annotate": "^2.0.2"
   }
 }

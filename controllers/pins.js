@@ -3,6 +3,10 @@ var Story = require('../models/Story');
 var Pin = require('../models/Pin');
 var auth = require('../resources/auth');
 
+//for ajax calls
+var http = require('http');
+var request = require('request');
+
 var pinsController = {
   getStoryPins: function(req, res) { //GET PINS FROM SPECIFIC STORY -- only getting from story id
     Story.findById({_id: req.params.storyId}, function (err, story) {
@@ -79,6 +83,18 @@ var pinsController = {
     Pin.find({}, function (err, pins) {
       res.json(pins);
     });
+  },
+  getLocationFromMapbox: function(req, res){//use Mapbox API to get latitude & longitude
+
+    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+ req.params.locationName +'.json?access_token=' + process.env.MAPBOX_API_TOKEN + '&autocomplete=true';
+    request(apiEndpoint, function(error, response, body){
+      body = JSON.parse(body);
+      console.log(body);
+      res.send(body);
+    });
+  },
+  getMapboxToken: function(req, res){
+    res.send(process.env.MAPBOX_API_TOKEN);
   }
 }
 

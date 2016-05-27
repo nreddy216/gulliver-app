@@ -5,8 +5,8 @@
 var app = angular.module('GulliverApp');
 app.controller('CreateStoryController', CreateStoryController);
 
-CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope"]; // minification protection
-function CreateStoryController ($http, Account, YourStoryService, $scope) {
+CreateStoryController.$inject = ["$http", "Account", "YourStoryService", "$scope", "$rootScope"]; // minification protection
+function CreateStoryController ($http, Account, YourStoryService, $scope, $rootScope) {
 
   var vm = this;
 
@@ -49,16 +49,20 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
 
   //GET LOCATION FROM QUERY
   vm.geocode = function(addMapData) {
-    //get MAPBOX API with access token (in hidden file)
-    var apiEndpoint = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'+vm.new_location.locationName+'.json?access_token=' + process.env.MAPBOX_API_TOKEN + '&autocomplete=true'
-
+    //API call is in Backend
     //ajax call to get location data from the zipcode
-     $http.get(apiEndpoint)
+     $http.get('/search/' + vm.new_location.locationName)
        .then(function(mapData) {
          var coordinates = mapData.data.features[0].center; //array [long, lat]
          addMapData(coordinates);// callback function that is called only after http call is receives data
        });
   }
+
+  $http.get('/api/mapboxToken')
+       .then(function(token){
+         $rootScope.apikey = token;
+       });
+
 
   angular.extend($scope, {
       center: {
@@ -79,7 +83,7 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey: process.env.MAPBOX_API_TOKEN,
+                               apikey: MAPBOX_API_TOKEN,
                                mapid: 'mapbox.streets'
                            }
                        },

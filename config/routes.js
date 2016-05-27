@@ -52,10 +52,15 @@ router.route('/api/stories/:storyId/pins')
     .get(pinsController.getStoryPins)
     .post(pinsController.addPinToStory);
 
-
 router.route('/api/pins/:id')
     .put(pinsController.editPin)
     .delete(pinsController.deletePin);
+
+router.route('/search/:locationName')
+    .get(pinsController.getLocationFromMapbox);
+
+router.route('/api/mapboxToken')
+    .get(auth.ensureAuthenticated, pinsController.getMapboxToken);
 
 
 

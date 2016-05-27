@@ -28,7 +28,7 @@ var port = process.env.PORT || 3000;
 var uri = process.env.MONGOLAB_URI || "mongodb://localhost/travelogue";
 mongoose.connect(uri);
 
-//all api routes
+//all local api routes
 var routes = require('./config/routes');
 app.use(routes);
 
