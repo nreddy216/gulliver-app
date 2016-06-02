@@ -5,8 +5,8 @@ var app = angular.module('GulliverApp');
 app.controller('ShowStoryController', ShowStoryController);
 
 
-ShowStoryController.$inject = ["$http", "Account", "$scope", "Story", "$stateParams"];
-function ShowStoryController ($http, Account, $scope, Story, $stateParams){
+ShowStoryController.$inject = ["$http", "Account", "$scope", "StoryService", "$stateParams"];
+function ShowStoryController ($http, Account, $scope, StoryService, $stateParams){
   var vm = this;
 
   vm.story = {};
@@ -30,7 +30,7 @@ function ShowStoryController ($http, Account, $scope, Story, $stateParams){
                            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                            type: 'xyz',
                            layerOptions: {
-                               apikey:  process.env.MAPBOX_API_TOKEN,
+                               apikey:  'pk.eyJ1IjoibnJlZGR5MjE2IiwiYSI6ImNpbW1vdWg2cjAwNTN2cmtyMzUzYjgxdW0ifQ.NeWvItiiylXClGSqlXUNsg',
                                mapid: 'mapbox.streets'
                            }
                        },
