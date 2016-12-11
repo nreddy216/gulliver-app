@@ -26,21 +26,20 @@ function Account($http, $q, $auth) {
 
 
     function signup(userData) {
-      //  #8: signup (https://github.com/sahat/satellizer#authsignupuser-options)
       return (
         $auth
           .signup(userData)
           .then(function(response) {
           // Redirect user here to login page or perhaps some other intermediate page
-        // that requires email address verification before any other part of the site
-        // can be accessed.
+          // that requires email address verification before any other part of the site
+          // can be accessed.
 
             $auth.setToken(response.data.token);
           })
         .catch(function(response) {
           console.log("handling errors?", response);
           })
-      // then, set the token (https://github.com/sahat/satellizer#authsettokentoken)
+      // then, set the token
       // returns a promise
         );
       }
@@ -48,13 +47,10 @@ function Account($http, $q, $auth) {
     function login(userData) {
       return (
         $auth
-          .login(userData) // login (https://github.com/sahat/satellizer#authloginuser-options)
+          .login(userData) // login
           .then(
             function onSuccess(response) {
-              // #3: set token (https://github.com/sahat/satellizer#authsettokentoken)
-              console.log('login response', response);
               $auth.setToken(response.data.token);
-              console.log('token', response.data.token);
             },
 
             function onError(error) {
@@ -65,8 +61,6 @@ function Account($http, $q, $auth) {
     }
 
     function logout() {
-      // returns a promise!!!
-      //  #6: logout the user by removing their jwt token (using satellizer)
       // Make sure to also wipe the user's data from the application:
       // self.user = null;
       // returns a promise!!!
@@ -78,11 +72,7 @@ function Account($http, $q, $auth) {
             self.user = null;
           })
       )
-
-
-
     }
-
 
     function currentUser() {
       if ( self.user ) { return self.user; }

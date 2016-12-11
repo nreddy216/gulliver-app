@@ -7,7 +7,6 @@ var storiesController = require('../controllers/stories');
 var pinsController = require('../controllers/pins');
 var auth = require('../resources/auth');
 
-
 /*
  * API Routes
  */

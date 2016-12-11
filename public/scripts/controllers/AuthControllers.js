@@ -19,7 +19,6 @@ function LoginController (Account, $location) {
     Account
       .login(vm.new_user)
       .then(function(){
-        // console.log("NEW USER ", vm);
         //  redirect to '/home'
          $location.path('/create-story');
          //  clear sign up form

@@ -67,8 +67,6 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
       markers: {
       },
       defaults: {
-        // minZoom: 2,
-        // doubleClickZoom: true,
         scrollWheelZoom: 'center', //zooms to the 'center'
         markerZoomAnimation: true, //zooms to whatever marker is rendered
         autoPan: true, //pans to whatever marker is clicked
@@ -93,8 +91,6 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
                 }
   });
 
-
-
  //adding pin
   vm.addPin = function(coordinates){
     vm.pinCounter += 1;
@@ -118,7 +114,6 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
       draggable: false,
       focus: true,
       riseOnHover: true
-
     }
 
     $http.post('/api/stories/' + vm.storyId + '/pins', vm.new_location)
