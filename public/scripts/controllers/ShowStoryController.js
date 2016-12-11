@@ -118,8 +118,6 @@ function ShowStoryController ($http, Account, $scope, StoryService, $stateParams
               }
 
               embeddedMessage += "  " + vm.story.pins[vm.counter].textContent;
-
-                console.log(" PIN ", vm.story.pins[vm.counter]);
                  $scope.center = {
                    lat: vm.story.pins[vm.counter].latitude,
                    lng: vm.story.pins[vm.counter].longitude,

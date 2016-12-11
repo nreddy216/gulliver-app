@@ -58,9 +58,6 @@ function CreateStoryController ($http, Account, YourStoryService, $scope) {
        });
   }
 
-  console.log($scope.mapbox_token);
-
-
   angular.extend($scope, {
       center: {
       },

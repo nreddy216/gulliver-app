@@ -61,6 +61,5 @@ router.route('/search/:locationName')
 router.route('/api/mapboxToken')
     .get(pinsController.getMapboxToken);
 
-
-
+// export router
 module.exports = router;

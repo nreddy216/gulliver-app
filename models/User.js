@@ -1,7 +1,6 @@
 // Create Schema==============================================================
 
 var mongoose = require('mongoose');
-// var Story = require('./story');
 var bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
@@ -12,11 +11,9 @@ var UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   firstName: String,
   lastName: String,
-  password: { type: String, select: false}, //select??
+  password: { type: String, select: false},
   profilePic: String,
   stories: [{type: Schema.Types.ObjectId, ref:'Story'}]
-  // isPublic: Boolean //users can create private accounts? icebox
-  //followers: ref data - icebox
 });
 
 // For Auth ==============================================================
